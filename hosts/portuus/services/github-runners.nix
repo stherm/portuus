@@ -26,6 +26,12 @@
     extraEnvironment.DEPLOY_KEY_PATH = config.sops.secrets."github-runners/portuus/deploy-key".path;
   };
 
+  # The runner deploys this very host: if the switch restarts the runner
+  # unit, it kills its own deploy job and magic rollback reverts the deploy.
+  # Keep the old runner running; it picks up the new version on its next
+  # natural restart (self-update, reboot, manual restart).
+  systemd.services.github-runner-portuus.restartIfChanged = false;
+
   users.users.github-runner-portuus.extraGroups = [ "kvm" ];
 
   sops.secrets =
