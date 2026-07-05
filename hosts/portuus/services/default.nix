@@ -16,6 +16,7 @@
     ./nextcloud.nix
     ./nginx.nix
     ./openssh.nix
+    ./palworld.nix
     ./radicale.nix
     ./rustdesk-server.nix
     ./vaultwarden.nix

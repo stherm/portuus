@@ -22,8 +22,6 @@ in
 
     nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
 
-    nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "minecraft-server" ];
-
     services.minecraft-servers = {
       enable = mkDefault true;
       eula = mkDefault true;

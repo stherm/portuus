@@ -1,10 +1,24 @@
 {
   inputs,
   outputs,
+  lib,
   ...
 }:
 
 {
+  # Central unfree allowlist: multiple allowUnfreePredicate definitions
+  # silently override each other, so all services share this one.
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "minecraft-server"
+      "steam"
+      "steam-original"
+      "steam-run"
+      "steam-unwrapped"
+      "steamcmd"
+    ];
+
   imports = [
     ./boot.nix
     ./hardware.nix

@@ -12,10 +12,10 @@ let
   s = c.services.nextcloud;
 
   package = pkgs.nextcloud32.overrideAttrs (old: rec {
-    version = "32.0.3";
+    version = "32.0.8";
     src = pkgs.fetchurl {
       url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-      hash = "sha256-m3GslskQtKNQ2Ya9OpLqBvAqFh+lhjNLVth9isr8YtQ=";
+      hash = "sha256-WK2N34YNdaKUuXqOPjlWLeyH/2UMuRwRRYmzdEqx3g0=";
     };
   });
 in
