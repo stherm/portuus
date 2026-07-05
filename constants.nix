@@ -57,6 +57,9 @@ rec {
       subdomain = "cloud";
       fqdn = "cloud." + domain;
     };
+    palworld = {
+      port = 8211;
+    };
     radicale = {
       subdomain = "dav";
       fqdn = "dav." + domain;

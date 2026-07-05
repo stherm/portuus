@@ -26,6 +26,9 @@ in
       server { listen ${toString mc.minecraft-creative.port}; proxy_pass ${ip}:${toString mc.minecraft-creative.port}; }
       server { listen ${toString mc.minecraft-amplified.port}; proxy_pass ${ip}:${toString mc.minecraft-amplified.port}; }
 
+      # Palworld
+      server { listen ${toString mc.palworld.port} udp; proxy_pass ${ip}:${toString mc.palworld.port}; }
+
       # Rustdesk
       server { listen ${toString rd.nat-test};  proxy_pass ${ip}:${toString rd.nat-test}; }
       server { listen ${toString rd.id};        proxy_pass ${ip}:${toString rd.id}; }
@@ -54,6 +57,7 @@ in
     ];
     allowedUDPPorts = [
       rd.id
+      mc.palworld.port
     ];
   };
 }
