@@ -11,11 +11,11 @@ let
   c = constants;
   s = c.services.nextcloud;
 
-  package = pkgs.nextcloud32.overrideAttrs (old: rec {
-    version = "32.0.8";
+  package = pkgs.nextcloud33.overrideAttrs (old: rec {
+    version = "33.0.2";
     src = pkgs.fetchurl {
       url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-      hash = "sha256-WK2N34YNdaKUuXqOPjlWLeyH/2UMuRwRRYmzdEqx3g0=";
+      hash = "sha256-kSV6tQAtXQnajQnYA4mYMzA1HFwAp+OiWxd7zqgRccw=";
     };
   });
 in
