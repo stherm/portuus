@@ -46,7 +46,11 @@ let
 
   settingsFile = pkgs.writeText "PalWorldSettings.ini" ''
     [/Script/Pal.PalGameWorldSettings]
-    OptionSettings=(${concatStringsSep "," (mapAttrsToList (k: v: "${k}=${renderValue v}") settings)})
+    OptionSettings=(${
+      concatStringsSep "," (
+        mapAttrsToList (k: v: "${k}=${renderValue v}") settings ++ mapAttrsToList (k: v: "${k}=${v}") cfg.rawSettings
+      )
+    })
   '';
 in
 {
@@ -82,6 +86,19 @@ in
       description = ''
         OptionSettings entries for PalWorldSettings.ini.
         Unset options fall back to the server defaults.
+      '';
+    };
+
+    rawSettings = mkOption {
+      type = types.attrsOf types.str;
+      default = { };
+      example = {
+        Difficulty = "None";
+        CrossplayPlatforms = "(Steam,Xbox,PS5,Mac)";
+      };
+      description = ''
+        OptionSettings entries written verbatim without quoting, for enum
+        values and tuples that settings cannot express.
       '';
     };
 
