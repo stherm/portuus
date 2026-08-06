@@ -48,7 +48,17 @@ in
           "= /.well-known/matrix/client".extraConfig = ''
             default_type application/json;
             add_header Access-Control-Allow-Origin "*";
-            return 200 '{"m.homeserver":{"base_url":"https://${c.domain}"}}';
+            return 200 '${
+              builtins.toJSON {
+                "m.homeserver".base_url = "https://${c.domain}";
+                "org.matrix.msc4143.rtc_foci" = [
+                  {
+                    type = "livekit";
+                    livekit_service_url = "https://${c.domain}/livekit/jwt";
+                  }
+                ];
+              }
+            }';
           '';
         };
       };
