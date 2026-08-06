@@ -6,7 +6,7 @@
 {
   imports = [
     ./github-runners.nix
-    ./gitlab-runner.nix
+    # ./gitlab-runner.nix
     ./gitlab.nix
     ./immich.nix
     ./jirafeau.nix
