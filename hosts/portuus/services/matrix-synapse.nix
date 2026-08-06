@@ -21,7 +21,6 @@
       enable = true;
       sops = true;
       dataDir = "/data/matrix-synapse";
-      coturn.enable = true;
       bridges = {
         whatsapp = {
           enable = true;
@@ -47,6 +46,9 @@
       ];
     };
 
+    livekit.enable = lib.mkForce false;
+    lk-jwt-service.enable = lib.mkForce false;
+
     # TLS terminated on edge
     nginx.virtualHosts."${config.networking.domain}" = {
       enableACME = lib.mkForce false;
@@ -58,11 +60,5 @@
         }
       ];
     };
-  };
-
-  # TODO: nix-core: toggle user if coturn and synapse are not running on the same machine
-  sops.secrets."coturn/static-auth-secret" = {
-    owner = lib.mkForce "matrix-synapse";
-    group = lib.mkForce "matrix-synapse";
   };
 }
