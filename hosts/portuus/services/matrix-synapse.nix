@@ -61,4 +61,6 @@
       ];
     };
   };
+
+  systemd.services.lk-jwt-service.enable = false;
 }
