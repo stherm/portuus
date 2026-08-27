@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  services.postgresql.package = pkgs.postgresql_17;
+
   environment.systemPackages = [
     (
       let
