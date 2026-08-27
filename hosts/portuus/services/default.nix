@@ -17,6 +17,7 @@
     ./nginx.nix
     ./openssh.nix
     ./palworld.nix
+    ./postgresql.nix
     ./radicale.nix
     ./rustdesk-server.nix
     ./vaultwarden.nix
