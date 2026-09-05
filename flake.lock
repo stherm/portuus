@@ -90,11 +90,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1788629016,
-        "narHash": "sha256-B/bOtI5RG+xPMY3JYG+mcr+EYLjPR4klp1DAOilUmn4=",
+        "lastModified": 1788631907,
+        "narHash": "sha256-jP4MDjjomGy90Do58lMkj9X/dOG3NyfpOSIIgG2I2Gg=",
         "ref": "wiki",
-        "rev": "3e1880bef4a07aa43f044f7563ac8f5a9d877734",
-        "revCount": 157,
+        "rev": "8ac10c6798e1e6ba48e185589fd07db8a5f0be43",
+        "revCount": 158,
         "type": "git",
         "url": "https://git.portuus.de/pnp/charbogen.git"
       },
