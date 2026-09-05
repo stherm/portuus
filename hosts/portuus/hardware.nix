@@ -62,6 +62,11 @@
       fsType = "zfs";
     };
 
+    "/data/charbogen" = {
+      device = "dpool/data/charbogen";
+      fsType = "zfs";
+    };
+
     "/data/firefly-iii" = {
       device = "dpool/data/firefly-iii";
       fsType = "zfs";
