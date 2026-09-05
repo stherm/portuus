@@ -12,6 +12,7 @@
     ./nginx.nix
     ./openssh.nix
     ./portuus-proxy.nix
+    ./roll-dice-proxy.nix
     ./stream-proxy.nix
 
     outputs.nixosModules.tailscale

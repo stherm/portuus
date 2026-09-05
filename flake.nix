@@ -18,6 +18,8 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    charbogen.url = "git+https://git.portuus.de/pnp/charbogen.git?ref=wiki";
   };
 
   outputs =

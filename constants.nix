@@ -14,6 +14,11 @@ rec {
   };
 
   services = {
+    charbogen = {
+      fqdn = "roll-dice.org";
+      authFqdn = "auth.roll-dice.org";
+      port = 5000;
+    };
     gitlab = {
       subdomain = "git";
       fqdn = "git." + domain;
