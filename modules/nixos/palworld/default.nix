@@ -1,6 +1,3 @@
-# Palworld dedicated server (SteamCMD app 2394010).
-# steamcmd updates the server on every service start, steam-run provides the
-# FHS environment for the dynamically linked PalServer binary.
 {
   config,
   lib,

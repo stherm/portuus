@@ -50,12 +50,15 @@ rec {
       port = 29316;
     };
     minecraft-survival = {
+      enable = false;
       port = 25565;
     };
     minecraft-creative = {
+      enable = false;
       port = 25566;
     };
     minecraft-amplified = {
+      enable = false;
       port = 25567;
     };
     nextcloud = {
@@ -63,6 +66,7 @@ rec {
       fqdn = "cloud." + domain;
     };
     palworld = {
+      enable = false;
       port = 8211;
     };
     radicale = {

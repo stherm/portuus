@@ -9,7 +9,7 @@ in
   services.nginx = {
     enable = true;
     forceSSL = false;
-    openFirewall = false; # only reachable via Tailnet
+    openFirewall = false;
     defaultListen = [
       {
         addr = c.hosts.portuus.ip;

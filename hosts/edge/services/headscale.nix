@@ -18,6 +18,5 @@
     };
   };
 
-  # Override default synix ACL with our own policy
   environment.etc."headscale/acl.hujson".source = lib.mkForce ./acl.hujson;
 }

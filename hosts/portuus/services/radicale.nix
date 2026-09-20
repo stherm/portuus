@@ -12,7 +12,7 @@ in
     reverseProxy = {
       enable = true;
       inherit (s) subdomain;
-      forceSSL = false; # TLS terminated on edge
+      forceSSL = false;
     };
     users = [
       "pascal"

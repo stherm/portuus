@@ -31,7 +31,7 @@ in
           email_from = mkIf cfg.mailIntegration.enable "gitlab@${domain}";
           email_display_name = mkIf cfg.mailIntegration.enable "${fqdn} GitLab";
           email_reply_to = mkIf cfg.mailIntegration.enable "no-reply@${domain}";
-          default_theme = mkDefault 2; # dark mode
+          default_theme = mkDefault 2;
           default_projects_features = {
             wiki = mkDefault false;
             snippets = mkDefault false;

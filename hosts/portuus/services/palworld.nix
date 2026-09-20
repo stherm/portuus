@@ -2,6 +2,7 @@
   outputs,
   config,
   constants,
+  lib,
   ...
 }:
 
@@ -11,7 +12,7 @@ in
 {
   imports = [ outputs.nixosModules.palworld ];
 
-  sops.secrets = {
+  sops.secrets = lib.mkIf s.enable {
     "palworld/server-password" = {
       owner = "palworld";
       restartUnits = [ "palworld.service" ];
@@ -23,10 +24,9 @@ in
   };
 
   services.palworld = {
-    enable = true;
-    inherit (s) port;
-    serverPasswordFile = config.sops.secrets."palworld/server-password".path;
-    adminPasswordFile = config.sops.secrets."palworld/admin-password".path;
+    inherit (s) enable port;
+    serverPasswordFile = lib.mkIf s.enable config.sops.secrets."palworld/server-password".path;
+    adminPasswordFile = lib.mkIf s.enable config.sops.secrets."palworld/admin-password".path;
 
     settings = {
       ServerName = "Portuus Palworld";
@@ -171,6 +171,4 @@ in
     };
   };
 
-  # no openFirewall needed: traffic comes via edge stream proxy over the
-  # Tailnet, and synix trusts the tailscale interface
 }

@@ -2,6 +2,7 @@
   outputs,
   config,
   lib,
+  pkgs,
   constants,
   ...
 }:
@@ -15,13 +16,14 @@ in
 
   services.immich = {
     enable = true;
+    package = pkgs.unstable.immich;
     reverseProxy = {
       enable = true;
       inherit (s) subdomain;
-      forceSSL = false; # TLS terminated on edge
+      forceSSL = false;
     };
     settings.server.externalDomain = lib.mkForce "https://${s.fqdn}";
     mediaLocation = "/data/immich";
-    accelerationDevices = null; # all devices
+    accelerationDevices = null;
   };
 }

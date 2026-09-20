@@ -1,6 +1,7 @@
 {
   outputs,
   config,
+  constants,
   pkgs,
   lib,
   ...
@@ -10,7 +11,13 @@ let
   cfg = config.services.minecraft-servers;
   survival = cfg.servers.survival;
 
-  # operators are also whitelisted on the creative server
+  c = constants.services;
+  anyEnabled = lib.any (s: s.enable) [
+    c.minecraft-survival
+    c.minecraft-creative
+    c.minecraft-amplified
+  ];
+
   ops = [
     "N3071GHT"
     "Xerion42"
@@ -32,9 +39,11 @@ in
   imports = [ outputs.nixosModules.minecraft-servers ];
 
   services.minecraft-servers = {
+    enable = anyEnabled;
+
     servers = {
       survival = {
-        enable = true;
+        enable = c.minecraft-survival.enable;
         package = pkgs.fabricServers.fabric-1_21_11;
         jvmOpts = "-Xms4G -Xmx16G -XX:+UseG1GC";
         serverProperties = {
@@ -73,7 +82,7 @@ in
       };
 
       creative = {
-        enable = true;
+        enable = c.minecraft-creative.enable;
         inherit (survival) package operators symlinks;
         jvmOpts = "-Xms2G -Xmx8G -XX:+UseG1GC";
         serverProperties = survival.serverProperties // {
@@ -84,7 +93,7 @@ in
       };
 
       amplified = {
-        enable = true;
+        enable = c.minecraft-amplified.enable;
         inherit (survival)
           package
           operators

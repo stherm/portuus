@@ -12,10 +12,10 @@ let
   s = c.services.nextcloud;
 
   package = pkgs.nextcloud33.overrideAttrs (old: rec {
-    version = "33.0.2";
+    version = "33.0.9";
     src = pkgs.fetchurl {
       url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-      hash = "sha256-kSV6tQAtXQnajQnYA4mYMzA1HFwAp+OiWxd7zqgRccw=";
+      hash = "sha256-8zHBBB0CfmWIUm0qAM5CvHCpYi6rWHHAvpF3JSz3dCM=";
     };
   });
 in
@@ -29,7 +29,7 @@ in
     reverseProxy = {
       enable = true;
       inherit (s) subdomain;
-      forceSSL = false; # TLS terminated on edge
+      forceSSL = false;
     };
     # Nextcloud needs to know it's behind HTTPS (edge terminates TLS)
     https = lib.mkForce true;

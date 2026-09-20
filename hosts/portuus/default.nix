@@ -6,8 +6,6 @@
 }:
 
 {
-  # Central unfree allowlist: multiple allowUnfreePredicate definitions
-  # silently override each other, so all services share this one.
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
