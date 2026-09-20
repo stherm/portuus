@@ -49,7 +49,6 @@
     livekit.enable = lib.mkForce false;
     lk-jwt-service.enable = lib.mkForce false;
 
-    # TLS terminated on edge
     nginx.virtualHosts."${config.networking.domain}" = {
       enableACME = lib.mkForce false;
       forceSSL = lib.mkForce false;

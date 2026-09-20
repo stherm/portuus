@@ -21,7 +21,7 @@ in
       reverseProxy = {
         enable = true;
         inherit (gl) subdomain;
-        forceSSL = false; # TLS terminated on edge
+        forceSSL = false;
       };
       # GitLab needs to know it's behind HTTPS even though local nginx is HTTP
       https = true;

@@ -15,7 +15,7 @@ in
   services.charbogen = {
     enable = true;
     domain = c.fqdn;
-    port = c.port;
+    inherit (c) port;
 
     bogen.enable = true;
     wiki.enable = true;

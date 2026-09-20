@@ -1,6 +1,3 @@
-# All public HTTP traffic enters via edge and is proxied over the Tailnet
-# to portuus's internal nginx (port 80, no TLS).
-# TLS is terminated on edge only.
 { lib, constants, ... }:
 
 let
@@ -29,7 +26,6 @@ in
     (mkProxy s.radicale.subdomain "")
     (mkProxy s.jirafeau.subdomain "")
 
-    # Matrix Synapse + Maubot (on root domain)
     {
       "${c.domain}" = {
         enableACME = true;

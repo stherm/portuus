@@ -57,18 +57,16 @@ in
       appstoreEnable = mkDefault false;
       webfinger = mkDefault true;
       settings = {
-        # Logging
         log_type = mkDefault "systemd";
         loglevel = mkDefault 2;
         syslog_tag = mkDefault "Nextcloud";
 
-        maintenance_window_start = 2; # 2am UTC
+        maintenance_window_start = 2;
         default_phone_region = mkDefault "DE";
       }
       // optionalAttrs cfg.mailIntegration.enable {
-        # SMTP with SSL/TLS
         mail_domain = mkDefault domain;
-        mail_from_address = mkDefault "nextcloud"; # @domain.tld gets added automatically
+        mail_from_address = mkDefault "nextcloud";
         mail_smtpauth = mkDefault true;
         mail_smtphost = mkDefault cfg.mailIntegration.smtpHost;
         mail_smtpmode = mkDefault "smtp";

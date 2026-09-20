@@ -17,7 +17,7 @@ in
     reverseProxy = {
       enable = true;
       inherit (s) subdomain;
-      forceSSL = false; # TLS terminated on edge
+      forceSSL = false;
     };
     # Vaultwarden needs to know the public URL is HTTPS
     config.DOMAIN = "https://${s.fqdn}";
