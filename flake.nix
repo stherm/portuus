@@ -20,6 +20,7 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     charbogen.url = "git+https://git.portuus.de/pnp/charbogen.git?ref=wiki";
+    charbogen.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
