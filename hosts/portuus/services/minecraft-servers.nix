@@ -12,11 +12,15 @@ let
   survival = cfg.servers.survival;
 
   c = constants.services;
-  anyEnabled = lib.any (s: s.enable) [
-    c.minecraft-survival
-    c.minecraft-creative
-    c.minecraft-amplified
-  ];
+
+  cobbleverse = pkgs.fetchModrinthModpack {
+    url = "https://cdn.modrinth.com/data/Jkb29YJU/versions/4SKGla61/COBBLEVERSE%201.7.42.mrpack";
+    packHash = "sha256-MhVNmHi/xfL+tBgep/1pkxNhgbmPbBBHDk/PhJaWWqA=";
+    side = "server";
+    preBuild = ''
+      unzip() { command unzip "$@" && chmod -R u+rwX pack-src; }
+    '';
+  };
 
   ops = [
     "N3071GHT"
@@ -39,7 +43,7 @@ in
   imports = [ outputs.nixosModules.minecraft-servers ];
 
   services.minecraft-servers = {
-    enable = anyEnabled;
+    enable = true;
 
     servers = {
       survival = {
@@ -106,6 +110,27 @@ in
           level-seed = "646305128";
           level-type = "minecraft:amplified";
           server-port = 25567;
+        };
+      };
+
+      cobbleverse = {
+        enable = c.minecraft-cobbleverse.enable;
+        package = pkgs.fabricServers.fabric-1_21_1.override { loaderVersion = "0.18.4"; };
+        inherit (survival) jvmOpts whitelist;
+        operators = mkOps (ops ++ [ "Sutaneko" ]);
+        serverProperties = {
+          server-port = c.minecraft-cobbleverse.port;
+          white-list = true;
+          difficulty = "normal";
+          view-distance = "12";
+          simulation-distance = "10";
+        };
+        symlinks = {
+          mods = "${cobbleverse}/mods";
+          datapacks = "${cobbleverse}/datapacks";
+        };
+        files = {
+          config = "${cobbleverse}/config";
         };
       };
     };

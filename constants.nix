@@ -61,6 +61,10 @@ rec {
       enable = false;
       port = 25567;
     };
+    minecraft-cobbleverse = {
+      enable = true;
+      port = 25568;
+    };
     nextcloud = {
       subdomain = "cloud";
       fqdn = "cloud." + domain;

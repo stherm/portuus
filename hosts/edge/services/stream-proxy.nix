@@ -11,6 +11,7 @@ let
     mc.minecraft-survival
     mc.minecraft-creative
     mc.minecraft-amplified
+    mc.minecraft-cobbleverse
   ];
   inherit (mc) palworld;
 in
