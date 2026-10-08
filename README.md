@@ -7,7 +7,7 @@ NixOS infrastructure for `portuus.de`. All public traffic enters via **edge** (H
 ```
 Internet ──► edge (Hetzner, static IP 178.105.18.167)
                ├─ nginx: TLS termination + reverse proxy (HTTP)
-               ├─ nginx stream: TCP/UDP forwarding (Mail, Minecraft, Rustdesk)
+               ├─ nginx stream: TCP/UDP forwarding (Mail, Forgejo SSH, Minecraft, Rustdesk)
                ├─ headscale
                └─ coturn
                     │
@@ -16,7 +16,8 @@ Internet ──► edge (Hetzner, static IP 178.105.18.167)
                     │ portuus: 100.64.0.2
                     │
                portuus (Home Server)
-               ├─ GitLab, Nextcloud, Immich, Vaultwarden
+               ├─ Forgejo + Forgejo Actions runner, GitHub Actions runner
+               ├─ Nextcloud, Immich, Vaultwarden
                ├─ Matrix Synapse + Maubot
                ├─ Radicale, Jirafeau
                ├─ Mailserver
@@ -26,9 +27,29 @@ Internet ──► edge (Hetzner, static IP 178.105.18.167)
 
 Only the servers are on the Tailnet. Clients connect through the public edge.
 
+## Git Hosting (Forgejo)
+
+`git.portuus.de` runs [Forgejo](https://forgejo.org) on portuus (`hosts/portuus/services/forgejo/`, data in
+`/data/forgejo`, custom branding in `forgejo/branding/`). It replaces the former GitLab instance, which is disabled
+(`gitlab.nix` and `gitlab-runner.nix` are no longer imported).
+
+- HTTPS: `https://git.portuus.de/<owner>/<repo>.git`, proxied by edge to portuus port 3456.
+- SSH: `forgejo@git.portuus.de:<owner>/<repo>.git` on port 2222; edge forwards it to the portuus sshd (port 2299).
+- CI: Forgejo Actions with a host-executor runner on portuus (`forgejo/runner.nix`, synix
+  `gitea-actions-runner` module, label `portuus-nix`). Repos use `.forgejo/workflows/*.yml` with
+  `runs-on: portuus-nix`.
+- aarch64: portuus emulates `aarch64-linux` via binfmt/QEMU (`boot.binfmt.emulatedSystems` in
+  `hosts/portuus/boot.nix`), so the runner can build ARM configs (e.g. Raspberry Pi) through the
+  host's Nix daemon. Emulated builds are slow; avoid uncached kernels.
+
 ## Deploy
 
-Deployments run via GitHub Actions (self-hosted runner on portuus) using [deploy-rs](https://github.com/serokell/deploy-rs).
+This repo stays on GitHub; its CI runs via GitHub Actions on a self-hosted runner on portuus:
+
+- `.github/workflows/ci.yml`: pull requests to `master`/`develop` run `nix flake check` (deploy-rs checks +
+  `pre-commit-check`) and build both hosts.
+- `.github/workflows/deploy-configs.yml`: pushes to `master` deploy edge and portuus with
+  [deploy-rs](https://github.com/serokell/deploy-rs).
 
 ### Manual deploy via scp
 
@@ -94,6 +115,9 @@ nix eval .#nixosConfigurations.portuus.config.system.build.toplevel
 
 # Format nix files
 nix fmt
+
+# Lint hooks (nixfmt, statix, shellcheck, yamllint, actionlint)
+nix build --no-link .#checks.x86_64-linux.pre-commit-check
 
 # Check which nginx config is active
 sudo cat /proc/$(pgrep -o nginx)/cmdline | tr '\0' '\n' | grep conf
