@@ -1,0 +1,33 @@
+{{template "base/head" .}}
+<div role="main" aria-label="{{if .IsSigned}}{{ctx.Locale.Tr "dashboard"}}{{else}}{{ctx.Locale.Tr "home"}}{{end}}" class="page-content home">
+	<div class="tw-mb-8 tw-px-8">
+		<div class="center">
+			<img class="logo" width="220" height="220" src="{{AssetUrlPrefix}}/img/logo.svg" alt="{{ctx.Locale.Tr "logo"}}">
+			<div class="hero">
+				<h1 class="ui icon header title">
+					{{AppDisplayName}}
+				</h1>
+				<h2>Git-Hosting auf portuus.de</h2>
+			</div>
+		</div>
+	</div>
+	<div class="ui stackable middle very relaxed page grid">
+		<div class="eight wide center column">
+			<h1 class="hero ui icon header">
+				{{svg "octicon-repo"}} Repositories
+			</h1>
+			<p class="large">
+				Öffentliche Projekte findest du unter <a href="{{AppSubUrl}}/explore/repos">Erkunden</a>.
+			</p>
+		</div>
+		<div class="eight wide center column">
+			<h1 class="hero ui icon header">
+				{{svg "octicon-sign-in"}} Anmelden
+			</h1>
+			<p class="large">
+				Accounts werden vom Admin vergeben. <a href="{{AppSubUrl}}/user/login">Zum Login</a>.
+			</p>
+		</div>
+	</div>
+</div>
+{{template "base/footer" .}}

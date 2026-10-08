@@ -72,6 +72,11 @@
       fsType = "zfs";
     };
 
+    "/data/forgejo" = {
+      device = "dpool/data/forgejo";
+      fsType = "zfs";
+    };
+
     "/data/gitea" = {
       device = "dpool/data/gitea";
       fsType = "zfs";

@@ -27,6 +27,17 @@ in
     (mkProxy s.jirafeau.subdomain "")
 
     {
+      "${s.forgejo.testFqdn}" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://${portuusIP}:${toString s.forgejo.port}";
+          extraConfig = "client_max_body_size 0;";
+        };
+      };
+    }
+
+    {
       "${c.domain}" = {
         enableACME = true;
         forceSSL = true;

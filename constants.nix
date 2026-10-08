@@ -19,6 +19,14 @@ rec {
       authFqdn = "auth.roll-dice.org";
       port = 5000;
     };
+    forgejo = {
+      subdomain = "git";
+      testSubdomain = "test";
+      fqdn = "git." + domain;
+      testFqdn = "test." + domain;
+      port = 3456;
+      sshPort = 2222;
+    };
     gitlab = {
       subdomain = "git";
       fqdn = "git." + domain;
