@@ -10,7 +10,8 @@
   "acls": [
     {"action": "accept", "src": ["group:admin"], "dst": ["group:servers:*"]},
     {"action": "accept", "src": ["group:admin"], "dst": ["group:iot:*"]},
-    {"action": "accept", "src": ["group:servers"], "dst": ["group:servers:*"]}
+    {"action": "accept", "src": ["group:servers"], "dst": ["group:servers:*"]},
+    {"action": "accept", "src": ["steffen@"], "dst": ["steffen@:*"]}
   ],
   "ssh": [
     {
