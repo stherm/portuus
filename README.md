@@ -50,6 +50,10 @@ This repo stays on GitHub; its CI runs via GitHub Actions on a self-hosted runne
   `pre-commit-check`) and build both hosts.
 - `.github/workflows/deploy-configs.yml`: pushes to `master` deploy edge and portuus with
   [deploy-rs](https://github.com/serokell/deploy-rs).
+- `.github/workflows/security.yml`: weekly (Monday) and on demand, scans the portuus and edge closures with
+  vulnix and diffs them with nvd against the previous scan. Baselines live in
+  `/var/lib/github-runner/portuus/security-scan/` (reset if the runner is re-registered); fails only on new CVEs
+  with CVSS >= 9.0.
 
 ### Manual deploy via scp
 
