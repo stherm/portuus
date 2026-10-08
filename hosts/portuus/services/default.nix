@@ -6,6 +6,7 @@
 {
   imports = [
     ./charbogen.nix
+    ./forgejo
     ./github-runners.nix
     # ./gitlab-runner.nix
     ./gitlab.nix

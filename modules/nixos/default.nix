@@ -1,5 +1,6 @@
 {
   common = import ./common;
+  forgejo = import ./forgejo;
   github-runner = import ./github-runner;
   gitlab = import ./gitlab;
   immich = import ./immich;

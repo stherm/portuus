@@ -1,0 +1,30 @@
+@import "./theme-forgejo-dark.css";
+
+:root {
+  --color-primary: #92b8cb;
+  --color-primary-contrast: #02192e;
+  --color-primary-dark-1: #a8c7d6;
+  --color-primary-dark-2: #a8c7d6;
+  --color-primary-dark-3: #bfd5e0;
+  --color-primary-dark-4: #bfd5e0;
+  --color-primary-dark-5: #d6e4eb;
+  --color-primary-dark-6: #d6e4eb;
+  --color-primary-dark-7: #edf3f6;
+  --color-primary-light-1: #7aa8bf;
+  --color-primary-light-2: #6297b2;
+  --color-primary-light-3: #4c8099;
+  --color-primary-light-4: #3d677b;
+  --color-primary-light-5: #3d677b;
+  --color-primary-light-6: #2e4e5d;
+  --color-primary-light-7: #2e4e5d;
+  --color-primary-alpha-10: #6297b219;
+  --color-primary-alpha-20: #6297b233;
+  --color-primary-alpha-30: #6297b24b;
+  --color-primary-alpha-40: #6297b266;
+  --color-primary-alpha-50: #6297b280;
+  --color-primary-alpha-60: #6297b299;
+  --color-primary-alpha-70: #6297b2b3;
+  --color-primary-alpha-80: #6297b2cc;
+  --color-primary-alpha-90: #6297b2e1;
+  --color-nav-bg: #02192e;
+}
