@@ -19,6 +19,7 @@
 
   imports = [
     ./boot.nix
+    ./git-credentials.nix
     ./hardware.nix
     ./networking.nix
     ./packages.nix

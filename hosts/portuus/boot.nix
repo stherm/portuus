@@ -23,6 +23,8 @@
 
     enableContainers = true;
 
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+
     supportedFilesystems = [ "zfs" ];
     zfs.forceImportRoot = false;
     # TODO: boot.kernelPackages = LTS;
