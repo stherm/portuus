@@ -54,6 +54,13 @@ in
         DEFAULT_BRANCH = "main";
       };
       session.COOKIE_SECURE = true;
+      mailer = {
+        ENABLED = true;
+        PROTOCOL = "smtps";
+        SMTP_PORT = 465;
+        FROM = "\"portuus Git\" <git@${c.domain}>";
+        USER = "git@${c.domain}";
+      };
     };
   };
 

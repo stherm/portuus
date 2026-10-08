@@ -104,7 +104,16 @@ rec {
   mail = {
     smtp = 25;
     submission-tls = 465;
-    submission = 587;
     imap = 993;
+  };
+
+  mail-proxy = {
+    smtp = 10025;
+    submission-tls = 10465;
+    imap = 10993;
+  };
+
+  mail-relay = {
+    port = 2525;
   };
 }

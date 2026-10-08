@@ -19,8 +19,11 @@ in
       inherit (s) subdomain;
       forceSSL = false;
     };
-    # Vaultwarden needs to know the public URL is HTTPS
-    config.DOMAIN = "https://${s.fqdn}";
+    config = {
+      DOMAIN = "https://${s.fqdn}";
+      SMTP_PORT = 465;
+      SMTP_SECURITY = "force_tls";
+    };
     mailIntegration = {
       enable = true;
       smtpHost = config.mailserver.fqdn;

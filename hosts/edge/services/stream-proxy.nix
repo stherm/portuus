@@ -6,6 +6,7 @@ let
   rd = c.services.rustdesk.ports;
   mc = c.services;
   m = c.mail;
+  mp = c.mail-proxy;
 
   minecraft = builtins.filter (s: s.enable) [
     mc.minecraft-survival
@@ -18,10 +19,9 @@ in
 {
   services.nginx = {
     streamConfig = ''
-      server { listen ${toString m.smtp};           proxy_pass ${ip}:${toString m.smtp}; }
-      server { listen ${toString m.submission};      proxy_pass ${ip}:${toString m.submission}; }
-      server { listen ${toString m.submission-tls};  proxy_pass ${ip}:${toString m.submission-tls}; }
-      server { listen ${toString m.imap};            proxy_pass ${ip}:${toString m.imap}; }
+      server { listen ${toString m.smtp};           proxy_pass ${ip}:${toString mp.smtp};           proxy_protocol on; }
+      server { listen ${toString m.submission-tls}; proxy_pass ${ip}:${toString mp.submission-tls}; proxy_protocol on; }
+      server { listen ${toString m.imap};           proxy_pass ${ip}:${toString mp.imap};           proxy_protocol on; proxy_timeout 30m; }
 
       server { listen ${toString mc.forgejo.sshPort}; proxy_pass ${ip}:2299; }
 
@@ -44,7 +44,6 @@ in
     allowedTCPPorts = [
       m.smtp
       m.submission-tls
-      m.submission
       m.imap
       mc.forgejo.sshPort
       rd.nat-test

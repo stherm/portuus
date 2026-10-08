@@ -9,6 +9,7 @@
     ./headscale.nix
     ./jetkvm-proxy.nix
     ./livekit.nix
+    ./mail-relay.nix
     ./nginx.nix
     ./openssh.nix
     ./portuus-proxy.nix
