@@ -23,7 +23,7 @@ in
       server { listen ${toString m.submission-tls};  proxy_pass ${ip}:${toString m.submission-tls}; }
       server { listen ${toString m.imap};            proxy_pass ${ip}:${toString m.imap}; }
 
-      server { listen ${toString mc.gitlab.sshPort}; proxy_pass ${ip}:2299; }
+      server { listen ${toString mc.forgejo.sshPort}; proxy_pass ${ip}:2299; }
 
       ${lib.concatMapStringsSep "\n" (
         s: "server { listen ${toString s.port}; proxy_pass ${ip}:${toString s.port}; }"
@@ -46,7 +46,7 @@ in
       m.submission-tls
       m.submission
       m.imap
-      mc.gitlab.sshPort
+      mc.forgejo.sshPort
       rd.nat-test
       rd.id
       rd.relay

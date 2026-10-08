@@ -112,7 +112,23 @@
         in
         inputs.deploy-rs.lib.${system}.deployChecks self.deploy
         // {
-          inherit (inputs.synix.checks.${system}) pre-commit-check;
+          pre-commit-check = inputs.synix.inputs.git-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              actionlint.enable = true;
+              nixfmt = {
+                enable = true;
+                settings.width = 120;
+              };
+              shellcheck.enable = true;
+              statix.enable = true;
+              yamllint = {
+                enable = true;
+                excludes = [ "secrets\\.yaml$" ];
+                settings.configData = "{rules: {line-length: {max: 120}}}";
+              };
+            };
+          };
         }
       );
 

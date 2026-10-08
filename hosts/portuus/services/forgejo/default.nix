@@ -28,6 +28,7 @@ in
 {
   imports = [
     outputs.nixosModules.forgejo
+    ./runner.nix
   ];
 
   services.forgejo = {
@@ -36,7 +37,7 @@ in
     settings = {
       DEFAULT.APP_NAME = "portuus Git";
       server = {
-        DOMAIN = fj.testFqdn;
+        DOMAIN = fj.fqdn;
         HTTP_PORT = fj.port;
         SSH_DOMAIN = fj.fqdn;
         SSH_PORT = fj.sshPort;
