@@ -27,16 +27,6 @@ rec {
       port = 3456;
       sshPort = 2222;
     };
-    gitlab = {
-      subdomain = "git";
-      fqdn = "git." + domain;
-      sshPort = 2222;
-    };
-    gitlab-pages = {
-      subdomain = "pages";
-      fqdn = "pages." + domain;
-      port = 8090;
-    };
     headscale = {
       subdomain = "hs";
       fqdn = "hs." + domain;

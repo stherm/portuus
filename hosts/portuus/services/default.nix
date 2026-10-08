@@ -6,9 +6,9 @@
 {
   imports = [
     ./charbogen.nix
+    ./fail2ban.nix
     ./forgejo
     ./github-runners.nix
-    # ./gitlab-runner.nix
     ./immich.nix
     ./jirafeau.nix
     ./mailserver.nix
