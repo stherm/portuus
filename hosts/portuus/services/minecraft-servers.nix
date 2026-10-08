@@ -60,12 +60,19 @@ in
           white-list = true;
         };
         whitelist = {
-          Angiiiii = "956a108f-1b34-411b-97ea-08ab14484d4f";
+          Angiiiii = "956a108f-1b34-411b-97ea-0V8ab14484d4f";
+          BennetBoom = "af407a45-a322-4719-bd8d-cef9f252301d";
           Engelhammer333 = "2c95a6d9-1d40-4944-8934-5ca82e719bd5";
+          Enzo_1337 = "22d56774-6eba-4d62-83f2-b10b8f09949d";
+          Hekatoncheir = "4cbe6155-596b-424a-98e1-3df33a08583d";
           JonShakespeare = "8578f586-dcaa-46c7-992b-77c98737b226";
+          Jyrol = "eecce1e9-6101-44a0-b9f4-d53a4d58155b";
+          Leskor = "d915d8b1-47f0-470b-8d24-045c6fb6a28f";
           Morschlitz98 = "ec39f163-1cae-4673-8d7e-a626f706eac1";
           N3071GHT = "f4fc9eb2-8d82-49a6-8061-72c490ea5f9a";
+          OpasLover = "59929279-9b38-4ff6-9388-742844faaa78";
           PureAcid = "cea52bd2-fabb-43cd-81d9-aeb0978a620b";
+          Saiyju_ = "515f58df-397c-40a2-8c3c-27cded13bffa";
           SherlockEmmy97 = "ac6688ab-5f0b-49c3-ba04-720aaba1b0a7";
           Sutaneko = "6c7e30b0-48ff-492a-8224-b6aa09346e7a";
           Xerion42 = "7f7112c3-4089-4510-a94f-78955aa1c205";
