@@ -56,18 +56,37 @@ in
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "L+ ${cfg.customDir}/public - - - - ${branding}/public"
-    "L+ ${cfg.customDir}/templates - - - - ${branding}/templates"
-  ];
+  systemd = {
+    tmpfiles.rules = [
+      "L+ ${cfg.customDir}/public - - - - ${branding}/public"
+      "L+ ${cfg.customDir}/templates - - - - ${branding}/templates"
+    ];
 
-  systemd.services.forgejo-secrets = {
-    unitConfig.RequiresMountsFor = [ cfg.stateDir ];
-    serviceConfig.ExecStartPre = "+${config.systemd.package}/bin/systemd-tmpfiles --create --prefix=${cfg.stateDir}";
-  };
+    services = {
+      forgejo-dirs = {
+        description = "Forgejo state directories";
+        requiredBy = [
+          "forgejo-secrets.service"
+          "forgejo.service"
+        ];
+        before = [
+          "forgejo-secrets.service"
+          "forgejo.service"
+        ];
+        unitConfig.RequiresMountsFor = [ cfg.stateDir ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${config.systemd.package}/bin/systemd-tmpfiles --create --prefix=${cfg.stateDir}";
+        };
+      };
 
-  systemd.services.forgejo = {
-    unitConfig.RequiresMountsFor = [ cfg.stateDir ];
-    restartTriggers = [ branding ];
+      forgejo-secrets.unitConfig.RequiresMountsFor = [ cfg.stateDir ];
+
+      forgejo = {
+        unitConfig.RequiresMountsFor = [ cfg.stateDir ];
+        restartTriggers = [ branding ];
+      };
+    };
   };
 }
