@@ -60,7 +60,7 @@ in
           white-list = true;
         };
         whitelist = {
-          Angiiiii = "956a108f-1b34-411b-97ea-0V8ab14484d4f";
+          Angiiiii = "956a108f-1b34-411b-97ea-08ab14484d4f";
           BennetBoom = "af407a45-a322-4719-bd8d-cef9f252301d";
           Engelhammer333 = "2c95a6d9-1d40-4944-8934-5ca82e719bd5";
           Enzo_1337 = "22d56774-6eba-4d62-83f2-b10b8f09949d";
