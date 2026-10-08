@@ -34,7 +34,6 @@ in
     dkim = {
       keyDirectory = "${dataDir}/dkim";
       domains.${c.domain}.selectors = {
-        mail = { };
         mail2026 = {
           keyLength = 2048;
         };
