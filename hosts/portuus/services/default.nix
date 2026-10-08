@@ -9,7 +9,6 @@
     ./forgejo
     ./github-runners.nix
     # ./gitlab-runner.nix
-    ./gitlab.nix
     ./immich.nix
     ./jirafeau.nix
     ./mailserver.nix

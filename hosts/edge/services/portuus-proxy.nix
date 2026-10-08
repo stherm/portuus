@@ -18,8 +18,6 @@ let
 in
 {
   services.nginx.virtualHosts = lib.mkMerge [
-    (mkProxy s.gitlab.subdomain "client_max_body_size 0;")
-    (mkProxy s.gitlab-pages.subdomain "")
     (mkProxy s.nextcloud.subdomain "client_max_body_size 1G;")
     (mkProxy s.immich.subdomain "client_max_body_size 5G;")
     (mkProxy s.vaultwarden.subdomain "")
@@ -27,7 +25,7 @@ in
     (mkProxy s.jirafeau.subdomain "")
 
     {
-      "${s.forgejo.testFqdn}" = {
+      "${s.forgejo.fqdn}" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
