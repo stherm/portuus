@@ -1,0 +1,236 @@
+name: Security
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  cve-scan:
+    name: CVE scan (${{ matrix.host }})
+    runs-on: self-hosted
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      matrix:
+        host:
+          - portuus
+          - edge
+    env:
+      HOST: ${{ matrix.host }}
+      STATE_DIR: /var/lib/github-runner/portuus/security-scan/${{ github.repository }}/${{ matrix.host }}
+      REPORT_DIR: security-report
+      WHITELIST: .github/vulnix-whitelist.toml
+      TOP_N: "15"
+      FAIL_ON_NEW_CVSS: "9.0"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Tools
+        run: |
+          set -euo pipefail
+          for pkg in jq gawk; do
+            for out in $(nix build --no-link --print-out-paths --inputs-from . "nixpkgs#$pkg"); do
+              if [ -d "$out/bin" ]; then
+                echo "$out/bin" >> "$GITHUB_PATH"
+              fi
+            done
+          done
+
+      - name: Prepare
+        run: |
+          set -euo pipefail
+          mkdir -p "$STATE_DIR"
+          rm -rf "$REPORT_DIR"
+          mkdir -p "$REPORT_DIR"
+          echo "State directory: $STATE_DIR"
+          if [ -f "$STATE_DIR/last-scan" ]; then
+            echo "Previous scan:"
+            sed 's/^/  /' "$STATE_DIR/last-scan"
+          else
+            echo "No previous scan recorded, this run will become the baseline."
+          fi
+
+      - name: Build toplevel
+        run: |
+          set -euo pipefail
+          nix build \
+            --out-link "$STATE_DIR/candidate" \
+            ".#nixosConfigurations.${HOST}.config.system.build.toplevel"
+          new_path=$(readlink -f "$STATE_DIR/candidate")
+          echo "NEW_PATH=$new_path" >> "$GITHUB_ENV"
+          echo "$new_path" > "$REPORT_DIR/store-path.txt"
+          echo "Built $new_path"
+
+      - name: Scan closure with vulnix
+        run: |
+          set -euo pipefail
+          report="$REPORT_DIR/vulnix.json"
+          args=(--closure --json)
+          if [ -f "$WHITELIST" ]; then
+            echo "Using whitelist $WHITELIST"
+            args+=(--whitelist "$WHITELIST")
+          fi
+          rc=0
+          start=$(date +%s)
+          nix run --inputs-from . nixpkgs#vulnix -- "${args[@]}" "$NEW_PATH" > "$report" || rc=$?
+          echo "vulnix exit code: $rc, runtime: $(( $(date +%s) - start ))s"
+          case "$rc" in
+            0 | 2) ;;
+            *)
+              echo "::error::vulnix failed with exit code $rc"
+              exit 1
+              ;;
+          esac
+          if ! jq -e 'type == "array"' "$report" > /dev/null 2>&1; then
+            echo "::error::vulnix exited with $rc but did not produce a JSON report"
+            exit 1
+          fi
+          count=$(jq 'length' "$report")
+          if { [ "$rc" -eq 2 ] && [ "$count" -eq 0 ]; } || { [ "$rc" -eq 0 ] && [ "$count" -ne 0 ]; }; then
+            echo "::error::Inconsistent vulnix result: exit code $rc with $count affected packages"
+            exit 1
+          fi
+          echo "Affected packages: $count"
+
+      - name: Diff closure against previous scan
+        run: |
+          set -euo pipefail
+          out="$REPORT_DIR/nvd-diff.txt"
+          old_path=""
+          if [ -L "$STATE_DIR/current" ]; then
+            old_path=$(readlink -f "$STATE_DIR/current")
+            if [ ! -e "$old_path" ]; then
+              echo "::warning::Previous closure $old_path no longer exists"
+              old_path=""
+            fi
+          fi
+          if [ -z "$old_path" ]; then
+            echo "No previous closure available, nothing to diff." > "$out"
+          elif [ "$old_path" = "$NEW_PATH" ]; then
+            echo "Closure unchanged since previous scan." > "$out"
+          else
+            nix run --inputs-from . nixpkgs#nvd -- --color never diff "$old_path" "$NEW_PATH" > "$out"
+          fi
+          tail -n 1 "$out"
+
+      - name: Summary
+        run: |
+          set -euo pipefail
+          flatten() {
+            jq '[ .[] as $p | $p.affected_by[] as $c
+                | {cve: $c, score: ($p.cvssv3_basescore[$c] // null), pkg: $p.name} ]
+              | group_by(.cve)
+              | map({cve: .[0].cve, score: (map(.score) | max), pkgs: (map(.pkg) | unique)})
+              | sort_by(-(.score // 0), .cve)' "$1"
+          }
+          flatten "$REPORT_DIR/vulnix.json" > "$REPORT_DIR/cves.json"
+          baseline=true
+          if [ -f "$STATE_DIR/vulnix.json" ] && jq -e 'type == "array"' "$STATE_DIR/vulnix.json" > /dev/null 2>&1; then
+            baseline=false
+            flatten "$STATE_DIR/vulnix.json" > "$REPORT_DIR/cves-previous.json"
+          else
+            echo '[]' > "$REPORT_DIR/cves-previous.json"
+          fi
+          jq -n \
+            --argjson baseline "$baseline" \
+            --slurpfile cur "$REPORT_DIR/cves.json" \
+            --slurpfile prev "$REPORT_DIR/cves-previous.json" \
+            '($cur[0] | map(.cve)) as $c
+            | ($prev[0] | map(.cve)) as $p
+            | {
+                baseline: $baseline,
+                new: (if $baseline then [] else [$cur[0][] | select(.cve | IN($p[]) | not)] end),
+                fixed: [$prev[0][] | select(.cve | IN($c[]) | not)]
+              }' > "$REPORT_DIR/cve-delta.json"
+
+          table() {
+            jq -r '.[] | [(.score // "n/a" | tostring), .cve, (.pkgs | join(", "))] | @tsv' \
+              | awk -F '\t' '
+                  BEGIN { printf "  %-6s %-18s %s\n", "CVSS", "CVE", "PACKAGES" }
+                  { printf "  %-6s %-18s %s\n", $1, $2, $3 }'
+          }
+
+          {
+            echo "=================================================================="
+            echo " CVE scan for ${HOST}"
+            echo "=================================================================="
+            echo "Commit:            ${GITHUB_SHA}"
+            echo "Closure:           ${NEW_PATH}"
+            echo "Scanned at:        $(date -u '+%Y-%m-%d %H:%M UTC')"
+            echo "Affected packages: $(jq 'length' "$REPORT_DIR/vulnix.json")"
+            jq -r '
+              def bucket:
+                if . == null then "unknown" elif . >= 9 then "critical"
+                elif . >= 7 then "high" elif . >= 4 then "medium" else "low" end;
+              (map(.score | bucket) | group_by(.) | map({key: .[0], value: length}) | from_entries) as $b
+              | "Unique CVEs:       \(length) (critical \($b.critical // 0), high \($b.high // 0), "
+                + "medium \($b.medium // 0), low \($b.low // 0), unknown \($b.unknown // 0))"
+            ' "$REPORT_DIR/cves.json"
+            jq -r '
+              if .baseline then "Previous scan:     none, this run is the baseline"
+              else "Since last scan:   \(.new | length) new, \(.fixed | length) fixed"
+              end
+            ' "$REPORT_DIR/cve-delta.json"
+            echo
+            echo "Top ${TOP_N} CVEs by CVSS v3 base score:"
+            jq --argjson n "$TOP_N" '.[:$n]' "$REPORT_DIR/cves.json" | table
+            if [ "$(jq '.new | length' "$REPORT_DIR/cve-delta.json")" -gt 0 ]; then
+              echo
+              echo "New since last scan:"
+              jq '.new' "$REPORT_DIR/cve-delta.json" | table
+            fi
+            if [ "$(jq '.fixed | length' "$REPORT_DIR/cve-delta.json")" -gt 0 ]; then
+              echo
+              echo "Fixed since last scan:"
+              jq '.fixed' "$REPORT_DIR/cve-delta.json" | table
+            fi
+            echo
+            echo "Closure changes since last scan (nvd diff):"
+            sed 's/^/  /' "$REPORT_DIR/nvd-diff.txt"
+          } | tee "$REPORT_DIR/summary.txt"
+
+          new_critical=$(jq --argjson t "$FAIL_ON_NEW_CVSS" \
+            '[.new[] | select(.score != null and .score >= $t)] | length' "$REPORT_DIR/cve-delta.json")
+          echo "NEW_CRITICAL=$new_critical" >> "$GITHUB_ENV"
+
+      - name: Store scan as new baseline
+        if: github.ref == 'refs/heads/master'
+        run: |
+          set -euo pipefail
+          nix-store --add-root "$STATE_DIR/current" --realise "$NEW_PATH" > /dev/null
+          cp "$REPORT_DIR/vulnix.json" "$STATE_DIR/vulnix.json.tmp"
+          mv "$STATE_DIR/vulnix.json.tmp" "$STATE_DIR/vulnix.json"
+          printf '%s\n' \
+            "commit=${GITHUB_SHA}" \
+            "run=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_NUMBER}" \
+            "date=$(date -u '+%Y-%m-%dT%H:%M:%SZ')" \
+            "path=${NEW_PATH}" > "$STATE_DIR/last-scan"
+          echo "Baseline for ${HOST} is now ${NEW_PATH}"
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-${{ matrix.host }}
+          path: security-report/
+          retention-days: 30
+
+      - name: Fail on new critical CVEs
+        run: |
+          set -euo pipefail
+          if [ "${NEW_CRITICAL:-0}" -gt 0 ]; then
+            msg="${NEW_CRITICAL} new CVE(s) with CVSS >= ${FAIL_ON_NEW_CVSS} on ${HOST} since the last scan"
+            echo "::error::${msg}, see the Summary step"
+            exit 1
+          fi
+          echo "No new CVEs with CVSS >= ${FAIL_ON_NEW_CVSS} since the last scan."
+
+      - name: Clean up
+        if: always()
+        run: rm -f "$STATE_DIR/candidate"

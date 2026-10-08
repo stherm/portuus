@@ -1,35 +1,89 @@
-{ inputs, lib, ... }:
+{
+  inputs,
+  config,
+  constants,
+  ...
+}:
 
+let
+  c = constants;
+  mp = c.mail-proxy;
+  edgeIp = c.hosts.edge.ip;
+  master = config.services.postfix.settings.master;
+  proxyArgs = [
+    "-o"
+    "smtpd_upstream_proxy_protocol=haproxy"
+  ];
+  mkProxyListener = args: {
+    type = "inet";
+    private = false;
+    command = "smtpd";
+    args = args ++ proxyArgs;
+  };
+in
 {
   imports = [ inputs.synix.nixosModules.mailserver ];
 
   mailserver = {
     enable = true;
     stateVersion = 3;
-    # TLS certs from previous ACME run; edge handles ACME renewal going forward
-    x509 = {
-      useACMEHost = lib.mkForce null;
-      certificateFile = "/var/lib/acme/mail.portuus.de/fullchain.pem";
-      privateKeyFile = "/var/lib/acme/mail.portuus.de/key.pem";
-    };
+    openFirewall = false;
     accounts' = {
-      info = {
-        aliases = [ "postmaster" ];
-      };
       steffen = {
-        aliases = [ "postmaster" ];
+        aliases = [
+          "postmaster"
+          "info"
+        ];
+      };
+      ulm = {
+        aliases = [
+          "postmaster"
+          "info"
+        ];
       };
       lissy = { };
-      ulm = { };
       nextcloud = {
         sendOnly = true;
       };
       vaultwarden = {
         sendOnly = true;
       };
-      gitlab = {
+      git = {
         sendOnly = true;
       };
+    };
+  };
+
+  security.acme.certs.${config.mailserver.fqdn} = {
+    webroot = null;
+    dnsProvider = "ionos";
+    dnsResolver = "1.1.1.1:53";
+    credentialFiles.IONOS_API_KEY_FILE = config.sops.secrets.ionos-api-key.path;
+    reloadServices = [ "postfix.service" ];
+  };
+
+  sops.secrets.ionos-api-key = {
+    mode = "0400";
+    owner = "acme";
+    group = "acme";
+  };
+
+  networking.hosts."127.0.0.1" = [ config.mailserver.fqdn ];
+
+  services.postfix.settings = {
+    main.relayhost = [ "[${edgeIp}]:${toString c.mail-relay.port}" ];
+    master = {
+      ${toString mp.smtp} = mkProxyListener [ ];
+      ${toString mp.submission-tls} = mkProxyListener master.submissions.args;
+    };
+  };
+
+  services.dovecot2.settings = {
+    haproxy_trusted_networks = [ "${edgeIp}/32" ];
+    "service imap-login"."inet_listener imaps_proxy" = {
+      port = mp.imap;
+      ssl = true;
+      haproxy = true;
     };
   };
 }

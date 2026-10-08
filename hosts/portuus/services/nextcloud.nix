@@ -31,7 +31,6 @@ in
       inherit (s) subdomain;
       forceSSL = false;
     };
-    # Nextcloud needs to know it's behind HTTPS (edge terminates TLS)
     https = lib.mkForce true;
     mailIntegration = {
       enable = true;
