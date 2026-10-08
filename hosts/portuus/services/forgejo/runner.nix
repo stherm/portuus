@@ -12,6 +12,7 @@
     enable = true;
     url = "http://127.0.0.1:${toString config.services.forgejo.settings.server.HTTP_PORT}";
     tokenFile = config.sops.templates."gitea-actions-runner/nix/token".path;
+    settings.runner.capacity = 2;
   };
 
   systemd.services.gitea-runner-nix.serviceConfig.SupplementaryGroups = lib.mkForce [ ];

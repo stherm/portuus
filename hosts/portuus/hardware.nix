@@ -102,6 +102,11 @@
       fsType = "zfs";
     };
 
+    "/data/mail" = {
+      device = "dpool/data/mail";
+      fsType = "zfs";
+    };
+
     "/data/matrix-synapse" = {
       device = "dpool/data/matrix-synapse";
       fsType = "zfs";
