@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  constants,
   ...
 }:
 
@@ -19,4 +20,8 @@
   };
 
   environment.etc."headscale/acl.hujson".source = lib.mkForce ./acl.hujson;
+
+  networking.hosts."127.0.0.1" = [ constants.services.headscale.fqdn ];
+
+  systemd.services.tailscaled-autoconnect.serviceConfig.TimeoutStartSec = "5min";
 }
