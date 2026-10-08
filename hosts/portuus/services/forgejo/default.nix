@@ -19,7 +19,6 @@ let
     cp ${./branding/favicon.svg} $img/favicon.svg
     rsvg-convert -w 512 -h 512 ${./branding/logo.svg} -o $img/logo.png
     rsvg-convert -w 180 -h 180 ${./branding/logo.svg} -o $img/apple-touch-icon.png
-    rsvg-convert -w 180 -h 180 ${./branding/logo.svg} -o $img/avatar_default.png
     rsvg-convert -w 64 -h 64 ${./branding/favicon.svg} -o $img/favicon.png
 
     cp ${./branding/theme-portuus.css} $out/public/assets/css/theme-portuus.css
