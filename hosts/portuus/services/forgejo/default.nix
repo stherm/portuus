@@ -61,5 +61,13 @@ in
     "L+ ${cfg.customDir}/templates - - - - ${branding}/templates"
   ];
 
-  systemd.services.forgejo.restartTriggers = [ branding ];
+  systemd.services.forgejo-secrets = {
+    unitConfig.RequiresMountsFor = [ cfg.stateDir ];
+    serviceConfig.ExecStartPre = "+${config.systemd.package}/bin/systemd-tmpfiles --create --prefix=${cfg.stateDir}";
+  };
+
+  systemd.services.forgejo = {
+    unitConfig.RequiresMountsFor = [ cfg.stateDir ];
+    restartTriggers = [ branding ];
+  };
 }
