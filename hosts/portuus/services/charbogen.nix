@@ -34,6 +34,18 @@ in
           sessionSecretFile = config.sops.secrets."charbogen/authelia-session".path;
           storageEncryptionKeyFile = config.sops.secrets."charbogen/authelia-storage".path;
         };
+        smtp = {
+          enable = true;
+          address = "submissions://${config.mailserver.fqdn}:465";
+          username = "noreply@${c.fqdn}";
+          sender = "Charbogen <noreply@${c.fqdn}>";
+          passwordFile = config.sops.secrets."charbogen/smtp-password".path;
+          after = [
+            "postfix.service"
+            "dovecot.service"
+          ];
+        };
+        settings.notifier.disable_startup_check = true;
       };
     };
 
@@ -85,6 +97,11 @@ in
     "charbogen/authelia-storage" = {
       owner = "authelia-charbogen";
       mode = "0400";
+    };
+    "charbogen/smtp-password" = {
+      owner = "authelia-charbogen";
+      mode = "0400";
+      restartUnits = [ "authelia-charbogen.service" ];
     };
   };
 

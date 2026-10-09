@@ -6,7 +6,9 @@ in
 {
   services.postfix = {
     enable = true;
-    transport = "${c.domain} smtp:[${c.hosts.portuus.ip}]:${toString c.mail.smtp}";
+    transport = lib.concatMapStringsSep "\n" (
+      d: "${d} smtp:[${c.hosts.portuus.ip}]:${toString c.mail.smtp}"
+    ) c.mail.domains;
     settings = {
       master.smtp_inet.name = lib.mkForce (toString c.mail-relay.port);
       main = {
