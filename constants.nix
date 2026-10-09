@@ -92,6 +92,10 @@ rec {
   };
 
   mail = {
+    domains = [
+      domain
+      services.charbogen.fqdn
+    ];
     smtp = 25;
     submission-tls = 465;
     imap = 993;

@@ -9,6 +9,10 @@
 let
   c = constants;
   mp = c.mail-proxy;
+  rollDiceAdmin = map (a: "${a}@${c.services.charbogen.fqdn}") [
+    "postmaster"
+    "abuse"
+  ];
   dataDir = "/data/mail";
   edgeIp = c.hosts.edge.ip;
   master = config.services.postfix.settings.master;
@@ -30,14 +34,13 @@ in
     enable = true;
     stateVersion = 3;
     openFirewall = false;
+    inherit (c.mail) domains;
     storage.path = "${dataDir}/vmail";
     dkim = {
       keyDirectory = "${dataDir}/dkim";
-      domains.${c.domain}.selectors = {
-        mail2026 = {
-          keyLength = 2048;
-        };
-      };
+      domains = lib.genAttrs c.mail.domains (_: {
+        selectors.mail2026.keyLength = 2048;
+      });
     };
     accounts' = {
       steffen = {
@@ -64,6 +67,14 @@ in
         sendOnly = true;
       };
     };
+    accounts = {
+      "noreply@${c.services.charbogen.fqdn}" = {
+        sendOnly = true;
+        quota = "5G";
+        hashedPasswordFile = config.sops.secrets."mailserver/accounts/noreply-roll-dice".path;
+      };
+      "steffen@${c.domain}".aliases = rollDiceAdmin;
+    };
   };
 
   security.acme.certs.${config.mailserver.fqdn} = {
@@ -74,10 +85,16 @@ in
     reloadServices = [ "postfix.service" ];
   };
 
-  sops.secrets.ionos-api-key = {
-    mode = "0400";
-    owner = "acme";
-    group = "acme";
+  sops.secrets = {
+    ionos-api-key = {
+      mode = "0400";
+      owner = "acme";
+      group = "acme";
+    };
+    "mailserver/accounts/noreply-roll-dice".restartUnits = [
+      "postfix.service"
+      "dovecot.service"
+    ];
   };
 
   networking.hosts."127.0.0.1" = [ config.mailserver.fqdn ];
