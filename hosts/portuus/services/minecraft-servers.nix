@@ -22,6 +22,16 @@ let
     '';
   };
 
+  cobbleverseConfig = pkgs.runCommand "cobbleverse-config" { } ''
+    cp -r ${cobbleverse}/config $out
+    chmod -R u+w $out
+    for tier in four five six seven; do
+      f=$out/cobblemonraiddens/tier_$tier.json5
+      sed -i -E 's/("required_damage":\s*)[0-9.]+/\10.0/' $f
+      grep -q '"required_damage": 0.0,' $f
+    done
+  '';
+
   ops = [
     "N3071GHT"
     "Xerion42"
@@ -137,7 +147,7 @@ in
           datapacks = "${cobbleverse}/datapacks";
         };
         files = {
-          config = "${cobbleverse}/config";
+          config = cobbleverseConfig;
         };
       };
     };
