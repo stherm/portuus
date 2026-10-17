@@ -9,7 +9,7 @@
 let
   c = constants;
   mp = c.mail-proxy;
-  ff = c.feuerwehrDomain;
+  ff = c.services.feuerwehr.fqdn;
   ffInfo = "friesenhagen@vg-feuerwehr-kirchen.de";
   ffFoerderverein = "foerdervereinfffriesenhagen@gmx.de";
   extraDomainAdmin =

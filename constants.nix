@@ -1,6 +1,5 @@
 rec {
   domain = "portuus.de";
-  feuerwehrDomain = "feuerwehr-friesenhagen.de";
 
   hosts = {
     portuus = {
@@ -20,6 +19,9 @@ rec {
       fqdn = "roll-dice.org";
       authFqdn = "auth.roll-dice.org";
       port = 5000;
+    };
+    feuerwehr = {
+      fqdn = "feuerwehr-friesenhagen.de";
     };
     forgejo = {
       subdomain = "git";
@@ -97,7 +99,7 @@ rec {
     domains = [
       domain
       services.charbogen.fqdn
-      feuerwehrDomain
+      services.feuerwehr.fqdn
     ];
     smtp = 25;
     submission-tls = 465;
