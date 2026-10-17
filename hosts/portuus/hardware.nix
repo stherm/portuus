@@ -67,23 +67,8 @@
       fsType = "zfs";
     };
 
-    "/data/firefly-iii" = {
-      device = "dpool/data/firefly-iii";
-      fsType = "zfs";
-    };
-
     "/data/forgejo" = {
       device = "dpool/data/forgejo";
-      fsType = "zfs";
-    };
-
-    "/data/gitea" = {
-      device = "dpool/data/gitea";
-      fsType = "zfs";
-    };
-
-    "/data/gitlab" = {
-      device = "dpool/data/gitlab";
       fsType = "zfs";
     };
 
@@ -119,26 +104,6 @@
 
     "/data/nextcloud" = {
       device = "dpool/data/nextcloud";
-      fsType = "zfs";
-    };
-
-    "/data/peertube" = {
-      device = "dpool/data/peertube";
-      fsType = "zfs";
-    };
-
-    "/data/rss-bridge" = {
-      device = "dpool/data/rss-bridge";
-      fsType = "zfs";
-    };
-
-    "/data/syncthing" = {
-      device = "dpool/data/syncthing";
-      fsType = "zfs";
-    };
-
-    "/data/tt-rss" = {
-      device = "dpool/data/tt-rss";
       fsType = "zfs";
     };
   };
