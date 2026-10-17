@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  pkgs,
   lib,
   constants,
   ...
@@ -21,6 +22,7 @@
       enable = true;
       sops = true;
       dataDir = "/data/matrix-synapse";
+      settings.max_upload_size = "200M";
       bridges = {
         whatsapp = {
           enable = true;
@@ -40,21 +42,58 @@
       admins = [
         "steffen"
       ];
-      plugins = with config.services.maubot.package.plugins; [ reminder ];
+      plugins = with config.services.maubot.package.plugins; [
+        choose
+        dice
+        github
+        karma
+        poll
+        reactbot
+        reminder
+        tex
+        timein
+        timer
+        translate
+        urban
+        urlpreview
+        weather
+        xkcd
+      ];
     };
 
     livekit.enable = lib.mkForce false;
     lk-jwt-service.enable = lib.mkForce false;
 
-    nginx.virtualHosts."${config.networking.domain}" = {
-      enableACME = lib.mkForce false;
-      forceSSL = lib.mkForce false;
-      listen = lib.mkForce [
-        {
-          addr = constants.hosts.portuus.ip;
-          port = 80;
-        }
-      ];
+    nginx.virtualHosts = {
+      "matrix.tail" = {
+        listen = [
+          {
+            addr = constants.hosts.portuus.ip;
+            port = 80;
+          }
+        ];
+        root = pkgs.ketesa.withConfig { restrictBaseUrl = "http://matrix.tail"; };
+        locations = {
+          "/_matrix".proxyPass = "http://127.0.0.1:${toString config.services.matrix-synapse.port}";
+          "/_synapse".proxyPass = "http://127.0.0.1:${toString config.services.matrix-synapse.port}";
+          "^~ /_matrix/maubot/" = {
+            proxyPass = with config.services.maubot.settings.server; "http://${hostname}:${toString port}";
+            proxyWebsockets = true;
+          };
+        };
+      };
+
+      "${config.networking.domain}" = {
+        locations."/_matrix".extraConfig = "client_max_body_size 200M;";
+        enableACME = lib.mkForce false;
+        forceSSL = lib.mkForce false;
+        listen = lib.mkForce [
+          {
+            addr = constants.hosts.portuus.ip;
+            port = 80;
+          }
+        ];
+      };
     };
   };
 

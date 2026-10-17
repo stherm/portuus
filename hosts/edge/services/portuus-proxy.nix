@@ -40,12 +40,14 @@ in
         enableACME = true;
         forceSSL = true;
         locations = {
-          "/_matrix".proxyPass = "http://${portuusIP}";
-          "/_synapse".proxyPass = "http://${portuusIP}";
-          "^~ /_matrix/maubot/" = {
+          "/_matrix" = {
             proxyPass = "http://${portuusIP}";
-            proxyWebsockets = true;
+            extraConfig = "client_max_body_size 200M;";
           };
+          "/_synapse".proxyPass = "http://${portuusIP}";
+          "^~ /_synapse/admin".extraConfig = "return 404;";
+          "^~ /_matrix/maubot/".extraConfig = "return 404;";
+          "^~ /_matrix/maubot/plugin/".proxyPass = "http://${portuusIP}";
           "= /.well-known/matrix/server".extraConfig = ''
             default_type application/json;
             return 200 '{"m.server":"${c.domain}:443"}';
