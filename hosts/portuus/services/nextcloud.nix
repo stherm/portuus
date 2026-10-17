@@ -12,10 +12,10 @@ let
   s = c.services.nextcloud;
 
   package = pkgs.nextcloud33.overrideAttrs (old: rec {
-    version = "33.0.9";
+    version = "33.0.10";
     src = pkgs.fetchurl {
       url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-      hash = "sha256-8zHBBB0CfmWIUm0qAM5CvHCpYi6rWHHAvpF3JSz3dCM=";
+      hash = "sha256-QnEQuW/YWA2P6yOkCkHQBlfpdflF4ISEhaaibXd9fK4=";
     };
   });
 in
@@ -36,16 +36,6 @@ in
       enable = true;
       smtpHost = config.mailserver.fqdn;
     };
-    extraApps = {
-      inherit (config.services.nextcloud.package.packages.apps)
-        bookmarks
-        calendar
-        contacts
-        richdocuments
-        tasks
-        ;
-    };
+    twoFactor.enable = true;
   };
-
-  # Security headers are set on edge (TLS termination point)
 }
