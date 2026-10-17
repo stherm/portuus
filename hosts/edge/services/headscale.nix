@@ -31,6 +31,13 @@ in
       enable = true;
       subdomain = "hs";
     };
+    settings.dns.extra_records = [
+      {
+        name = "matrix.tail";
+        type = "A";
+        value = constants.hosts.portuus.ip;
+      }
+    ];
   };
 
   environment.etc."headscale/acl.hujson".source = lib.mkForce ./acl.hujson;
