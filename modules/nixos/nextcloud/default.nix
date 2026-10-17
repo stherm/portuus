@@ -12,9 +12,11 @@ let
 
   inherit (lib)
     concatMapStrings
+    concatStrings
     escapeShellArg
     escapeShellArgs
     getExe
+    mapAttrsToList
     mkDefault
     mkEnableOption
     mkIf
@@ -67,6 +69,15 @@ in
       type = types.listOf types.str;
       default = optional (cfg.settings.log_type != "file") "logreader";
       description = "Shipped apps to disable via occ.";
+    };
+    theming = mkOption {
+      type = types.attrsOf (types.either types.str types.path);
+      default = { };
+      example = {
+        name = "portuus";
+        primary_color = "#4c8099";
+      };
+      description = "Values applied via occ theming:config. The keys logo, logoheader, favicon and background take file paths.";
     };
   };
 
@@ -156,6 +167,14 @@ in
       nextcloud-disable-apps = mkIf (cfg.disabledApps != [ ]) (mkOccUnit ''
         ${occ} app:disable ${escapeShellArgs cfg.disabledApps}
       '');
+
+      nextcloud-theming = mkIf (cfg.theming != { }) (
+        mkOccUnit (
+          concatStrings (
+            mapAttrsToList (k: v: "${occ} theming:config ${escapeShellArg k} ${escapeShellArg "${v}"}\n") cfg.theming
+          )
+        )
+      );
     };
 
     services.nginx.virtualHosts = mkIf cfg.reverseProxy.enable {
