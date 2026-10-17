@@ -16,6 +16,7 @@
     ./portuus-proxy.nix
     ./roll-dice-proxy.nix
     ./stream-proxy.nix
+    ./website-ff-proxy.nix
 
     outputs.nixosModules.tailscale
   ];

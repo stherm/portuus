@@ -23,6 +23,7 @@
     ./radicale.nix
     ./rustdesk-server.nix
     ./vaultwarden.nix
+    ./website-ff.nix
     ./zfs.nix
 
     outputs.nixosModules.tailscale

@@ -20,6 +20,9 @@ rec {
       authFqdn = "auth.roll-dice.org";
       port = 5000;
     };
+    feuerwehr = {
+      fqdn = "feuerwehr-friesenhagen.de";
+    };
     forgejo = {
       subdomain = "git";
       testSubdomain = "test";
@@ -96,6 +99,7 @@ rec {
     domains = [
       domain
       services.charbogen.fqdn
+      services.feuerwehr.fqdn
     ];
     smtp = 25;
     submission-tls = 465;

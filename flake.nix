@@ -21,6 +21,9 @@
 
     charbogen.url = "git+https://git.portuus.de/pnp/charbogen.git?ref=master";
     charbogen.inputs.nixpkgs.follows = "nixpkgs";
+
+    website-ff.url = "git+https://git.portuus.de/steffen/website-ff.git?ref=main";
+    website-ff.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
