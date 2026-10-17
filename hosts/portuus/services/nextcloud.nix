@@ -41,6 +41,17 @@ in
       enforce = true;
       enforcedGroups = [ "admin" ];
     };
+    theming = {
+      name = "portuus";
+      slogan = "Cloud auf portuus.de";
+      url = "https://portuus.de";
+      primary_color = "#4c8099";
+      background = "backgroundColor";
+      background_color = "#02192e";
+      logo = ../../../assets/branding/logo.svg;
+      logoheader = ../../../assets/branding/logo.svg;
+      favicon = ../../../assets/branding/logo.svg;
+    };
     settings = {
       trusted_proxies = [ c.hosts.edge.ip ];
       "overwrite.cli.url" = "https://${config.services.nextcloud.hostName}";

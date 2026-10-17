@@ -11,15 +11,17 @@ let
   fj = c.services.forgejo;
   cfg = config.services.forgejo;
 
-  branding = pkgs.runCommand "forgejo-portuus-branding" { nativeBuildInputs = [ pkgs.librsvg ]; } ''
+  brandingDir = ../../../../assets/branding;
+
+  branding = pkgs.runCommand "forgejo-portuus-branding" { } ''
     img=$out/public/assets/img
     mkdir -p $img $out/public/assets/css $out/templates
 
-    cp ${./branding/logo.svg} $img/logo.svg
-    cp ${./branding/favicon.svg} $img/favicon.svg
-    rsvg-convert -w 512 -h 512 ${./branding/logo.svg} -o $img/logo.png
-    rsvg-convert -w 180 -h 180 ${./branding/logo.svg} -o $img/apple-touch-icon.png
-    rsvg-convert -w 64 -h 64 ${./branding/favicon.svg} -o $img/favicon.png
+    cp ${brandingDir}/logo.svg $img/logo.svg
+    cp ${brandingDir}/logo.svg $img/favicon.svg
+    cp ${brandingDir}/png/logo-512.png $img/logo.png
+    cp ${brandingDir}/png/logo-180.png $img/apple-touch-icon.png
+    cp ${brandingDir}/png/logo-64.png $img/favicon.png
 
     cp ${./branding/theme-portuus.css} $out/public/assets/css/theme-portuus.css
     cp ${./branding/home.tmpl} $out/templates/home.tmpl
