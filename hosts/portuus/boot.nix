@@ -27,6 +27,5 @@
 
     supportedFilesystems = [ "zfs" ];
     zfs.forceImportRoot = false;
-    # TODO: boot.kernelPackages = LTS;
   };
 }
