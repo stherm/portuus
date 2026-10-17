@@ -85,17 +85,40 @@ in
       secretFile = mkIf cfg.mailIntegration.enable config.sops.templates."nextcloud".path;
     };
 
-    systemd.services.nextcloud-twofactor = mkIf cfg.twoFactor.enable {
-      after = [ "nextcloud-setup.service" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "oneshot";
-        ExecCondition = "${getExe cfg.occ} status --exit-code";
+    systemd.services = {
+      nextcloud-dirs = {
+        description = "Nextcloud data directories";
+        requiredBy = [
+          "nextcloud-setup.service"
+          "phpfpm-nextcloud.service"
+        ];
+        before = [
+          "nextcloud-setup.service"
+          "phpfpm-nextcloud.service"
+        ];
+        unitConfig.RequiresMountsFor = [ cfg.datadir ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = "${config.systemd.package}/bin/systemd-tmpfiles --create --prefix=${cfg.datadir}";
+        };
       };
-      script = ''
-        ${getExe cfg.occ} app:enable twofactor_totp twofactor_backupcodes
-        ${getExe cfg.occ} twofactorauth:enforce ${if cfg.twoFactor.enforce then "--on" else "--off"}
-      '';
+
+      nextcloud-setup.unitConfig.RequiresMountsFor = [ cfg.datadir ];
+      phpfpm-nextcloud.unitConfig.RequiresMountsFor = [ cfg.datadir ];
+
+      nextcloud-twofactor = mkIf cfg.twoFactor.enable {
+        after = [ "nextcloud-setup.service" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecCondition = "${getExe cfg.occ} status --exit-code";
+        };
+        script = ''
+          ${getExe cfg.occ} app:enable twofactor_totp twofactor_backupcodes
+          ${getExe cfg.occ} twofactorauth:enforce ${if cfg.twoFactor.enforce then "--on" else "--off"}
+        '';
+      };
     };
 
     services.nginx.virtualHosts = mkIf cfg.reverseProxy.enable {
