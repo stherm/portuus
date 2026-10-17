@@ -12,8 +12,15 @@ in
 {
   services.nginx.virtualHosts.${c.fqdn} = {
     root = site;
-    locations."~ \\.pmtiles$".extraConfig = ''
-      types { application/vnd.pmtiles pmtiles; }
-    '';
+    extraConfig = "error_page 404 /404.html;";
+    locations = {
+      "/".tryFiles = "$uri $uri/index.html =404";
+      "/_astro/".extraConfig = ''
+        add_header Cache-Control "public, max-age=31536000, immutable";
+      '';
+      "~ \\.pmtiles$".extraConfig = ''
+        types { application/vnd.pmtiles pmtiles; }
+      '';
+    };
   };
 }
