@@ -9,7 +9,7 @@ fi
 INSTANCE="$1"
 SERVICE_NAME="minecraft-server-${INSTANCE}.service"
 SOURCE_DIR="/srv/minecraft/${INSTANCE}/world"
-BACKUP_DIR="/data/minecraft/backups/${INSTANCE}/worlds"
+BACKUP_DIR="/data/backup/minecraft/${INSTANCE}/worlds"
 TIMESTAMP=$(date +"%Y_%m_%d-%H_%M_%S")
 BACKUP_FILE="world.${TIMESTAMP}.tar.gz"
 

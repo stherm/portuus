@@ -36,7 +36,16 @@ in
       enable = true;
       smtpHost = config.mailserver.fqdn;
     };
-    twoFactor.enable = true;
+    twoFactor = {
+      enable = true;
+      enforce = true;
+      enforcedGroups = [ "admin" ];
+    };
+    settings = {
+      trusted_proxies = [ c.hosts.edge.ip ];
+      "overwrite.cli.url" = "https://${config.services.nextcloud.hostName}";
+      serverid = 238;
+    };
   };
 
   services.postgresqlBackup = {
