@@ -38,4 +38,15 @@ in
     };
     twoFactor.enable = true;
   };
+
+  services.postgresqlBackup = {
+    enable = true;
+    databases = [ config.services.nextcloud.config.dbname ];
+    location = "/data/backup/postgresql";
+    compression = "zstd";
+  };
+
+  systemd.services."postgresqlBackup-${config.services.nextcloud.config.dbname}".unitConfig.RequiresMountsFor = [
+    "/data/backup"
+  ];
 }
