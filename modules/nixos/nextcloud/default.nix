@@ -11,12 +11,33 @@ let
   fqdn = if (cfg.reverseProxy.enable && subdomain != "") then "${subdomain}.${domain}" else domain;
 
   inherit (lib)
+    concatMapStrings
+    escapeShellArg
+    escapeShellArgs
     getExe
     mkDefault
     mkEnableOption
     mkIf
+    mkOption
+    optional
     optionalAttrs
+    optionalString
+    types
     ;
+
+  occ = getExe cfg.occ;
+
+  mkOccUnit = script: {
+    after = [ "nextcloud-setup.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      User = "nextcloud";
+      LoadCredential = config.systemd.services.nextcloud-cron.serviceConfig.LoadCredential;
+      ExecCondition = "${occ} status --exit-code";
+    };
+    inherit script;
+  };
 
   inherit (lib.utils)
     mkMailIntegrationOption
@@ -30,7 +51,22 @@ in
     reverseProxy = mkReverseProxyOption "Nextcloud" "nc";
     twoFactor = {
       enable = mkEnableOption "two-factor authentication via TOTP and backup codes";
-      enforce = mkEnableOption "enforcing two-factor authentication for all users";
+      enforce = mkOption {
+        type = types.nullOr types.bool;
+        default = null;
+        description = "Whether to enforce two-factor authentication. Null leaves the current policy untouched.";
+      };
+      enforcedGroups = mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+        example = [ "admin" ];
+        description = "Groups for which two-factor authentication is enforced when enforce is true. Empty means all users.";
+      };
+    };
+    disabledApps = mkOption {
+      type = types.listOf types.str;
+      default = optional (cfg.settings.log_type != "file") "logreader";
+      description = "Shipped apps to disable via occ.";
     };
   };
 
@@ -107,18 +143,19 @@ in
       nextcloud-setup.unitConfig.RequiresMountsFor = [ cfg.datadir ];
       phpfpm-nextcloud.unitConfig.RequiresMountsFor = [ cfg.datadir ];
 
-      nextcloud-twofactor = mkIf cfg.twoFactor.enable {
-        after = [ "nextcloud-setup.service" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "oneshot";
-          ExecCondition = "${getExe cfg.occ} status --exit-code";
-        };
-        script = ''
-          ${getExe cfg.occ} app:enable twofactor_totp twofactor_backupcodes
-          ${getExe cfg.occ} twofactorauth:enforce ${if cfg.twoFactor.enforce then "--on" else "--off"}
-        '';
-      };
+      nextcloud-twofactor = mkIf cfg.twoFactor.enable (mkOccUnit ''
+        ${occ} app:enable twofactor_totp twofactor_backupcodes
+        ${optionalString (cfg.twoFactor.enforce != null) (
+          if cfg.twoFactor.enforce then
+            "${occ} twofactorauth:enforce --on${concatMapStrings (g: " --group=${escapeShellArg g}") cfg.twoFactor.enforcedGroups}"
+          else
+            "${occ} twofactorauth:enforce --off"
+        )}
+      '');
+
+      nextcloud-disable-apps = mkIf (cfg.disabledApps != [ ]) (mkOccUnit ''
+        ${occ} app:disable ${escapeShellArgs cfg.disabledApps}
+      '');
     };
 
     services.nginx.virtualHosts = mkIf cfg.reverseProxy.enable {

@@ -113,7 +113,7 @@ zfs create -o mountpoint=legacy -o quota=500G                       dpool/data/j
 zfs create -o mountpoint=legacy -o com.sun:auto-snapshot=true       dpool/data/mail
 zfs create -o mountpoint=legacy -o quota=500G                       dpool/data/matrix-synapse
 zfs create -o mountpoint=legacy                                     dpool/data/maubot
-zfs create -o mountpoint=legacy -o quota=3T                         dpool/data/nextcloud
+zfs create -o mountpoint=legacy -o quota=3T -o com.sun:auto-snapshot=true dpool/data/nextcloud
 
 mount -o X-mount.mkdir -t zfs dpool/data/backup         "$MNT"/data/backup
 mount -o X-mount.mkdir -t zfs dpool/data/charbogen      "$MNT"/data/charbogen
