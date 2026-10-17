@@ -1,5 +1,6 @@
 rec {
   domain = "portuus.de";
+  feuerwehrDomain = "feuerwehr-friesenhagen.de";
 
   hosts = {
     portuus = {
@@ -96,6 +97,7 @@ rec {
     domains = [
       domain
       services.charbogen.fqdn
+      feuerwehrDomain
     ];
     smtp = 25;
     submission-tls = 465;

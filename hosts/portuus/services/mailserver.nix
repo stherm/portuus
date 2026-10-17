@@ -9,10 +9,19 @@
 let
   c = constants;
   mp = c.mail-proxy;
-  rollDiceAdmin = map (a: "${a}@${c.services.charbogen.fqdn}") [
-    "postmaster"
-    "abuse"
-  ];
+  ff = c.feuerwehrDomain;
+  ffInfo = "friesenhagen@vg-feuerwehr-kirchen.de";
+  ffFoerderverein = "foerdervereinfffriesenhagen@gmx.de";
+  extraDomainAdmin =
+    lib.concatMap
+      (d: [
+        "postmaster@${d}"
+        "abuse@${d}"
+      ])
+      [
+        c.services.charbogen.fqdn
+        ff
+      ];
   dataDir = "/data/mail";
   edgeIp = c.hosts.edge.ip;
   master = config.services.postfix.settings.master;
@@ -73,8 +82,16 @@ in
         quota = "5G";
         hashedPasswordFile = config.sops.secrets."mailserver/accounts/noreply-roll-dice".path;
       };
-      "steffen@${c.domain}".aliases = rollDiceAdmin;
+      "steffen@${c.domain}".aliases = extraDomainAdmin;
     };
+    forwards = {
+      "info@${ff}" = ffInfo;
+      "wehrfuehrung@${ff}" = ffInfo;
+      "wehrführung@${ff}" = ffInfo;
+      "foerderverein@${ff}" = ffFoerderverein;
+      "förderverein@${ff}" = ffFoerderverein;
+    };
+    srs.enable = true;
   };
 
   security.acme.certs.${config.mailserver.fqdn} = {
