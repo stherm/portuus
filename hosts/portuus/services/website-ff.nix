@@ -1,5 +1,6 @@
 {
   inputs,
+  config,
   pkgs,
   constants,
   ...
@@ -10,6 +11,8 @@ let
   site = inputs.website-ff.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
+  imports = [ inputs.website-ff.nixosModules.instagram ];
+
   services.nginx.virtualHosts.${c.fqdn} = {
     root = site;
     extraConfig = "error_page 404 /404.html;";
@@ -23,4 +26,12 @@ in
       '';
     };
   };
+
+  services.website-ff-instagram = {
+    enable = true;
+    tokenFile = config.sops.secrets."website-ff/instagram-token".path;
+    virtualHost = c.fqdn;
+  };
+
+  sops.secrets."website-ff/instagram-token" = { };
 }
