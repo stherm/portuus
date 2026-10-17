@@ -40,10 +40,7 @@
       admins = [
         "steffen"
       ];
-      plugins = with config.services.maubot.package.plugins; [
-        gitlab
-        reminder
-      ];
+      plugins = with config.services.maubot.package.plugins; [ reminder ];
     };
 
     livekit.enable = lib.mkForce false;
