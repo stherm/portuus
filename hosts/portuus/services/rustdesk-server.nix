@@ -1,6 +1,3 @@
-# TODO: turn into module for nix-core
-# TODO: add assertion: --key/-k cannot be in extraArgs
-
 {
   config,
   pkgs,

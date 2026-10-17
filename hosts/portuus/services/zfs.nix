@@ -1,8 +1,22 @@
-{ pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-# Mark datasets to snapshot
-# sudo zfs set com.sun:auto-snapshot:daily=true dpool/data/backup
-
+let
+  snapshotDatasets = [
+    "dpool/data/backup"
+    "dpool/data/charbogen"
+    "dpool/data/forgejo"
+    "dpool/data/immich"
+    "dpool/data/mail"
+    "dpool/data/matrix-synapse"
+    "dpool/data/maubot"
+    "dpool/data/nextcloud"
+  ];
+in
 {
   services.zfs = {
     autoSnapshot = {
@@ -16,10 +30,8 @@
     };
 
     autoReplication = {
-      # enable = true;
-      host = ""; # TODO: Deploy permanent backup server
+      host = "";
       username = "root";
-      # sudo -i ssh-keygen -t rsa -b 4096 -f /root/.ssh/zfs-replication
       identityFilePath = "/root/.ssh/zfs-replication";
       localFilesystem = "dpool/data/backup";
       remoteFilesystem = "dpool/portuus-backup";
@@ -38,6 +50,20 @@
         ZED_NOTIFY_WARNING = "1";
       };
     };
+  };
+
+  systemd.services.zfs-autosnapshot-props = {
+    description = "Mark ZFS datasets for automatic snapshots";
+    after = [ "zfs-import.target" ];
+    wantedBy = [ "multi-user.target" ];
+    path = [ config.boot.zfs.package ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = lib.concatMapStrings (ds: ''
+      zfs set com.sun:auto-snapshot=true ${ds}
+    '') snapshotDatasets;
   };
 
   environment.systemPackages = with pkgs; [ lz4 ];

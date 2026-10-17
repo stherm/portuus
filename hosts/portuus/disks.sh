@@ -104,16 +104,16 @@ zpool create -f -o ashift=12 -o autotrim=on -O acltype=posixacl -O xattr=sa -O d
 zfs create -o canmount=noauto -o mountpoint=legacy dpool/data
 mount -o X-mount.mkdir -t zfs dpool/data "$MNT"/data
 
-zfs create -o mountpoint=legacy -o com.sun:auto-snapshot:daily=true dpool/data/backup
-zfs create -o mountpoint=legacy                                     dpool/data/charbogen
-zfs create -o mountpoint=legacy                                     dpool/data/forgejo
-zfs create -o mountpoint=legacy -o quota=1T                         dpool/data/immich
-zfs create -o mountpoint=legacy -o quota=3T                         dpool/data/jellyfin
-zfs create -o mountpoint=legacy -o quota=500G                       dpool/data/jirafeau
-zfs create -o mountpoint=legacy -o com.sun:auto-snapshot=true       dpool/data/mail
-zfs create -o mountpoint=legacy -o quota=500G                       dpool/data/matrix-synapse
-zfs create -o mountpoint=legacy                                     dpool/data/maubot
-zfs create -o mountpoint=legacy -o quota=3T -o com.sun:auto-snapshot=true dpool/data/nextcloud
+zfs create -o mountpoint=legacy               dpool/data/backup
+zfs create -o mountpoint=legacy               dpool/data/charbogen
+zfs create -o mountpoint=legacy               dpool/data/forgejo
+zfs create -o mountpoint=legacy -o quota=1T   dpool/data/immich
+zfs create -o mountpoint=legacy -o quota=3T   dpool/data/jellyfin
+zfs create -o mountpoint=legacy -o quota=500G dpool/data/jirafeau
+zfs create -o mountpoint=legacy               dpool/data/mail
+zfs create -o mountpoint=legacy -o quota=500G dpool/data/matrix-synapse
+zfs create -o mountpoint=legacy               dpool/data/maubot
+zfs create -o mountpoint=legacy -o quota=3T   dpool/data/nextcloud
 
 mount -o X-mount.mkdir -t zfs dpool/data/backup         "$MNT"/data/backup
 mount -o X-mount.mkdir -t zfs dpool/data/charbogen      "$MNT"/data/charbogen
