@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
@@ -36,10 +35,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment = {
-      etc."secrets/nextcloud-initial-admin-pass".text = "nextcloud";
-      systemPackages = [ pkgs.sqlite ];
-    };
+    environment.etc."secrets/nextcloud-initial-admin-pass".text = "nextcloud";
 
     services.nextcloud = {
       hostName = fqdn;
@@ -47,8 +43,9 @@ in
       config = {
         adminuser = mkDefault "nextcloud";
         adminpassFile = mkDefault "/etc/secrets/nextcloud-initial-admin-pass";
-        dbtype = mkDefault "sqlite";
+        dbtype = mkDefault "pgsql";
       };
+      database.createLocally = mkDefault true;
       configureRedis = mkDefault true;
       extraAppsEnable = mkDefault true;
       appstoreEnable = mkDefault false;

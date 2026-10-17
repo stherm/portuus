@@ -62,6 +62,11 @@
       fsType = "zfs";
     };
 
+    "/data/backup" = {
+      device = "dpool/data/backup";
+      fsType = "zfs";
+    };
+
     "/data/charbogen" = {
       device = "dpool/data/charbogen";
       fsType = "zfs";
