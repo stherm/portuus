@@ -11,16 +11,10 @@ let
   subdomain = cfg.reverseProxy.subdomain;
   fqdn = if (cfg.reverseProxy.enable && subdomain != "") then "${subdomain}.${domain}" else domain;
 
-  # package = pkgs.nextcloud31.overrideAttrs (old: rec {
-  #   version = "31.0.7";
-  #   src = pkgs.fetchurl {
-  #     url = "https://download.nextcloud.com/server/releases/nextcloud-${version}.tar.bz2";
-  #     hash = "sha256-ACpdA64Fp/DDBWlH1toLeaRNPXIPVyj+UVWgxaO07Gk=";
-  #   };
-  # });
-
   inherit (lib)
+    getExe
     mkDefault
+    mkEnableOption
     mkIf
     optionalAttrs
     ;
@@ -35,22 +29,25 @@ in
   options.services.nextcloud = {
     mailIntegration = mkMailIntegrationOption "Nextcloud";
     reverseProxy = mkReverseProxyOption "Nextcloud" "nc";
+    twoFactor = {
+      enable = mkEnableOption "two-factor authentication via TOTP and backup codes";
+      enforce = mkEnableOption "enforcing two-factor authentication for all users";
+    };
   };
 
   config = mkIf cfg.enable {
     environment = {
       etc."secrets/nextcloud-initial-admin-pass".text = "nextcloud";
-      systemPackages = [ pkgs.sqlite ]; # TODO: switch to postgresql
+      systemPackages = [ pkgs.sqlite ];
     };
 
     services.nextcloud = {
-      # inherit package;
       hostName = fqdn;
       https = if cfg.reverseProxy.enable then cfg.reverseProxy.forceSSL else mkDefault false;
       config = {
         adminuser = mkDefault "nextcloud";
         adminpassFile = mkDefault "/etc/secrets/nextcloud-initial-admin-pass";
-        dbtype = mkDefault "sqlite"; # TODO: switch to postgresql
+        dbtype = mkDefault "sqlite";
       };
       configureRedis = mkDefault true;
       extraAppsEnable = mkDefault true;
@@ -89,6 +86,19 @@ in
         short_open_tag = "Off";
       };
       secretFile = mkIf cfg.mailIntegration.enable config.sops.templates."nextcloud".path;
+    };
+
+    systemd.services.nextcloud-twofactor = mkIf cfg.twoFactor.enable {
+      after = [ "nextcloud-setup.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecCondition = "${getExe cfg.occ} status --exit-code";
+      };
+      script = ''
+        ${getExe cfg.occ} app:enable twofactor_totp twofactor_backupcodes
+        ${getExe cfg.occ} twofactorauth:enforce ${if cfg.twoFactor.enforce then "--on" else "--off"}
+      '';
     };
 
     services.nginx.virtualHosts = mkIf cfg.reverseProxy.enable {
