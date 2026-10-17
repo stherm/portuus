@@ -6,6 +6,7 @@
 {
   imports = [
     ./charbogen.nix
+    ./edge-backup.nix
     ./fail2ban.nix
     ./forgejo
     ./github-runners.nix

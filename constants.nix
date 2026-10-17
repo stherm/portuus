@@ -4,6 +4,7 @@ rec {
   hosts = {
     portuus = {
       ip = "100.64.0.2";
+      edgeBackupKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOgY0vxCSmHl4ueA5mEKaO8RrCOVjLwmDdtF4OOHqSYp portuus-edge-backup";
     };
     edge = {
       ip = "100.64.0.1";

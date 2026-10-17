@@ -1,25 +1,20 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, ... }:
 
 let
-  cfg = config.services.rustdesk-server;
-
-  keyFile = config.sops.secrets."rustdesk-server/key".path;
-  relayArg = builtins.concatStringsSep ":" cfg.signal.relayHosts;
+  envFile = config.sops.templates."rustdesk-server/env".path;
 in
 {
-  sops.secrets."rustdesk-server/key" = {
-    owner = "rustdesk";
-    group = "rustdesk";
-    mode = "0440";
-    restartUnits = [
-      "rustdesk-signal.service"
-      "rustdesk-relay.service"
-    ];
+  sops = {
+    secrets."rustdesk-server/key" = { };
+    templates."rustdesk-server/env" = {
+      content = ''
+        KEY=${config.sops.placeholder."rustdesk-server/key"}
+      '';
+      restartUnits = [
+        "rustdesk-signal.service"
+        "rustdesk-relay.service"
+      ];
+    };
   };
 
   services.rustdesk-server = {
@@ -34,11 +29,8 @@ in
     };
   };
 
-  systemd.services.rustdesk-signal.serviceConfig.ExecStart = lib.mkForce ''
-    ${pkgs.bash}/bin/bash -c "${cfg.package}/bin/hbbs --relay-servers ${relayArg} --key $(${pkgs.coreutils}/bin/cat ${keyFile}) ${lib.escapeShellArgs cfg.signal.extraArgs}"
-  '';
-
-  systemd.services.rustdesk-relay.serviceConfig.ExecStart = lib.mkForce ''
-    ${pkgs.bash}/bin/bash -c "${cfg.package}/bin/hbbr --key $(${pkgs.coreutils}/bin/cat ${keyFile}) ${lib.escapeShellArgs cfg.relay.extraArgs}"
-  '';
+  systemd.services = {
+    rustdesk-signal.serviceConfig.EnvironmentFile = envFile;
+    rustdesk-relay.serviceConfig.EnvironmentFile = envFile;
+  };
 }

@@ -28,5 +28,8 @@ in
       enable = true;
       smtpHost = config.mailserver.fqdn;
     };
+    backupDir = "/data/backup/vaultwarden";
   };
+
+  systemd.services.backup-vaultwarden.unitConfig.RequiresMountsFor = [ config.services.vaultwarden.backupDir ];
 }
