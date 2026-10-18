@@ -57,6 +57,7 @@
         urban
         urlpreview
         weather
+        webhook
         xkcd
       ];
     };
