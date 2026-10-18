@@ -10,6 +10,7 @@
   ];
 
   nix.settings.trusted-users = [ "root" ];
+  nix.settings.accept-flake-config = lib.mkForce false;
 
   services.openssh.settings = {
     PermitRootLogin = lib.mkForce "prohibit-password";
