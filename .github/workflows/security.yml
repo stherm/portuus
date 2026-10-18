@@ -28,6 +28,7 @@ jobs:
       CVE_CACHE: /var/lib/github-runner/portuus/security-scan/cve-cache
       REPORT_DIR: security-report
       WHITELIST: .github/vulnix-whitelist.toml
+      HOST_WHITELIST: .github/vulnix-whitelist-hosts.toml
       TOP_N: "15"
       FAIL_ON_NEW_CVSS: "9.0"
     steps:
@@ -76,10 +77,12 @@ jobs:
           report="$REPORT_DIR/vulnix.json"
           mkdir -p "$VULNIX_CACHE"
           args=(--closure --json --cache-dir "$VULNIX_CACHE")
-          if [ -f "$WHITELIST" ]; then
-            echo "Using whitelist $WHITELIST"
-            args+=(--whitelist "$WHITELIST")
-          fi
+          for wl in "$WHITELIST" "$HOST_WHITELIST"; do
+            if [ -f "$wl" ]; then
+              echo "Using whitelist $wl"
+              args+=(--whitelist "$wl")
+            fi
+          done
           for attempt in $(seq 1 "$VULNIX_ATTEMPTS"); do
             rc=0
             start=$(date +%s)

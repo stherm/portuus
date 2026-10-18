@@ -67,7 +67,7 @@ def load_cve(cve_id, cache_dir):
 def matching_entries(record, pname):
     entries = record.get("containers", {}).get("cna", {}).get("affected", []) or []
     tokens = set(norm(pname))
-    matched, foreign = [], []
+    matched, foreign, ambiguous = [], [], []
     for entry in entries:
         raw_product = str(entry.get("product") or entry.get("packageName") or "").strip().lower()
         if raw_product in PLACEHOLDER:
@@ -80,9 +80,11 @@ def matching_entries(record, pname):
                 foreign.append(entry)
             else:
                 matched.append(entry)
+        elif tokens & (set(product) | set(vendor)):
+            ambiguous.append(entry)
         else:
             foreign.append(entry)
-    return matched, foreign
+    return matched, foreign, ambiguous
 
 
 def fixed_in_version(entries, version):
@@ -181,11 +183,11 @@ def triage(findings, cache_dir):
                 decision["reason"] = f"CVE record unavailable: {exc}"
                 out.append(decision)
                 continue
-            matched, foreign = matching_entries(record, pname)
+            matched, foreign, ambiguous = matching_entries(record, pname)
             patch = patched_in_derivation(cve_id, pkg.get("derivation", ""), drv_cache)
             if patch:
                 decision.update(verdict="patched", reason=f"{cve_id} in applied patch {patch}")
-            elif not matched and foreign:
+            elif not matched and not ambiguous and foreign:
                 products = sorted({f"{e.get('vendor', '?')}/{e.get('product', e.get('packageName', '?'))}" for e in foreign})
                 decision.update(verdict="false_positive", reason="affects " + ", ".join(products[:3]))
             elif matched:
