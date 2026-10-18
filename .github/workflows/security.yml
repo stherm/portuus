@@ -23,6 +23,8 @@ jobs:
     env:
       HOST: ${{ matrix.host }}
       STATE_DIR: /var/lib/github-runner/portuus/security-scan/${{ github.repository }}/${{ matrix.host }}
+      VULNIX_CACHE: /var/lib/github-runner/portuus/security-scan/vulnix-cache
+      VULNIX_ATTEMPTS: "3"
       REPORT_DIR: security-report
       WHITELIST: .github/vulnix-whitelist.toml
       TOP_N: "15"
@@ -34,7 +36,7 @@ jobs:
       - name: Tools
         run: |
           set -euo pipefail
-          for pkg in jq gawk; do
+          for pkg in jq gawk curl; do
             for out in $(nix build --no-link --print-out-paths --inputs-from . "nixpkgs#$pkg"); do
               if [ -d "$out/bin" ]; then
                 echo "$out/bin" >> "$GITHUB_PATH"
@@ -71,15 +73,25 @@ jobs:
         run: |
           set -euo pipefail
           report="$REPORT_DIR/vulnix.json"
-          args=(--closure --json)
+          mkdir -p "$VULNIX_CACHE"
+          args=(--closure --json --cache-dir "$VULNIX_CACHE")
           if [ -f "$WHITELIST" ]; then
             echo "Using whitelist $WHITELIST"
             args+=(--whitelist "$WHITELIST")
           fi
-          rc=0
-          start=$(date +%s)
-          nix run --inputs-from . nixpkgs#vulnix -- "${args[@]}" "$NEW_PATH" > "$report" || rc=$?
-          echo "vulnix exit code: $rc, runtime: $(( $(date +%s) - start ))s"
+          for attempt in $(seq 1 "$VULNIX_ATTEMPTS"); do
+            rc=0
+            start=$(date +%s)
+            nix run --inputs-from . nixpkgs#vulnix -- "${args[@]}" "$NEW_PATH" > "$report" || rc=$?
+            echo "vulnix attempt $attempt: exit code $rc, runtime $(( $(date +%s) - start ))s"
+            case "$rc" in
+              0 | 2) break ;;
+            esac
+            if [ "$attempt" -lt "$VULNIX_ATTEMPTS" ]; then
+              echo "::warning::vulnix failed with exit code $rc, retrying in 60s"
+              sleep 60
+            fi
+          done
           case "$rc" in
             0 | 2) ;;
             *)
@@ -230,6 +242,40 @@ jobs:
             exit 1
           fi
           echo "No new CVEs with CVSS >= ${FAIL_ON_NEW_CVSS} since the last scan."
+
+      - name: Notify Matrix
+        if: always() && github.ref == 'refs/heads/master'
+        env:
+          WEBHOOK_TOKEN: ${{ secrets.MATRIX_WEBHOOK_TOKEN }}
+          WEBHOOK_URL: http://127.0.0.1:29316/_matrix/maubot/plugin/security/send
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          set -euo pipefail
+          if [ -z "${WEBHOOK_TOKEN:-}" ]; then
+            echo "MATRIX_WEBHOOK_TOKEN is not set, skipping notification"
+            exit 0
+          fi
+          run_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          if [ "$JOB_STATUS" = "success" ]; then
+            headline="✅ CVE scan ${HOST}"
+          else
+            headline="❌ CVE scan ${HOST} (${JOB_STATUS})"
+          fi
+          if [ -f "$REPORT_DIR/summary.txt" ]; then
+            body=$(sed -n '/^Closure changes/q;p' "$REPORT_DIR/summary.txt" | grep -v '^==*$' | sed '/^ CVE scan for/d')
+            if [ -f "$REPORT_DIR/nvd-diff.txt" ]; then
+              body+=$'\n'"$(tail -n 1 "$REPORT_DIR/nvd-diff.txt")"
+            fi
+          else
+            body="No summary, the scan failed before the Summary step."
+          fi
+          text=$(printf '### %s\n\n[Run %s](%s)\n\n~~~\n%s\n~~~\n' "$headline" "$GITHUB_RUN_NUMBER" "$run_url" "$body")
+          jq -Rs '{text: .}' <<< "$text" \
+            | curl -fsS --max-time 30 -X POST \
+                -H "Authorization: Bearer ${WEBHOOK_TOKEN}" \
+                -H "Content-Type: application/json" \
+                --data-binary @- "$WEBHOOK_URL" > /dev/null \
+            || echo "::warning::Matrix notification failed"
 
       - name: Clean up
         if: always()
