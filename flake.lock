@@ -1071,11 +1071,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792267719,
-        "narHash": "sha256-qOWLmEfhi01MN1nBFMZY5Z955uz3d/VPLP/oEqxPuKQ=",
+        "lastModified": 1792307223,
+        "narHash": "sha256-f0mUYd7J+l8C9Sqc2YIEirbVk6Wc3ze8oyheVuOLGVE=",
         "ref": "main",
-        "rev": "276f7ef6540b564caf2c9283807cb04ad1c5a30a",
-        "revCount": 67,
+        "rev": "39be53cc53e2cb50cfc57bdd09871b8247b7077e",
+        "revCount": 76,
         "type": "git",
         "url": "https://git.portuus.de/steffen/website-ff.git"
       },
