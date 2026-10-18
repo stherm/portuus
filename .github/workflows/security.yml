@@ -25,6 +25,7 @@ jobs:
       STATE_DIR: /var/lib/github-runner/portuus/security-scan/${{ github.repository }}/${{ matrix.host }}
       VULNIX_CACHE: /var/lib/github-runner/portuus/security-scan/vulnix-cache
       VULNIX_ATTEMPTS: "3"
+      CVE_CACHE: /var/lib/github-runner/portuus/security-scan/cve-cache
       REPORT_DIR: security-report
       WHITELIST: .github/vulnix-whitelist.toml
       TOP_N: "15"
@@ -110,6 +111,27 @@ jobs:
           fi
           echo "Affected packages: $count"
 
+      - name: Prefilter clear cases
+        run: |
+          set -euo pipefail
+          mv "$REPORT_DIR/vulnix.json" "$REPORT_DIR/vulnix-raw.json"
+          mkdir -p "$CVE_CACHE"
+          if nix run --inputs-from . nixpkgs#python3 -- -I .github/vulnix_prefilter.py \
+            "$REPORT_DIR/vulnix-raw.json" --cve-cache "$CVE_CACHE" > "$REPORT_DIR/prefilter.json"; then
+            jq --slurpfile pf "$REPORT_DIR/prefilter.json" '
+              ([$pf[0][] | select(.verdict != "undecided") | "\(.cve)|\(.package)"]) as $done
+              | map(.name as $n | .affected_by |= map(select(("\(.)|\($n)") | IN($done[]) | not)))
+              | map(select(.affected_by | length > 0))
+            ' "$REPORT_DIR/vulnix-raw.json" > "$REPORT_DIR/vulnix.json"
+          else
+            echo "::warning::Prefilter failed, using the unfiltered vulnix report"
+            cp "$REPORT_DIR/vulnix-raw.json" "$REPORT_DIR/vulnix.json"
+            echo '[]' > "$REPORT_DIR/prefilter.json"
+          fi
+          jq -r '[.[] | select(.verdict != "undecided")] | group_by(.verdict)
+            | map("\(.[0].verdict): \(length)") | join(", ") | "Prefiltered: " + (if . == "" then "none" else . end)' \
+            "$REPORT_DIR/prefilter.json"
+
       - name: Diff closure against previous scan
         run: |
           set -euo pipefail
@@ -176,6 +198,13 @@ jobs:
             echo "Closure:           ${NEW_PATH}"
             echo "Scanned at:        $(date -u '+%Y-%m-%d %H:%M UTC')"
             echo "Affected packages: $(jq 'length' "$REPORT_DIR/vulnix.json")"
+            if [ -s "$REPORT_DIR/prefilter.json" ]; then
+              jq -r 'def n(v): [.[] | select(.verdict == v)] | length;
+                "Prefiltered:       \(n("fixed_in_version") + n("patched") + n("false_positive")) "
+                  + "(fixed in version \(n("fixed_in_version")), patched \(n("patched")), "
+                  + "other product \(n("false_positive")))"' \
+                "$REPORT_DIR/prefilter.json"
+            fi
             jq -r '
               def bucket:
                 if . == null then "unknown" elif . >= 9 then "critical"
