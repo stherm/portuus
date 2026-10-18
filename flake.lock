@@ -71,11 +71,11 @@
     "bdwgc": {
       "flake": false,
       "locked": {
-        "lastModified": 1790015987,
-        "narHash": "sha256-bPVosUgucJR0hGSap3tJW84AR6eGYegVROV+O8VYX5A=",
+        "lastModified": 1791890853,
+        "narHash": "sha256-Wip2gE+2EJGC6trYxO9Pl36rkgA3BJJkAsiWTVGXFBc=",
         "owner": "DeterminateSystems",
         "repo": "bdwgc",
-        "rev": "373957929b9ca3b2ae69a3e16b830c44c15b42ca",
+        "rev": "d569c29c479acb44bcf4e992acfc776fb88fb857",
         "type": "github"
       },
       "original": {
@@ -109,11 +109,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1792169070,
-        "narHash": "sha256-DUsVPCh2vLqNNE6rv60Q7zptkQPK36M1/l+vn4u4w+4=",
+        "lastModified": 1792350929,
+        "narHash": "sha256-Z35LEfwj2BlY0dTeU8dx8pR5x9EK4FLoJu1xYX/l7pw=",
         "ref": "master",
-        "rev": "9e5ebf7c4605be57057f3c329b2ad4e9e08879cf",
-        "revCount": 1294,
+        "rev": "8ad82b9e1ea3f9b850788263bebae8b037baf8db",
+        "revCount": 1309,
         "type": "git",
         "url": "https://git.portuus.de/pnp/charbogen.git"
       },
@@ -448,11 +448,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790500375,
-        "narHash": "sha256-XN3sDtn8TU9hAc9xqZ+SqRB/HHm2wjxM6aSWYLJU+oo=",
+        "lastModified": 1791909798,
+        "narHash": "sha256-VAhpCOmrun/KXimYfR8NM88bciKCui7CqHHhThSzgag=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "a0e4241b51206fbcbf52fd322eb5f0cd80f153c4",
+        "rev": "1ba1dbfe28738c9a71c266be6efa5b89e75491a9",
         "type": "github"
       },
       "original": {
@@ -530,11 +530,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1790996401,
-        "narHash": "sha256-f+kOxEmOUnQazVAmGg0i8hzwgd1kX/geY+k/Dpheye8=",
+        "lastModified": 1792274446,
+        "narHash": "sha256-AM1HmBeDnB2B3dSiXuCYeu7Me+lHNpz/P39lVxGJBuQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "db7d5e2332710f5abb088f6b5de927d7f9511b35",
+        "rev": "ab3823b4b24c0c3ca984c1f3ee577fd6d667424c",
         "type": "github"
       },
       "original": {
@@ -554,11 +554,11 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1791465135,
-        "narHash": "sha256-9prV+Nfkt/Fs4N8cvDe3bsNZ/bQWW/FWiUrZbw1OYdg=",
+        "lastModified": 1792188996,
+        "narHash": "sha256-+wZuesAaCfqohENc3UCsKiNbdarDZp+8oyiLRPUfdj4=",
         "owner": "DeterminateSystems",
         "repo": "nix-src",
-        "rev": "ea7e9be2050705f62414cd8657bb656b52477d40",
+        "rev": "74d688aa7b83ee1894ac1881eb3421b4c3fe3677",
         "type": "github"
       },
       "original": {
@@ -740,11 +740,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791676013,
-        "narHash": "sha256-IweiBP1Df4Byzjz4j4WGygwqGMYKQK4Jcm5mTAtOz/w=",
+        "lastModified": 1792280989,
+        "narHash": "sha256-bEYOg9chJN6QfzF7X6QO5tu7mtBNrjvHamGHkxZl/ms=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "5993e61187a396461d9a005e3554d18bc06deb0e",
+        "rev": "40f215cf75a4d4fcf73aa42ce449f431342b7266",
         "type": "github"
       },
       "original": {
@@ -844,11 +844,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791639265,
-        "narHash": "sha256-51gxD0eLcJkxH2TYdhE+Qsf04yg3PRV7anCAqOFX70E=",
+        "lastModified": 1792056300,
+        "narHash": "sha256-YU1LjDe1o2Ymg5zEiCHbmMXLkDCtxHQRiVqZ3nC5GGk=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "a8be3b14935d3532604c51c8dfe3021c73d1a885",
+        "rev": "44931708c62937c2b1bf7953902989fa5bb9ee1b",
         "type": "github"
       },
       "original": {
@@ -907,11 +907,11 @@
         "stylix": "stylix"
       },
       "locked": {
-        "lastModified": 1792095260,
-        "narHash": "sha256-9f28mi+ijKVrhpxX7x9MqWTdFx0jL1wprxTzA5T45Vw=",
+        "lastModified": 1792323619,
+        "narHash": "sha256-1PukA9Y5BbW2+6yEUP7TksKkRnp9CsPAOC8zpUIFNKg=",
         "ref": "release-26.05",
-        "rev": "92181e4174ba8d861ccfd99cee4e24d2de26f519",
-        "revCount": 270,
+        "rev": "986a554abecfa26eb4874c94fd240db087921aaf",
+        "revCount": 282,
         "type": "git",
         "url": "https://git.sid.ovh/sid/synix.git"
       },
@@ -1071,11 +1071,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792307223,
-        "narHash": "sha256-f0mUYd7J+l8C9Sqc2YIEirbVk6Wc3ze8oyheVuOLGVE=",
+        "lastModified": 1792351399,
+        "narHash": "sha256-gMoDJOb9JkPH9EHra2sO9vMjjEN7+BA1zEJIQ5vCc0s=",
         "ref": "main",
-        "rev": "39be53cc53e2cb50cfc57bdd09871b8247b7077e",
-        "revCount": 76,
+        "rev": "e0a99f7f19393ac00b1faa4ee8ccbb016ea8241b",
+        "revCount": 78,
         "type": "git",
         "url": "https://git.portuus.de/steffen/website-ff.git"
       },
