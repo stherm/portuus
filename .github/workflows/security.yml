@@ -199,10 +199,10 @@ jobs:
             echo "Scanned at:        $(date -u '+%Y-%m-%d %H:%M UTC')"
             echo "Affected packages: $(jq 'length' "$REPORT_DIR/vulnix.json")"
             if [ -s "$REPORT_DIR/prefilter.json" ]; then
-              jq -r '[.[] | select(.verdict != "undecided")] as $d
-                | "Prefiltered:       \($d | length) (fixed in version \([$d[] | select(.verdict == "fixed_in_version")] | length), "
-                  + "patched \([$d[] | select(.verdict == "patched")] | length), "
-                  + "other product \([$d[] | select(.verdict == "false_positive")] | length))"' \
+              jq -r 'def n(v): [.[] | select(.verdict == v)] | length;
+                "Prefiltered:       \(n("fixed_in_version") + n("patched") + n("false_positive")) "
+                  + "(fixed in version \(n("fixed_in_version")), patched \(n("patched")), "
+                  + "other product \(n("false_positive")))"' \
                 "$REPORT_DIR/prefilter.json"
             fi
             jq -r '
