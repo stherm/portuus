@@ -111,7 +111,7 @@ def fixed_in_version(entries, version):
                 exact = vkey(low)
                 if exact is None or exact == our:
                     return None
-                reasons.append(f"nur {low} betroffen")
+                reasons.append(f"only {low} affected")
                 continue
             upper = vkey(lt if lt is not None else le)
             if upper is None:
@@ -122,7 +122,7 @@ def fixed_in_version(entries, version):
             if not (above or below):
                 return None
             bound = f"< {lt}" if lt is not None else f"<= {le}"
-            reasons.append(f"betroffen {low or '*'} {bound}")
+            reasons.append(f"affected {low or '*'} {bound}")
     if not reasons:
         return None
     return "; ".join(sorted(set(reasons)))
@@ -178,20 +178,20 @@ def triage(findings, cache_dir):
             try:
                 record = load_cve(cve_id, cache_dir)
             except Exception as exc:
-                decision["reason"] = f"CVE-Datensatz nicht abrufbar: {exc}"
+                decision["reason"] = f"CVE record unavailable: {exc}"
                 out.append(decision)
                 continue
             matched, foreign = matching_entries(record, pname)
             patch = patched_in_derivation(cve_id, pkg.get("derivation", ""), drv_cache)
             if patch:
-                decision.update(verdict="patched", reason=f"{cve_id} im angewendeten Patch {patch}")
+                decision.update(verdict="patched", reason=f"{cve_id} in applied patch {patch}")
             elif not matched and foreign:
                 products = sorted({f"{e.get('vendor', '?')}/{e.get('product', e.get('packageName', '?'))}" for e in foreign})
-                decision.update(verdict="false_positive", reason="betrifft " + ", ".join(products[:3]))
+                decision.update(verdict="false_positive", reason="affects " + ", ".join(products[:3]))
             elif matched:
                 why = fixed_in_version(matched, version)
                 if why:
-                    decision.update(verdict="fixed_in_version", reason=f"{version} nicht im betroffenen Bereich ({why})")
+                    decision.update(verdict="fixed_in_version", reason=f"{version} outside the affected range ({why})")
             out.append(decision)
     return out
 
