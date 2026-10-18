@@ -11,5 +11,9 @@
 
   nix.settings.trusted-users = [ "root" ];
 
-  services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
+  services.openssh.settings = {
+    PermitRootLogin = lib.mkForce "prohibit-password";
+    KbdInteractiveAuthentication = false;
+    Compression = false;
+  };
 }

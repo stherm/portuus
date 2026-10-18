@@ -1,0 +1,446 @@
+["ada-3.4.4"]
+cve = [
+  "CVE-2024-9410",
+]
+until = "2027-01-18"
+comment = "CVE-2024-9410 Fehlalarm: Die CVE betrifft die Sentry-Konfiguration des SaaS-Dienstes Ada.cx (Ada Support). Das nixpkgs-Paket ada ist dagegen der WHATWG-URL-Parser von ada-url, also eine ganz andere Software."
+
+["ada-4.0.0"]
+cve = [
+  "CVE-2024-9410",
+]
+until = "2027-01-18"
+comment = "CVE-2024-9410 Fehlalarm: Die CVE betrifft die Sentry-Konfiguration des SaaS-Dienstes Ada.cx. Das Paket ada 4.0.0 (aus unstable) ist der URL-Parser von ada-url."
+
+["avahi-0.8"]
+cve = [
+  "CVE-2021-26720",
+  "CVE-2025-59529",
+]
+until = "2027-01-18"
+comment = "CVE-2021-26720 nicht anwendbar: Betrifft laut MITRE nur das Debian-Skript avahi-daemon-check-dns.sh (if-up.d-Hook) aus der Debian-Paketierung, nicht Upstream-Avahi. nixpkgs liefert dieses Skript nicht aus, außerdem ist avahi-daemon auf beiden Hosts dea | CVE-2025-59529 nicht anwendbar: Lokaler DoS über den Simple-Protocol-Unix-Socket von avahi-daemon (/run/avahi-daemon/socket). avahi-daemon läuft auf keinem Host (services.avahi.enable = false), avahi ist nur als Client-Bibliothek von cups/gtk4 (Network"
+
+["binutils-2.46"]
+cve = [
+  "CVE-2025-69649",
+  "CVE-2025-69650",
+  "CVE-2025-69651",
+  "CVE-2025-69652",
+  "CVE-2026-6846",
+]
+until = "2027-01-18"
+comment = "CVE-2025-69649 in dieser Version behoben: Der Fix (Commit 66a3492, PR 33697, 08.12.2025) steckt schon im Release-Tag binutils-2_46 (08.02.2026). Die Prüfung `if (section != NULL)` in process_relocs ist in readelf.c von 2.46 vorhanden. Das 'thru 2.46' im CVE-Text | CVE-2025-69650 in dieser Version behoben: Der Fix (Commit ea4bc025, PR 33698/33700, 08.12.2025, all_relocations wird mit memset genullt) ist in readelf.c von 2.46 enthalten. Das CVE ist außerdem umstritten. | CVE-2025-69651 in dieser Version behoben: Gleicher Fix wie CVE-2025-69650 (Commit ea4bc025, PR 33698/33700). Er ist im 2.46-Release-Tag vorhanden. | CVE-2025-69652 in dieser Version behoben: Der Fix (Commit 44b79abd, PR 33701, 08.12.2025) ist in dwarf.c von 2.46 enthalten. Dort steht die Prüfung `num_debug_info_entries != DEBUG_INFO_UNAVAILABLE` bei der Initialisierung von debug_info_p. | CVE-2026-6846 nicht anwendbar: Der Heap-Overflow liegt in xcoff_link_add_symbols (bfd/xcofflink.c) und tritt nur beim Linken von XCOFF-Objekten auf. Unser binutils ist ohne --enable-targets=all nur für x86_64-linux gebaut. objdump -i listet keine XCOF"
+
+["busybox-1.37.0"]
+cve = [
+  "CVE-2025-46394",
+]
+until = "2027-01-18"
+comment = "CVE-2025-46394 nicht anwendbar: Das betroffene busybox ist die Sandbox-Shell von nix (make allnoconfig, nur CONFIG_ASH). Es enthält nur die Binaries ash, busybox und sh, das tar-Applet ist nicht gebaut."
+
+["cjson-1.7.19"]
+cve = [
+  "CVE-2026-16554",
+  "CVE-2026-67215",
+  "CVE-2026-67216",
+  "CVE-2026-67217",
+]
+until = "2027-01-18"
+comment = "CVE-2026-16554 nicht anwendbar: Der Überlauf tritt nur auf 32-Bit-Plattformen und nur mit cJSON_PrintBuffered() auf. Beide Hosts sind x86_64. Der einzige Nutzer im Laufzeit-Closure ist librist, und librist ruft cJSON_PrintBuffered nicht auf. | CVE-2026-67215 nicht anwendbar: Ausnutzbar ist die Lücke nur über JSON Patch (cJSONUtils_ApplyPatches*) aus libcjson_utils. Der einzige Nutzer von cjson auf den Hosts ist librist. librist erzeugt nur Statistik-JSON und importiert weder cJSONUtils-Funkt | CVE-2026-67216 nicht anwendbar: Betroffen ist nur cJSON_Compare() auf Eingaben, die ein Angreifer beeinflusst. librist ist der einzige Nutzer von cjson im Closure und ruft cJSON_Compare nicht auf. librist parst auch kein JSON. | CVE-2026-67217 nicht anwendbar: Betroffen ist nur apply_patch() in cJSON_Utils (JSON Patch). Das wird von keinem Programm auf den Hosts genutzt. librist, der einzige Nutzer, linkt libcjson_utils nicht und ruft keine cJSONUtils-Funktionen auf."
+
+["coreutils-9.11"]
+cve = [
+  "CVE-2026-56391",
+  "CVE-2026-56392",
+]
+until = "2027-01-18"
+comment = "CVE-2026-56391 gepatcht: nixpkgs bringt den Patch CVE-2026-56391.patch mit, und er ist in der Derivation enthalten. vulnix erkennt ihn vermutlich nicht, weil die Patches in structuredAttrs liegen. | CVE-2026-56392 gepatcht: nixpkgs bringt den Patch CVE-2026-56392.patch mit, und er ist in der Derivation enthalten."
+
+["cups-2.4.19"]
+cve = [
+  "CVE-2022-26691",
+]
+until = "2027-01-18"
+comment = "CVE-2022-26691 in dieser Version behoben: Der Apple-Record betrifft die CUPS-Prüfung von Local-Authorization-Zertifikaten, die in CUPS 2.4.2 behoben wurde; vorliegend ist 2.4.19. Außerdem läuft kein cupsd (services.printing.enable = false), cups ist nur als libc"
+
+["dash-0.5.13.3"]
+cve = [
+  "CVE-2024-21485",
+]
+until = "2027-01-18"
+comment = "CVE-2024-21485 Fehlalarm: Das CVE betrifft das Python/JS-Framework Plotly Dash (dash, dash-core-components). Es betrifft nicht die Debian-Almquist-Shell dash."
+
+["dbus-1"]
+cve = [
+  "CVE-2022-42010",
+  "CVE-2022-42011",
+  "CVE-2022-42012",
+]
+until = "2027-01-18"
+comment = "CVE-2022-42010 Fehlalarm: 'dbus-1' ist keine D-Bus-Version, sondern die NixOS-generierte Konfigurationsverzeichnis-Derivation (system.conf/session.conf per xsltproc). vulnix liest fälschlich Version '1'. Das tatsächliche D-Bus ist 1.16.2, die Lüc | CVE-2022-42011 Fehlalarm: 'dbus-1' ist nur die generierte D-Bus-Konfigurationsderivation, keine Software mit Version 1. Das installierte D-Bus 1.16.2 ist neuer als die Fix-Versionen 1.14.4/1.15.2. | CVE-2022-42012 Fehlalarm: 'dbus-1' ist nur die generierte D-Bus-Konfigurationsderivation, keine Software mit Version 1. Das installierte D-Bus 1.16.2 ist neuer als die Fix-Versionen 1.14.4/1.15.2."
+
+["dhcpcd-10.3.1"]
+cve = [
+  "CVE-2026-56113",
+  "CVE-2026-56114",
+  "CVE-2026-56116",
+  "CVE-2026-56117",
+]
+until = "2027-01-18"
+comment = "CVE-2026-56113 nicht anwendbar: DHCPv6-Use-after-free im dhcpcd-Daemon. dhcpcd läuft auf keinem Host: kein systemd-Dienst dhcpcd, NetworkManager nutzt den internen DHCP-Client (dhcp=internal). dhcpcd liegt nur als optionale Laufzeitabhängigkeit von Net | CVE-2026-56114 nicht anwendbar: Stack-OOB-Write in dhcp6_makemessage des dhcpcd-Daemons. Der Daemon läuft auf keinem Host: NetworkManager mit dhcp=internal, kein dhcpcd-Dienst. | CVE-2026-56116 nicht anwendbar: Speicherleck bei der Verarbeitung von IPv6-Router-Advertisements im dhcpcd-Daemon. dhcpcd läuft auf keinem Host, RAs werden von Kernel/NetworkManager verarbeitet (dhcp=internal). | CVE-2026-56117 nicht anwendbar: Use-after-free im Control-Socket des laufenden dhcpcd-Daemons (nur ohne Privsep). Da dhcpcd auf keinem Host gestartet wird, gibt es keinen Control-Socket; zudem haben nur Admins lokale Logins."
+
+["dovecot-2.4.5"]
+cve = [
+  "CVE-2025-59028",
+  "CVE-2025-59032",
+  "CVE-2026-0394",
+  "CVE-2026-24031",
+  "CVE-2026-27851",
+  "CVE-2026-27859",
+  "CVE-2026-27860",
+  "CVE-2026-33603",
+  "CVE-2026-40016",
+  "CVE-2026-40020",
+  "CVE-2026-42006",
+]
+until = "2027-01-18"
+comment = "CVE-2025-59028 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.3 behoben (last affected CE 2.4.0); vorliegend ist 2.4.5. | CVE-2025-59032 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.3 behoben; vorliegend ist 2.4.5. | CVE-2026-0394 in dieser Version behoben: Laut Hersteller-CSAF ab Dovecot CE 2.4.0 behoben (betroffen nur Pro bis 2.3.0); vorliegend ist 2.4.5. | CVE-2026-24031 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.3 behoben; vorliegend ist 2.4.5. | CVE-2026-27851 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.4 behoben (last affected CE 2.4.3); vorliegend ist 2.4.5. | CVE-2026-27859 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.3 behoben; vorliegend ist 2.4.5. | CVE-2026-27860 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.3 behoben; vorliegend ist 2.4.5. | CVE-2026-33603 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.4 behoben; vorliegend ist 2.4.5. | CVE-2026-40016 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.4 behoben; vorliegend ist 2.4.5. | CVE-2026-40020 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.4 behoben; vorliegend ist 2.4.5. | CVE-2026-42006 in dieser Version behoben: Laut Hersteller-CSAF in Dovecot CE 2.4.4 behoben (last affected CE 2.4.3); vorliegend ist 2.4.5."
+
+["fzf-0.72.0"]
+cve = [
+  "CVE-2026-53432",
+  "CVE-2026-53433",
+]
+until = "2027-01-18"
+comment = "CVE-2026-53432 nicht anwendbar: Die Version ist betroffen (Fix erst in 0.73.1). fzf wird aber nur interaktiv von Admins benutzt: system-path und das synix-Tailnet-Umschaltskript mit fester, kurzer Eingabe. Für den Absturz braucht es eine Zeile von rund | CVE-2026-53433 nicht anwendbar: Betroffen ist nur der HTTP-Server im --listen-Modus. Weder das Repo noch synix startet fzf mit --listen. fzf läuft nur interaktiv (Tailnet-Umschaltskript, Admin-Shell)."
+
+["gcc-15.3.0"]
+cve = [
+  "CVE-2023-4039",
+]
+until = "2027-01-18"
+comment = "CVE-2023-4039 nicht anwendbar: Der Fehler im Stack-Protector betrifft nur GCC mit Ziel AArch64 (und ist umstritten). Beide Hosts sind x86_64-linux, und im Runtime-Closure liegen nur gcc-15.3.0-lib/-libgcc dieses x86_64-Compilers."
+
+["gcc-16.2.0"]
+cve = [
+  "CVE-2023-4039",
+]
+until = "2027-01-18"
+comment = "CVE-2023-4039 nicht anwendbar: Betrifft nur GCC mit Ziel AArch64 (umstritten). Die Hosts sind x86_64-linux, im Closure liegen nur gcc-16.2.0-lib/-libgcc (x86_64)."
+
+["giflib-5.2.2"]
+cve = [
+  "CVE-2024-45993",
+]
+until = "2027-01-18"
+comment = "CVE-2024-45993 nicht anwendbar: Der Heap-Overflow steckt nur im CLI-Hilfsprogramm gif2rgb, nicht in libgif.so; Debian stuft ihn als 'Crash in CLI tool, no security impact' ein. Auf keinem Host ruft ein Dienst gif2rgb auf."
+
+["git-2.54.0"]
+cve = [
+  "CVE-2021-21684",
+  "CVE-2022-30947",
+  "CVE-2022-36882",
+  "CVE-2022-36883",
+  "CVE-2022-36884",
+  "CVE-2022-38663",
+]
+until = "2027-01-18"
+comment = "CVE-2021-21684 Fehlalarm: Betrifft das Jenkins Git Plugin, nicht Git selbst. Jenkins wird nicht eingesetzt. | CVE-2022-30947 Fehlalarm: Betrifft das Jenkins Git Plugin, nicht Git. | CVE-2022-36882 Fehlalarm: Betrifft das Jenkins Git Plugin (CSRF), nicht Git. | CVE-2022-36883 Fehlalarm: Betrifft das Jenkins Git Plugin, nicht Git. | CVE-2022-36884 Fehlalarm: Betrifft den Webhook-Endpunkt des Jenkins Git Plugins, nicht Git. | CVE-2022-38663 Fehlalarm: Betrifft die Credentials-Maskierung im Jenkins Git Plugin, nicht Git."
+
+["glibc-2.42-100"]
+cve = [
+  "CVE-2025-15281",
+  "CVE-2026-4046",
+  "CVE-2026-4437",
+  "CVE-2026-4438",
+  "CVE-2026-5435",
+  "CVE-2026-5450",
+  "CVE-2026-5928",
+  "CVE-2026-6238",
+]
+until = "2027-01-18"
+comment = "CVE-2025-15281 gepatcht: Der nixpkgs-Patch 2.42-master.patch (Backports aus release/2.42/master, Suffix -100) enthält den Fix 'posix: Reset wordexp_t fields with WRDE_REUSE (CVE-2025-15281 / BZ 33814)'. | CVE-2026-4046 gepatcht: 2.42-master.patch enthält den Commit 'Use pending character state in IBM1390, IBM1399 character sets (CVE-2026-4046)' inkl. Test für Bug 33980. | CVE-2026-4437 gepatcht: 2.42-master.patch enthält 'resolv: Count records correctly (CVE-2026-4437)'. | CVE-2026-4438 gepatcht: 2.42-master.patch enthält 'resolv: Check hostname for validity (CVE-2026-4438)'. | CVE-2026-5435 gepatcht: 2.42-master.patch enthält 'resolv: More types as unknown in ns_sprintrrf (CVE-2026-5435)' (Bug 34033) samt Testfall tst-ns_sprintrr. | CVE-2026-5450 gepatcht: 2.42-master.patch enthält 'stdio-common: Fix buffer overflow in scanf %mc [BZ #34008]', dessen Commit-Message CVE-2026-5450 nennt. | CVE-2026-5928 gepatcht: 2.42-master.patch enthält 'libio: Fix ungetwc operating on byte stream [BZ #33998]', dessen Commit-Message CVE-2026-5928 nennt (Fix in _IO_wdefault_pbackfail). | CVE-2026-6238 gepatcht: 2.42-master.patch enthält 'resolv: Fix buffer overreads in ns_sprintrrf (CVE-2026-6238)'."
+
+["glibc-2.44-25"]
+cve = [
+  "CVE-2026-5435",
+  "CVE-2026-6238",
+]
+until = "2027-01-18"
+comment = "CVE-2026-5435 in dieser Version behoben: Der Fix ist bereits im Release glibc 2.44 enthalten: NEWS listet Bug 34033 (ns_sprintrrf TSIG-Pfad) unter den in 2.44 behobenen Bugs. Der MITRE-Eintrag '2.2 und neuer' ist hier zu weit gefasst. | CVE-2026-6238 in dieser Version behoben: Laut MITRE sind nur glibc bis 2.43 betroffen, und die NEWS von glibc 2.44 führen Bug 34069 (CVE-2026-6238) als behoben."
+
+["gstreamer-1.26.11"]
+cve = [
+  "CVE-2026-18295",
+  "CVE-2026-18296",
+  "CVE-2026-18297",
+  "CVE-2026-18298",
+  "CVE-2026-18299",
+  "CVE-2026-1940",
+  "CVE-2026-2920",
+  "CVE-2026-2921",
+  "CVE-2026-2922",
+  "CVE-2026-2923",
+  "CVE-2026-3081",
+  "CVE-2026-3082",
+  "CVE-2026-3083",
+  "CVE-2026-3084",
+  "CVE-2026-3085",
+  "CVE-2026-3086",
+  "CVE-2026-73433",
+  "CVE-2026-73434",
+]
+until = "2027-01-18"
+comment = "CVE-2026-18295 nicht anwendbar: Betroffen ist das Element qtmoovrecover in gst-plugins-good (< 1.28.5). Das Kernpaket gstreamer-1.26.11 enthält nur coreelements/coretracers, und gst-plugins-good liegt in keinem der beiden System-Closures. | CVE-2026-18296 nicht anwendbar: Gleiches Advisory wie CVE-2026-18295 (qtmoovrecover/MRF in gst-plugins-good < 1.28.5). Das Kernpaket enthält den Code nicht, und gst-plugins-good ist auf keinem Host installiert. | CVE-2026-18297 nicht anwendbar: Der Opus-Decoder gehört zu gst-plugins-base (< 1.28.5), nicht zum Kernpaket. gst-plugins-base-1.26.11 ist zwar vorhanden, aber nur über GUI-Bibliotheken (gtk4, webkitgtk, pipewire, libcamera) der NetworkManager-VPN-Edito | CVE-2026-18298 nicht anwendbar: Betroffen ist gdkpixbufdec in gst-plugins-good (< 1.28.5). Das Kernpaket enthält es nicht, und gst-plugins-good ist auf keinem Host im Closure. | CVE-2026-18299 nicht anwendbar: Betroffen ist rtpsbcdepay in gst-plugins-good (< 1.28.5). Das Kernpaket enthält es nicht, und gst-plugins-good ist auf keinem Host im Closure. | CVE-2026-1940 in dieser Version behoben: Der wavparse-adtl-OOB-Read (gst-plugins-good) wurde in 1.26.11 behoben ('wavparse: Avoid integer overflow and out-of-bounds read when parsing adtl chunks'). Zusätzlich ist gst-plugins-good auf keinem Host vorhanden. | CVE-2026-2920 nicht anwendbar: Der ASF-Demuxer gehört zu gst-plugins-ugly. Der ursprüngliche Fix ist in 1.26.11 enthalten ('asfdemux: Error out on files with more than 32 streams'). Ein Folge-Fix (SA-2026-0058) betrifft ugly < 1.28.5, aber gst-plugins | CVE-2026-2921 in dieser Version behoben: Der Integer-Overflow im RIFF-Parser (gst-plugins-base) wurde in 1.26.11 behoben ('riff: Correctly check that enough RGB palette data is available'). Er liegt ohnehin nicht im Kernpaket. | CVE-2026-2922 in dieser Version behoben: Der rmdemux-OOB-Write (gst-plugins-ugly) wurde in 1.26.11 behoben ('rmdemux: Check if new video fragment overflows the fragment storage'). gst-plugins-ugly ist zudem auf keinem Host vorhanden. | CVE-2026-2923 in dieser Version behoben: Der dvbsuboverlay-OOB-Bug (gst-plugins-bad) wurde in 1.26.11 behoben ('dvbsuboverlay: Add missing bounds checks to the parser everywhere'). | CVE-2026-3081 in dieser Version behoben: Der h266parser-Stack-Overflow bei pic_timing SEI (gst-plugins-bad) wurde in 1.26.11 behoben ('h266parser: Fix out of bounds write when parsing pic_timing SEI'). | CVE-2026-3082 in dieser Version behoben: Der jpegparser-Huffman-Overflow (gst-plugins-bad codecparsers) wurde in 1.26.11 behoben ('jpegparser: boundary checks before copying it'). | CVE-2026-3083 in dieser Version behoben: Laut Advisory betroffen: gst-plugins-good 1.x <= 1.26.10. In 1.26.11 wird rtpqdm2depay deaktiviert. gst-plugins-good ist außerdem auf keinem Host vorhanden. | CVE-2026-3084 in dieser Version behoben: Der h266parser-Fehler bei Picture Partitions (gst-plugins-bad) wurde in 1.26.11 behoben ('h266parser: Validate tile index bounds in picture partition parsing'). | CVE-2026-3085 in dieser Version behoben: Gleiches Advisory wie CVE-2026-3083 (rtpqdm2depay, gst-plugins-good <= 1.26.10). In 1.26.11 ist das Element deaktiviert, und gst-plugins-good ist auf keinem Host vorhanden. | CVE-2026-3086 in dieser Version behoben: Der h266parser-APS-OOB-Write (gst-plugins-bad) wurde in 1.26.11 behoben ('h266parser: Fix APS ID bounds check in APS parsing'). | CVE-2026-73433 nicht anwendbar: Betroffen ist avidemux in gst-plugins-good (< 1.28.6). Das Kernpaket enthält avidemux nicht, und gst-plugins-good ist auf keinem Host im Closure. | CVE-2026-73434 nicht anwendbar: Gleiches Advisory wie CVE-2026-73433 (avidemux vprp in gst-plugins-good < 1.28.6). Der Code liegt nicht im Kernpaket, und gst-plugins-good ist auf keinem Host installiert."
+
+["imagemagick-7.1.2-31"]
+cve = [
+  "CVE-2026-102635",
+  "CVE-2026-105083",
+]
+until = "2027-01-18"
+comment = "CVE-2026-102635 nicht anwendbar: 7.1.2-31 kommt nur über vips in Immich (unstable) und ist ungepatcht. vips liest GIFs aber mit dem eingebauten nsgif-Loader (Priorität 50) statt mit magickload (-100); beide erkennen GIF am Magic 'GIF8'. Der verwundbare  | CVE-2026-105083 nicht anwendbar: Der Bypass greift nur, wenn eine policy.xml mit alternativem DOCTYPE verwendet wird. Auf den Hosts gibt es keine eigene ImageMagick-Policy. Die mitgelieferte policy.xml nutzt das Standard-DOCTYPE mit internem Subset ('<!"
+
+["inetutils-2.7"]
+cve = [
+  "CVE-2026-32772",
+]
+until = "2027-01-18"
+comment = "CVE-2026-32772 nicht anwendbar: Betroffen ist nur der telnet-Client beim Verbinden zu einem bösartigen Server. inetutils ist nicht in system-path. Es steht nur im internen PATH des home-manager-Skripts, das telnet nie aufruft (für hostname u.ä.). nixpk"
+
+["jq-1.8.2"]
+cve = [
+  "CVE-2026-39979",
+  "CVE-2026-44777",
+]
+until = "2027-01-18"
+comment = "CVE-2026-39979 in dieser Version behoben: Laut GHSA-2hhh-px8h-355p ist <= 1.8.1 betroffen und 1.8.2 gepatcht. Bei uns läuft 1.8.2. | CVE-2026-44777 in dieser Version behoben: Betroffen sind 1.8.2rc1 und älter, laut GHSA-rmpv-jgvr-wpr9 ist das Final-Release 1.8.2 gepatcht."
+
+["kitty-0.49.1"]
+cve = [
+  "CVE-2023-48795",
+  "CVE-2024-23749",
+  "CVE-2024-25003",
+  "CVE-2024-25004",
+]
+until = "2027-01-18"
+comment = "CVE-2023-48795 Fehlalarm: Terrapin betrifft SSH-Protokoll-Implementierungen (OpenSSH, PuTTY, libssh...). Das Terminal kitty implementiert kein SSH, 'kitten ssh' ruft das System-OpenSSH auf. Der Treffer kommt vermutlich über die Namensgleichheit m | CVE-2024-23749 Fehlalarm: Betrifft KiTTY 0.76.1.13, den Windows-Fork des SSH-Clients PuTTY, nicht das Linux-Terminal kitty (kovidgoyal, Version 0.49.x). | CVE-2024-25003 Fehlalarm: Betrifft den Windows-PuTTY-Fork KiTTY (0.76.1.13), nicht das Terminal kitty. | CVE-2024-25004 Fehlalarm: Betrifft den Windows-PuTTY-Fork KiTTY (0.76.1.13), nicht das Terminal kitty."
+
+["lapack-3"]
+cve = [
+  "CVE-2021-4048",
+]
+until = "2027-01-18"
+comment = "CVE-2021-4048 in dieser Version behoben: lapack-3 ist in nixpkgs nur ein Wrapper. Er kopiert liblapack.so.3 aus openblas-0.3.33, und der Fehler ist in OpenBLAS seit 0.3.18 behoben. Auch die Referenz-Header stammen aus liblapack 3.12.1 (Fix ab 3.10.1)."
+
+["libraw-0.22.1"]
+cve = [
+  "CVE-2026-20884",
+  "CVE-2026-20911",
+  "CVE-2026-21413",
+  "CVE-2026-24450",
+]
+until = "2027-01-18"
+comment = "CVE-2026-20884 in dieser Version behoben: Der Fix-Commit aa4458eb ist im Tag 0.22.1 enthalten, Debian markiert 0.22.1-1 als gefixt. nixpkgs baut genau Tag 0.22.1. | CVE-2026-20911 in dieser Version behoben: Der Fix-Commit 5357bb5f ist im Tag 0.22.1 enthalten (eingeführt in 0.22.0), Debian markiert 0.22.1-1 als gefixt. | CVE-2026-21413 in dieser Version behoben: Der Fix-Commit 75ed2c12 ist im Tag 0.22.1 enthalten, Debian markiert 0.22.1-1 als gefixt. | CVE-2026-24450 in dieser Version behoben: Der Fix-Commit c911c9b9 ist im Tag 0.22.1 enthalten, Debian markiert 0.22.1-1 als gefixt."
+
+["libsndfile-1.2.2"]
+cve = [
+  "CVE-2024-50612",
+  "CVE-2024-50613",
+  "CVE-2025-52194",
+  "CVE-2025-56226",
+  "CVE-2026-37555",
+]
+until = "2027-01-18"
+comment = "CVE-2024-50612 nicht anwendbar: Der Bug liegt im Ogg/Vorbis-Schreibpfad (vorbis_analysis_wrote) und braucht eine Anwendung, die mit libsndfile Vorbis kodiert. Unter den Bibliotheken, die Dienste laden, linkt nur libpulsecommon/libpulsecore libsndfile;  | CVE-2024-50613 nicht anwendbar: Erreichbare Assertion im MP3-Encoder (mpeg_l3_encoder_close), nur beim Schreiben von MP3 über libsndfile. Kein Dienst kodiert Audio mit libsndfile; im Dienstkontext linkt nur libpulsecommon die Bibliothek. | CVE-2025-52194 nicht anwendbar: Overflow beim Lesen von IRCAM-Headern über sf_open. In den Diensten (Immich, mautrix-Bridges) parst ffmpeg Audio mit eigenen Demuxern, libsndfile ist nur über libpulsecommon (sndfile-util für paplay/Samples) eingebunden. | CVE-2025-56226 nicht anwendbar: Speicherleck in mpeg_l3_encoder_init, nur im MP3-Schreibpfad. Kein Dienst kodiert über libsndfile. | CVE-2026-37555 nicht anwendbar: Integer-Overflow im IMA-ADPCM-WAV-Lesepfad, ungepatcht in 1.2.2. Er braucht sf_open auf eine Angreifer-WAV. Im Dienstkontext linkt nur libpulsecommon/libpulsecore libsndfile; ffmpeg (Immich, mautrix) dekodiert WAV selbst"
+
+["libsoup-3.6.6"]
+cve = [
+  "CVE-2026-102555",
+  "CVE-2026-102556",
+  "CVE-2026-102557",
+  "CVE-2026-102558",
+]
+until = "2027-01-18"
+comment = "CVE-2026-102555 nicht anwendbar: Ungepatcht (Fix e4f03226 erst in 3.7.3, nicht unter den nixpkgs-Patches). libsoup wird auf beiden Hosts aber nur von Desktop-Bibliotheken referenziert (webkitgtk, tinysparql via gtk3, gupnp/gssdp via libnice in gst-plugi | CVE-2026-102556 nicht anwendbar: Ungepatcht (Fix d2cbaf25 in 3.7.3). Betrifft nur Anwendungen, die SoupWebsocketConnection mit ::pong-Handler nutzen. Auf den Hosts wird libsoup nur von GUI-Bibliotheken referenziert, kein Dienst baut libsoup-WebSockets a | CVE-2026-102557 nicht anwendbar: Ungepatcht (Fix d7f074f8 in 3.7.3). Der WebSocket-Fragment-Reassembly-Bug braucht einen libsoup-WebSocket-Client oder -Server. Kein Dienst auf edge/portuus nutzt libsoup-WebSockets, Referrer sind nur GUI-Bibliotheken. | CVE-2026-102558 nicht anwendbar: Ungepatcht (Fix 381a474f in 3.7.3). Betrifft SoupWebsocketConnection mit unbegrenzter max-incoming-payload-size. Kein Dienst auf den Hosts nutzt libsoup-WebSockets, Referrer sind nur GUI-Bibliotheken."
+
+["libssh2-1.11.1"]
+cve = [
+  "CVE-2025-15661",
+  "CVE-2026-55199",
+  "CVE-2026-55200",
+  "CVE-2026-58050",
+  "CVE-2026-58051",
+  "CVE-2026-66032",
+  "CVE-2026-66033",
+  "CVE-2026-66034",
+  "CVE-2026-66035",
+  "CVE-2026-7598",
+]
+until = "2027-01-18"
+comment = "CVE-2025-15661 gepatcht: nixpkgs bindet den Debian-Backport von Upstream-Commit 2dae302 als CVE-2025-15661.patch ein (dazu libssh-unconst-backport.patch), und die gescannte Derivation enthält ihn im Feld patches. | CVE-2026-55199 gepatcht: Backport von Upstream-Commit 1762685 ist als CVE-2026-55199.patch in der Paketdefinition und in der Derivation enthalten. | CVE-2026-55200 gepatcht: Backport von Upstream-Commit 97acf3d (packet_length-Obergrenze in transport.c) ist als CVE-2026-55200.patch eingebunden und in der Derivation vorhanden. | CVE-2026-58050 gepatcht: nixpkgs bindet einen Backport von Upstream-Commit 3449752 (Yggdrasil-Patch, Verweis auf libssh2 Issue 1925) als CVE-2026-58050.patch ein; zusätzlich betrifft der Overflow nur 32-Bit, portuus ist x86_64. | CVE-2026-58051 gepatcht: Backport von Upstream-Commit a9758da ist als CVE-2026-58051.patch in Paketdefinition und Derivation enthalten. | CVE-2026-66032 gepatcht: Debian-Backport von Upstream-Commit 5e47761 (Double-Free in sftp_open) ist als CVE-2026-66032.patch eingebunden und in der Derivation vorhanden. | CVE-2026-66033 gepatcht: Debian-Backport von Upstream-Commit a2ed82d (AES-GCM-Underflow) ist als CVE-2026-66033.patch eingebunden und in der Derivation vorhanden. | CVE-2026-66034 gepatcht: Debian-Backport von Upstream-Commit a13bb6c (publickey-Subsystem Bounds-Check) ist als CVE-2026-66034.patch eingebunden und in der Derivation vorhanden. | CVE-2026-66035 gepatcht: Debian-Backport von Upstream-Commit 42e33d8 (ETM-Heap-Overflow in fullpacket) ist als CVE-2026-66035.patch eingebunden und in der Derivation vorhanden. | CVE-2026-7598 gepatcht: nixpkgs liefert ./CVE-2026-7598.patch (Upstream-Commit 256d04b, Overflow-Checks in userauth_list/userauth_password) mit, die Derivation enthält ihn."
+
+["libusb-1.0.29"]
+cve = [
+  "CVE-2026-23679",
+  "CVE-2026-47104",
+]
+until = "2027-01-18"
+comment = "CVE-2026-23679 nicht anwendbar: Auslösen lässt sich der Fehler nur mit präparierten USB-Deskriptoren, also über ein physisch angestecktes Gerät (portuus) oder über die Kontrolle des Hypervisors (edge-VPS). Die Folge ist nur ein NULL-Deref-Absturz des a | CVE-2026-47104 nicht anwendbar: Das ist ein 1-Byte-Out-of-Bounds-Read beim Parsen von IAD-Deskriptoren. Er setzt präparierte USB-Geräte voraus, also physischen Zugriff oder Hypervisor-Kontrolle. Auf den Hosts verarbeitet kein Dienst USB-Deskriptoren üb"
+
+["mercurial-7.1.2"]
+cve = [
+  "CVE-2022-43410",
+]
+until = "2027-01-18"
+comment = "CVE-2022-43410 Fehlalarm: Betrifft das Jenkins Mercurial Plugin, nicht Mercurial selbst. Jenkins wird nicht eingesetzt."
+
+["nghttp2-1.69.0"]
+cve = [
+  "CVE-2026-58055",
+]
+until = "2027-01-18"
+comment = "CVE-2026-58055 nicht anwendbar: Die Lücke steckt nur im Proxy-Programm nghttpx, nicht in libnghttp2. nghttpx wird auf keinem Host als Dienst betrieben. edge nutzt nginx als Proxy, und dort ist nur nghttp2-lib im Closure (für curl, bind, libsoup). Auf p"
+
+["nmap-7.99"]
+cve = [
+  "CVE-2026-58058",
+]
+until = "2027-01-18"
+comment = "CVE-2026-58058 nicht anwendbar: Die Version ist betroffen und in nixpkgs nicht gepatcht. Auslösbar ist der Fehler aber nur, wenn ein Admin per Hand einen IPv6-Raw-Scan gegen ein bösartiges Ziel startet. Folge ist ein Absturz bzw. Out-of-Bounds-Read im "
+
+["olm-3.2.16"]
+cve = [
+  "CVE-2024-45191",
+  "CVE-2024-45192",
+  "CVE-2024-45193",
+]
+until = "2027-01-18"
+comment = "CVE-2024-45191 bewusst akzeptiert: libolm ist upstream aufgegeben und bewusst in permittedInsecurePackages freigegeben (mautrix-whatsapp, mautrix-signal, maubot). Praktisch nur mit lokalem Zugriff ausnutzbar bzw. ohne Fälschungsmöglichkeit. | CVE-2024-45192 bewusst akzeptiert: libolm ist upstream aufgegeben und bewusst in permittedInsecurePackages freigegeben (mautrix-whatsapp, mautrix-signal, maubot). Praktisch nur mit lokalem Zugriff ausnutzbar bzw. ohne Fälschungsmöglichkeit. | CVE-2024-45193 bewusst akzeptiert: libolm ist upstream aufgegeben und bewusst in permittedInsecurePackages freigegeben (mautrix-whatsapp, mautrix-signal, maubot). Praktisch nur mit lokalem Zugriff ausnutzbar bzw. ohne Fälschungsmöglichkeit."
+
+["openssh-10.5p1"]
+cve = [
+  "CVE-2026-106552",
+  "CVE-2026-106553",
+  "CVE-2026-106555",
+  "CVE-2026-106582",
+  "CVE-2026-106583",
+  "CVE-2026-106584",
+  "CVE-2026-106585",
+  "CVE-2026-106586",
+  "CVE-2026-106587",
+]
+until = "2027-01-18"
+comment = "CVE-2026-106552 nicht anwendbar: Betrifft nur den sftp-Client bei rekursivem Download von einem bösartigen Server. Kein Dienst auf edge oder portuus nutzt sftp oder scp als Client (edge-backup, fail2ban-Aktion und deploy-rs nutzen nur ssh zu eigenen Hos | CVE-2026-106553 nicht anwendbar: nixpkgs baut openssh mit withKerberos=false, also ohne --with-kerberos5, wodurch GSSAPI-Authentifizierung nicht einkompiliert ist; sshd-auth linkt keine libgssapi/krb5, und GSSAPIAuthentication ist in sshd_config nicht g | CVE-2026-106555 nicht anwendbar: Wie CVE-2026-106553: GSSAPI-Authentifizierung ist im nixpkgs-Build ohne Kerberos nicht vorhanden und auf beiden Hosts nicht konfiguriert, der betroffene Zustand kann nicht entstehen. | CVE-2026-106582 nicht anwendbar: Betrifft die zlib-Kompression nach dem Login. Seit ssh_hardening gilt Compression = no auf portuus und edge, die Lücke ist damit nicht erreichbar. Behoben in openssh 10.6p1. | CVE-2026-106583 nicht anwendbar: Betrifft nur den ssh-Client, wenn ein Benutzername aus nicht vertrauenswürdiger Quelle auf der Kommandozeile landet und in ProxyCommand/Match exec expandiert wird. Alle ssh-Aufrufe auf den Hosts verwenden feste Benutzern | CVE-2026-106584 nicht anwendbar: Betrifft nur das Ausstellen von SSH-Zertifikaten mit ssh-keygen (Ablaufzeit bei Sommerzeit falsch). Auf den Hosts werden keine SSH-Zertifikate erzeugt oder akzeptiert: kein TrustedUserCAKeys, kein HostCertificate, Author | CVE-2026-106585 nicht anwendbar: Betrifft die zlib-Kompression nach dem Login. Seit ssh_hardening gilt Compression = no auf portuus und edge, die Lücke ist damit nicht erreichbar. Behoben in openssh 10.6p1. | CVE-2026-106586 nicht anwendbar: Der restrict-Fehler betrifft nur Tunnel-Forwarding (PermitTunnel). PermitTunnel ist auf beiden Hosts nicht gesetzt und damit global no, sodass die restrict-Keys auf edge (edge-backup, mail-ban) keinen Tunnel öffnen könne | CVE-2026-106587 nicht anwendbar: Laut Release Notes wird \"none\" nur dann fälschlich als Dateiname interpretiert, wenn die Option in einem Match-Block überschrieben wird. Die sshd_config beider Hosts enthält AuthorizedPrincipalsFile none nur global und"
+
+["openssl-3.5.8"]
+cve = [
+  "CVE-2026-35191",
+  "CVE-2026-42772",
+  "CVE-2026-54872",
+  "CVE-2026-54873",
+  "CVE-2026-54875",
+  "CVE-2026-72897",
+  "CVE-2026-75804",
+  "CVE-2026-75805",
+  "CVE-2026-75806",
+  "CVE-2026-77696",
+  "CVE-2026-84782",
+  "CVE-2026-84784",
+]
+until = "2027-01-18"
+comment = "CVE-2026-35191 nicht anwendbar: Betrifft nur einen OpenSSL-eigenen QUIC-Server ohne Adressvalidierung. Kein Nutzer von openssl-3.5.8 (nur Immich-Stack) betreibt einen QUIC-Server: Immich lauscht nur per HTTP hinter nginx, und curl/Node nutzen für QUIC  | CVE-2026-42772 nicht anwendbar: Fehler im QUIC-Stream-Reassembly des OpenSSL-eigenen QUIC-Stacks. Die Konsumenten von openssl-3.5.8 (Immich Node/Python, curl, ffmpeg-Libs) verwenden diesen Stack nicht; HTTP/3 in curl und Node läuft über ngtcp2, Python  | CVE-2026-54872 nicht anwendbar: Timing-Leck nur bei ECDSA/SM2-Signaturen auf generischen Kurven (z.B. Brainpool); NIST-Kurven sind nicht betroffen. Im Immich-Stack, dem einzigen Nutzer von openssl-3.5.8, gibt es keine Signaturoperationen mit eigenen pr | CVE-2026-54873 nicht anwendbar: Betrifft nur das Puffer-Management des OpenSSL-eigenen QUIC-Stacks, der von keinem Konsumenten von openssl-3.5.8 genutzt wird (curl/Node nutzen ngtcp2, Immich hat keinen QUIC-Endpunkt). | CVE-2026-54875 nicht anwendbar: Laut Advisory nur auf AArch64 und RISC-V betroffen und nur bei SM2-Operationen; portuus ist x86_64-linux und nutzt kein SM2. | CVE-2026-72897 nicht anwendbar: Betrifft nur TLS-Server, die mitten im Handshake SSL_set_SSL_CTX() aufrufen und Kontexte mit unterschiedlich vielen Provider-Sigalgs haben (nicht Default). Kein TLS-Server auf portuus nutzt openssl-3.5.8: Immich spricht  | CVE-2026-75804 nicht anwendbar: Fehlende Connection-Flow-Control im OpenSSL-eigenen QUIC-Stack; dieser wird von keinem Nutzer von openssl-3.5.8 verwendet (QUIC in curl/Node über ngtcp2). | CVE-2026-75805 nicht anwendbar: Betrifft nur CMP-Clients, die eine Zertifikatssperrung per PKCS#10-CSR anfordern (openssl cmp -cmd rr -csr bzw. OSSL_CMP_exec_RR_ses). CMP wird auf den Hosts nirgends genutzt. | CVE-2026-75806 nicht anwendbar: Nur bestehende DTLS-1.2-Assoziationen sind betroffen (bei TLS nur Protokollkonformität). Kein Konsument von openssl-3.5.8 auf portuus nutzt DTLS: Immich Node/Python sprechen TLS über TCP, ffmpeg verarbeitet nur lokale Da | CVE-2026-77696 nicht anwendbar: Betrifft nur SM2-Signaturerzeugung. Auf portuus erzeugt kein Nutzer von openssl-3.5.8 SM2-Signaturen; es gibt weder SM2-Schlüssel noch einen TLS-Server im Immich-Stack. | CVE-2026-84782 nicht anwendbar: Fehler in der DTLS-Retransmission-Logik; nur DTLS-Verbindungen betroffen. Kein Konsument von openssl-3.5.8 (Immich-Server, Immich-ML, ffmpeg-Libs) baut DTLS-Verbindungen auf, pipewire läuft nicht. | CVE-2026-84784 nicht anwendbar: NEW_CONNECTION_ID-Flood im OpenSSL-eigenen QUIC-Stack; dieser wird von keinem Nutzer von openssl-3.5.8 verwendet (curl/Node nutzen ngtcp2, Python ssl hat kein QUIC)."
+
+["orc-0.4.41"]
+cve = [
+  "CVE-2025-47436",
+]
+until = "2027-01-18"
+comment = "CVE-2025-47436 Fehlalarm: Die CVE betrifft Apache ORC (C++-Bibliothek für das Columnar-Dateiformat, LZO-Dekompression, Versionen 1.x/2.x). Das nixpkgs-Paket orc ist der GStreamer Optimized Inner Loop Runtime Compiler, ein anderes Projekt."
+
+["orc-0.4.44"]
+cve = [
+  "CVE-2025-47436",
+]
+until = "2027-01-18"
+comment = "CVE-2025-47436 Fehlalarm: Die CVE betrifft Apache ORC (Columnar-Dateiformat), nicht den GStreamer-SIMD-Compiler orc 0.4.44 aus nixpkgs-unstable. Die Übereinstimmung ist nur der Name."
+
+["patch-2.8"]
+cve = [
+  "CVE-2026-56288",
+  "CVE-2026-56289",
+]
+until = "2027-01-18"
+comment = "CVE-2026-56288 nicht anwendbar: Ein NULL-Pointer-DoS in GNU patch bei bösartiger Patch-Datei. patch steht nur als CLI im PATH und läuft in Nix-Builds (stdenv), deren Patches aus nixpkgs bzw. dem eigenen Repo kommen. Kein Dienst wendet fremde Patch-Date | CVE-2026-56289 nicht anwendbar: Ein CPU-DoS (Endlosschleife) in GNU patch bei bösartiger Patch-Datei. Kein Dienst verarbeitet fremde Patch-Dateien mit GNU patch, die Nutzung beschränkt sich auf Admin-CLI und Nix-Builds mit vertrauenswürdigen Patches."
+
+["perl-5.42.3"]
+cve = [
+  "CVE-2026-13221",
+  "CVE-2026-57432",
+  "CVE-2026-8376",
+]
+until = "2027-01-18"
+comment = "CVE-2026-13221 in dieser Version behoben: Betroffen ist '5.41.0 bis vor 5.42.3-RC1', die vorliegende Version 5.42.3 ist also behoben. | CVE-2026-57432 in dieser Version behoben: Betroffen ist '5.41.0 bis vor 5.42.3-RC1', 5.42.3 enthält den Fix. | CVE-2026-8376 in dieser Version behoben: Betroffen ist '5.41.0 bis vor 5.42.3-RC1', 5.42.3 enthält den Fix. Der Fehler betrifft außerdem nur 32-Bit-Builds, die Hosts sind x86_64."
+
+["perl-5.42.3-env"]
+cve = [
+  "CVE-2026-13221",
+  "CVE-2026-57432",
+  "CVE-2026-8376",
+]
+until = "2027-01-18"
+comment = "CVE-2026-13221 in dieser Version behoben: Das perl-env bündelt perl 5.42.3, und laut MITRE ist erst die Linie vor 5.42.3-RC1 betroffen. | CVE-2026-57432 in dieser Version behoben: Das perl-env bündelt perl 5.42.3, behoben seit 5.42.3-RC1. | CVE-2026-8376 in dieser Version behoben: Das perl-env bündelt perl 5.42.3, behoben seit 5.42.3-RC1. Der Fehler betrifft außerdem nur 32-Bit-Builds."
+
+["pgvector-0.8.2"]
+cve = [
+  "CVE-2026-18022",
+]
+until = "2027-01-18"
+comment = "CVE-2026-18022 nicht anwendbar: Laut Advisory sind nur 32-Bit-Systeme betroffen. portuus ist x86_64. Ausnutzen könnte die Lücke außerdem nur ein Datenbank-Benutzer beim Bau eines IVFFlat-Index."
+
+["php-calendar-8.4.26"]
+cve = [
+  "CVE-2022-4455",
+]
+until = "2027-01-18"
+comment = "CVE-2022-4455 Fehlalarm: Die CVE betrifft die PHP-Webanwendung sproctor/php-calendar 2.0.x (XSS über PHP_SELF). Das nixpkgs-Paket php-calendar ist dagegen die mitgelieferte PHP-Erweiterung ext/calendar von PHP 8.4.26."
+
+["polkit-1.pam"]
+cve = [
+  "CVE-2021-4034",
+]
+until = "2027-01-18"
+comment = "CVE-2021-4034 Fehlalarm: 'polkit-1.pam' ist nur die von NixOS erzeugte PAM-Konfigurationsdatei (writeText mit pam_unix-Zeilen), keine polkit-Software. Installiert ist polkit-127, PwnKit wurde in polkit 0.120 behoben."
+
+["rustdesk-server-1.1.16"]
+cve = [
+  "CVE-2026-30796",
+  "CVE-2026-3598",
+]
+until = "2027-01-18"
+comment = "CVE-2026-30796 Fehlalarm: Die CVE betrifft den RustDesk Client (Address-Book-/Heartbeat-Sync in src/hbbs_http/sync.rs). Auf portuus läuft nur der Open-Source-Server rustdesk/rustdesk-server (hbbs/hbbr). | CVE-2026-3598 Fehlalarm: Die CVE betrifft das kommerzielle Produkt RustDesk Server Pro bis 1.7.5 (Config-Export der Web-Konsole). Das OSS-Paket rustdesk-server 1.1.16 hat diese Web-Konsole nicht und ist ein anderes Produkt."
+
+["snappy-1.2.2"]
+cve = [
+  "CVE-2023-28115",
+  "CVE-2023-41330",
+]
+until = "2027-01-18"
+comment = "CVE-2023-28115 Fehlalarm: Die CVE betrifft die PHP-Bibliothek KnpLabs/snappy (PDF/Thumbnail-Generator, PHAR-Deserialisierung). Das nixpkgs-Paket snappy ist die Kompressionsbibliothek google/snappy. | CVE-2023-41330 Fehlalarm: Die CVE betrifft knplabs/knp-snappy (PHP), nicht die Kompressionsbibliothek google/snappy aus nixpkgs."
+
+["sqlite-3.51.2"]
+cve = [
+  "CVE-2026-11822",
+  "CVE-2026-11824",
+]
+until = "2027-01-18"
+comment = "CVE-2026-11822 nicht anwendbar: Die FTS5-Lücken sind echt vorhanden: FTS5 ist aktiviert, behoben erst in 3.53.2, und es gibt keinen Patch. Ausnutzen lassen sie sich aber nur, wenn eine präparierte Datenbankdatei mit kaputten FTS5-Seiten geöffnet und da | CVE-2026-11824 nicht anwendbar: Der Heap-Überlauf in fts5ChunkIterate tritt nur bei einer präparierten Datenbankdatei (szLeaf < 4) und einer FTS5-MATCH-Abfrage auf. Kein Dienst auf edge oder portuus öffnet SQLite-Datenbanken von Angreifern. Alle Datenb"
+
+["zlib-1.3.2"]
+cve = [
+  "CVE-2023-6992",
+  "CVE-2026-27820",
+]
+until = "2027-01-18"
+comment = "CVE-2023-6992 Fehlalarm: Betroffen ist nur der Cloudflare-Fork von zlib. Das Advisory sagt ausdrücklich: 'The upstream repository is not affected.' nixpkgs nutzt das Upstream-zlib von madler/zlib.net. | CVE-2026-27820 Fehlalarm: Die CVE betrifft das Ruby-Gem zlib (Zlib::GzipReader, Versionen 3.x), nicht die C-Bibliothek zlib 1.3.2."
+
