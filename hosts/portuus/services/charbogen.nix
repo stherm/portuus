@@ -20,6 +20,10 @@ in
     bogen.enable = true;
     wiki.enable = true;
     api.enable = true;
+    mcp = {
+      enable = true;
+      publicUrl = "https://${c.fqdn}";
+    };
 
     auth = {
       mode = "proxy";
