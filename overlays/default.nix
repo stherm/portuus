@@ -27,4 +27,15 @@
       inherit (prev) config;
     };
   };
+
+  php-security = final: prev: {
+    inherit
+      (import inputs.nixpkgs-php {
+        inherit (prev.stdenv.hostPlatform) system;
+        inherit (prev) config;
+      })
+      php
+      php84
+      ;
+  };
 }

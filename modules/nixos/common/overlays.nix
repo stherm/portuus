@@ -7,5 +7,6 @@
     outputs.overlays.modifications
     outputs.overlays.old-stable-packages
     outputs.overlays.unstable-packages
+    outputs.overlays.php-security
   ];
 }
