@@ -3,6 +3,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-old-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-php.url = "github:nixos/nixpkgs/8c259fc0dd1f3ccc1aaf4f9156ab16b7328b5a4f";
 
     synix.url = "git+https://git.sid.ovh/sid/synix.git?ref=release-26.05";
     synix.inputs.nixpkgs.follows = "nixpkgs";
