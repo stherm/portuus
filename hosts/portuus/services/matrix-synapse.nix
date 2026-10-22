@@ -22,7 +22,14 @@
       enable = true;
       sops = true;
       dataDir = "/data/matrix-synapse";
-      settings.max_upload_size = "200M";
+      settings = {
+        max_upload_size = "200M";
+        max_event_delay_duration = "24h";
+        rc_delayed_event_mgmt = {
+          per_second = 1;
+          burst_count = 20;
+        };
+      };
       bridges = {
         whatsapp = {
           enable = true;
