@@ -109,11 +109,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1792856545,
-        "narHash": "sha256-OXKIwZEJ0UStxi1AWAVgWVCWydsVdqzSXASG4auRMMI=",
+        "lastModified": 1792865462,
+        "narHash": "sha256-F9ZWFU+0vH6k6ICT2E+iGtzK+wzFIZ/ovcfLgvNsbH4=",
         "ref": "master",
-        "rev": "0df07ab8600e1e685982ecde89d68394dcacadfe",
-        "revCount": 1772,
+        "rev": "4bb69bf507ee2fcaef852f4d60a894f797273c6d",
+        "revCount": 1778,
         "type": "git",
         "url": "https://git.portuus.de/pnp/charbogen.git"
       },
@@ -544,6 +544,28 @@
         "type": "github"
       }
     },
+    "microvm": {
+      "inputs": {
+        "nixpkgs": [
+          "synix",
+          "nixpkgs"
+        ],
+        "spectrum": "spectrum"
+      },
+      "locked": {
+        "lastModified": 1791551030,
+        "narHash": "sha256-jTx3O3MKqPjv+cDfBFQ5zlKECBEwzF91scC+mSumZyE=",
+        "owner": "microvm-nix",
+        "repo": "microvm.nix",
+        "rev": "f13928fe9900e91709d7ce581eefa47eaafa79e1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "microvm-nix",
+        "repo": "microvm.nix",
+        "type": "github"
+      }
+    },
     "nix": {
       "inputs": {
         "bdwgc": "bdwgc",
@@ -576,11 +598,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1792556406,
-        "narHash": "sha256-DSRDShv41SWpRsyP5SqmIgGAp2Z3AVREZxEwqdcnXj8=",
+        "lastModified": 1792815274,
+        "narHash": "sha256-Pt3FA/1PY8pr3KREMpyRFfA9lNlYVdEhlAY9oZ/+VlM=",
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
-        "rev": "27f79badc34d8df808bc617db8f0de208ecd375f",
+        "rev": "d1531f60276d400b7d0d9be01ca3b814057096ce",
         "type": "github"
       },
       "original": {
@@ -615,11 +637,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1792503283,
-        "narHash": "sha256-vhe2jyvRCgufWPqDuDq1S3t3ypE+ka46IFutV02xKso=",
+        "lastModified": 1792615934,
+        "narHash": "sha256-MlvRfa1O5Cqc2/a+gG+l9TSuowEoCKCmrJ1d9oAVm0I=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "cd4ea8d57de16f4810bc5f14207bac45fbf19f67",
+        "rev": "da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36",
         "type": "github"
       },
       "original": {
@@ -658,22 +680,6 @@
         "owner": "nixos",
         "ref": "nixos-25.11",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-php": {
-      "locked": {
-        "lastModified": 1792593785,
-        "narHash": "sha256-dEQs/r/DSIvSjw5pQro/BAqsUnFNNZ3I/qmFYzatGvc=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "8c259fc0dd1f3ccc1aaf4f9156ab16b7328b5a4f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "8c259fc0dd1f3ccc1aaf4f9156ab16b7328b5a4f",
         "type": "github"
       }
     },
@@ -826,7 +832,6 @@
         "nixos-mailserver": "nixos-mailserver",
         "nixpkgs": "nixpkgs",
         "nixpkgs-old-stable": "nixpkgs-old-stable",
-        "nixpkgs-php": "nixpkgs-php",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix",
         "synix": "synix",
@@ -840,11 +845,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792056300,
-        "narHash": "sha256-YU1LjDe1o2Ymg5zEiCHbmMXLkDCtxHQRiVqZ3nC5GGk=",
+        "lastModified": 1792809984,
+        "narHash": "sha256-KV+CaZX7QS0hcdKxwGKehDb1jmUgx6lbkTPpaoIW5Nw=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "44931708c62937c2b1bf7953902989fa5bb9ee1b",
+        "rev": "442449fa7b1fe6c692d0103ac9fc8f9e82931cf3",
         "type": "github"
       },
       "original": {
@@ -872,6 +877,22 @@
         "owner": "Mic92",
         "repo": "sops-nix",
         "type": "github"
+      }
+    },
+    "spectrum": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786032750,
+        "narHash": "sha256-+Ba/kIn5BjvV7PN8bWOo7RoqgTY/Yv2M7qeMf3wS2Ag=",
+        "ref": "refs/heads/main",
+        "rev": "77d2389874bb092b8dbf05ecc5b1030372e80e98",
+        "revCount": 1417,
+        "type": "git",
+        "url": "https://spectrum-os.org/git/spectrum"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://spectrum-os.org/git/spectrum"
       }
     },
     "stylix": {
@@ -914,8 +935,12 @@
         "flake-schemas": "flake-schemas",
         "git-hooks": "git-hooks_2",
         "home-manager": "home-manager",
+        "microvm": "microvm",
         "nix": "nix",
         "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-php": [
           "nixpkgs"
         ],
         "nixvim": "nixvim",
@@ -924,11 +949,11 @@
         "stylix": "stylix"
       },
       "locked": {
-        "lastModified": 1792323619,
-        "narHash": "sha256-1PukA9Y5BbW2+6yEUP7TksKkRnp9CsPAOC8zpUIFNKg=",
+        "lastModified": 1792759580,
+        "narHash": "sha256-kUtakaMQIkcDtik3H1rUQ9zWJiWYe1k8MXDQS4WYm4U=",
         "ref": "release-26.05",
-        "rev": "986a554abecfa26eb4874c94fd240db087921aaf",
-        "revCount": 282,
+        "rev": "6793c39466fd1eccde79ad8af1437491c2785f24",
+        "revCount": 289,
         "type": "git",
         "url": "https://git.sid.ovh/sid/synix.git"
       },
