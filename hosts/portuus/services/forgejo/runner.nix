@@ -26,7 +26,11 @@
     tmpfiles.rules = [ "d /var/lib/gitea-runner-work 0750 gitea-runner gitea-runner - -" ];
   };
 
-  nix.settings.allowed-users = [ "*" ];
+  nix.settings = {
+    allowed-users = [ "*" ];
+    trusted-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
+    trusted-public-keys = [ "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI=" ];
+  };
 
   sops = {
     secrets."gitea-actions-runner/nix/token" = { };
