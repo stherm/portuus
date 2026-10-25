@@ -62,6 +62,11 @@
       fsType = "zfs";
     };
 
+    "/data/attic" = {
+      device = "dpool/data/attic";
+      fsType = "zfs";
+    };
+
     "/data/backup" = {
       device = "dpool/data/backup";
       fsType = "zfs";

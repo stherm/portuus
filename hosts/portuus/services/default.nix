@@ -5,6 +5,7 @@
 
 {
   imports = [
+    ./attic.nix
     ./charbogen.nix
     ./edge-backup.nix
     ./fail2ban.nix
