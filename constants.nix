@@ -19,6 +19,8 @@ rec {
       subdomain = "cache";
       fqdn = "cache." + domain;
       port = 8180;
+      cache = "portuus";
+      publicKey = "portuus:OEIdyRk2znvu8n4B+2FnNmWjOWnKxRACfQfuIYHNd8s=";
     };
     charbogen = {
       fqdn = "roll-dice.org";

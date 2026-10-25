@@ -6,6 +6,7 @@
 {
   imports = [
     ./attic.nix
+    ./attic-watch-store.nix
     ./charbogen.nix
     ./edge-backup.nix
     ./fail2ban.nix

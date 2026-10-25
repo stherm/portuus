@@ -1,4 +1,5 @@
 {
+  attic-client = import ./attic-client;
   common = import ./common;
   forgejo = import ./forgejo;
   github-runner = import ./github-runner;

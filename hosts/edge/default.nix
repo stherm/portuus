@@ -16,8 +16,11 @@
 
     inputs.synix.nixosModules.common
 
+    outputs.nixosModules.attic-client
     outputs.nixosModules.common
   ];
+
+  services.attic-client.enable = true;
 
   system.stateVersion = "25.11";
 }
