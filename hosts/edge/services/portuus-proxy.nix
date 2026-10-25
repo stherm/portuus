@@ -23,6 +23,12 @@ in
     (mkProxy s.vaultwarden.subdomain "")
     (mkProxy s.radicale.subdomain "")
     (mkProxy s.jirafeau.subdomain "")
+    (mkProxy s.attic.subdomain ''
+      client_max_body_size 0;
+      proxy_request_buffering off;
+      proxy_read_timeout 600s;
+      proxy_send_timeout 600s;
+    '')
 
     {
       "${s.forgejo.fqdn}" = {

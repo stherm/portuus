@@ -15,6 +15,11 @@ rec {
   };
 
   services = {
+    attic = {
+      subdomain = "cache";
+      fqdn = "cache." + domain;
+      port = 8180;
+    };
     charbogen = {
       fqdn = "roll-dice.org";
       authFqdn = "auth.roll-dice.org";
