@@ -8,6 +8,7 @@
 let
   inherit (lib)
     mkEnableOption
+    mkForce
     mkIf
     mkOption
     types
@@ -42,8 +43,14 @@ in
 
   config = mkIf cfg.enable {
     nix.settings = {
-      substituters = [ "${cfg.endpoint}/${cfg.cache}" ];
-      trusted-public-keys = [ s.publicKey ];
+      substituters = mkForce [
+        "https://cache.nixos.org"
+        "${cfg.endpoint}/${cfg.cache}"
+      ];
+      trusted-public-keys = mkForce [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        s.publicKey
+      ];
       netrc-file = config.sops.templates."attic-client/netrc".path;
       connect-timeout = 5;
     };
