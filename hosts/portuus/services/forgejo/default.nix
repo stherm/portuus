@@ -56,6 +56,7 @@ in
         DEFAULT_BRANCH = "main";
       };
       session.COOKIE_SECURE = true;
+      actions.ENDLESS_TASK_TIMEOUT = "12h";
       mailer = {
         ENABLED = true;
         PROTOCOL = "smtps";
