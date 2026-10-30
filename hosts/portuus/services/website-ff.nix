@@ -11,7 +11,10 @@ let
   site = inputs.website-ff.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
-  imports = [ inputs.website-ff.nixosModules.instagram ];
+  imports = [
+    inputs.website-ff.nixosModules.instagram
+    inputs.website-ff.nixosModules.einsatzzahlen
+  ];
 
   services.nginx.virtualHosts.${c.fqdn} = {
     root = site;
@@ -34,4 +37,10 @@ in
   };
 
   sops.secrets."website-ff/instagram-token" = { };
+
+  services.website-ff-einsatzzahlen = {
+    enable = true;
+    url = "https://${constants.services.nextcloud.fqdn}/s/JzSD5QTG8y9JDgW/download";
+    virtualHost = c.fqdn;
+  };
 }
