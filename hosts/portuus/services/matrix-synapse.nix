@@ -81,6 +81,12 @@
           }
         ];
         root = pkgs.ketesa.withConfig { restrictBaseUrl = "http://matrix.tail"; };
+        extraConfig = ''
+          deny ${constants.hosts.edge.ip};
+          allow 100.64.0.0/10;
+          allow fd7a:115c:a1e0::/48;
+          deny all;
+        '';
         locations = {
           "/_matrix".proxyPass = "http://127.0.0.1:${toString config.services.matrix-synapse.port}";
           "/_synapse".proxyPass = "http://127.0.0.1:${toString config.services.matrix-synapse.port}";
