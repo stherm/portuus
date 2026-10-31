@@ -14,6 +14,7 @@
     ./github-runners.nix
     ./gmod.nix
     ./immich.nix
+    ./jellyfin.nix
     ./jirafeau.nix
     ./mailserver.nix
     ./matrix-synapse.nix

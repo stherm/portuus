@@ -20,6 +20,13 @@ in
   services.nginx.virtualHosts = lib.mkMerge [
     (mkProxy s.nextcloud.subdomain "client_max_body_size 1G;")
     (mkProxy s.immich.subdomain "client_max_body_size 5G;")
+    (mkProxy s.jellyfin.subdomain "client_max_body_size 50M;")
+    {
+      "${s.jellyfin.fqdn}".locations."/socket" = {
+        proxyPass = "http://${portuusIP}";
+        proxyWebsockets = true;
+      };
+    }
     (mkProxy s.vaultwarden.subdomain "")
     (mkProxy s.radicale.subdomain "")
     (mkProxy s.jirafeau.subdomain "")

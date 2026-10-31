@@ -51,6 +51,11 @@ rec {
       fqdn = "gallery." + domain;
       port = 2283;
     };
+    jellyfin = {
+      subdomain = "media";
+      fqdn = "media." + domain;
+      port = 8096;
+    };
     jirafeau = {
       subdomain = "share";
       fqdn = "share." + domain;

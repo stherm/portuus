@@ -25,6 +25,7 @@ let
     s.forgejo.fqdn
     s.headscale.fqdn
     s.immich.fqdn
+    s.jellyfin.fqdn
     s.jirafeau.fqdn
     s.nextcloud.fqdn
     s.radicale.fqdn
@@ -34,6 +35,7 @@ let
   webUis = [
     s.forgejo.fqdn
     s.immich.fqdn
+    s.jellyfin.fqdn
     s.jirafeau.fqdn
     s.nextcloud.fqdn
     s.radicale.fqdn
