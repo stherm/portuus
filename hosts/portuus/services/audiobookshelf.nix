@@ -1,12 +1,15 @@
 {
   config,
   constants,
+  lib,
+  pkgs,
   ...
 }:
 
 let
   s = constants.services.audiobookshelf;
   cfg = config.services.audiobookshelf;
+  b = constants.branding;
   mediaDir = "/data/audiobooks";
 in
 {
@@ -16,10 +19,18 @@ in
       inherit (s) port;
     };
 
-    nginx.virtualHosts.${s.fqdn}.locations."/" = {
-      proxyPass = "http://127.0.0.1:${toString s.port}";
-      proxyWebsockets = true;
-      extraConfig = "client_max_body_size 2G;";
+    nginx.virtualHosts.${s.fqdn}.locations = {
+      "/" = {
+        proxyPass = "http://127.0.0.1:${toString s.port}";
+        proxyWebsockets = true;
+        extraConfig = "client_max_body_size 2G;";
+      };
+      "= /audiobookshelf/icon.svg".alias = b.logo;
+    }
+    // b.iconLocations { inherit lib pkgs; } {
+      "audiobookshelf/favicon.ico" = 48;
+      "audiobookshelf/ios_icon.png" = 180;
+      "audiobookshelf/icon192.png" = 192;
     };
   };
 
