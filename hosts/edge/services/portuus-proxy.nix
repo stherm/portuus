@@ -27,6 +27,8 @@ in
         proxyWebsockets = true;
       };
     }
+    (mkProxy s.audiobookshelf.subdomain "client_max_body_size 2G;")
+    { "${s.audiobookshelf.fqdn}".locations."/".proxyWebsockets = true; }
     (mkProxy s.vaultwarden.subdomain "")
     (mkProxy s.radicale.subdomain "")
     (mkProxy s.jirafeau.subdomain "")

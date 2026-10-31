@@ -22,6 +22,7 @@ let
   vhosts = [
     c.domain
     s.attic.fqdn
+    s.audiobookshelf.fqdn
     s.forgejo.fqdn
     s.headscale.fqdn
     s.immich.fqdn
@@ -33,6 +34,7 @@ let
   ];
 
   webUis = [
+    s.audiobookshelf.fqdn
     s.forgejo.fqdn
     s.immich.fqdn
     s.jellyfin.fqdn
