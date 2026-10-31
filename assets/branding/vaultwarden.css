@@ -1,0 +1,34 @@
+:root {
+  --color-brand-050: var(--portuus-blue-50);
+  --color-brand-100: var(--portuus-blue-100);
+  --color-brand-200: var(--portuus-blue-200);
+  --color-brand-300: var(--portuus-blue-300);
+  --color-brand-400: var(--portuus-blue-400);
+  --color-brand-500: var(--portuus-blue-500);
+  --color-brand-600: var(--portuus-blue-600);
+  --color-brand-700: var(--portuus-blue-700);
+  --color-brand-800: var(--portuus-blue-800);
+  --color-brand-900: var(--portuus-blue-900);
+  --color-brand-950: var(--portuus-blue-950);
+  --color-primary-100: var(--portuus-blue-100-rgb);
+  --color-primary-600: var(--portuus-blue-700-rgb);
+  --color-primary-700: var(--portuus-blue-800-rgb);
+}
+
+.theme_dark {
+  --color-primary-100: var(--portuus-surface-hover-rgb);
+  --color-primary-600: var(--portuus-blue-400-rgb);
+  --color-primary-700: var(--portuus-blue-200-rgb);
+  --color-background: var(--portuus-surface-rgb);
+  --color-background-alt: var(--portuus-navy-rgb);
+  --color-background-alt3: var(--portuus-surface-hover-rgb);
+  --color-background-alt4: var(--portuus-navy-rgb);
+  --color-bg-primary: var(--portuus-surface);
+  --color-bg-secondary: var(--portuus-surface-hover);
+  --color-bg-tertiary: var(--portuus-navy);
+  --color-bg-quaternary: var(--portuus-border);
+  --color-bg-inactive: var(--portuus-navy);
+  --color-bg-brand-softer: var(--portuus-surface);
+  --color-bg-brand-soft: var(--portuus-surface-hover);
+  --color-bg-brand-medium: var(--portuus-border);
+}
