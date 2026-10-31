@@ -10,6 +10,9 @@ let
   s = constants.services.audiobookshelf;
   cfg = config.services.audiobookshelf;
   b = constants.branding;
+  css = pkgs.writeText "audiobookshelf-portuus.css" (
+    b.cssVariables + builtins.readFile ../../../assets/branding/audiobookshelf.css
+  );
   mediaDir = "/data/audiobooks";
 in
 {
@@ -23,9 +26,18 @@ in
       "/" = {
         proxyPass = "http://127.0.0.1:${toString s.port}";
         proxyWebsockets = true;
-        extraConfig = "client_max_body_size 2G;";
+        extraConfig = ''
+          client_max_body_size 2G;
+          sub_filter '</head>' '<link rel="stylesheet" href="/audiobookshelf/portuus.css"></head>';
+          sub_filter_once on;
+        '';
       };
       "= /audiobookshelf/icon.svg".alias = b.logo;
+      "= /audiobookshelf/portuus.css".alias = css;
+      "~ ^/audiobookshelf/_nuxt/img/icon\\.[0-9a-f]+\\.svg$" = {
+        root = dirOf b.logo;
+        extraConfig = "try_files /logo.svg =404;";
+      };
     }
     // b.iconLocations { inherit lib pkgs; } {
       "audiobookshelf/favicon.ico" = 48;

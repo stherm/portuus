@@ -1,0 +1,10 @@
+html:root {
+  --color-bg: var(--portuus-surface);
+  --color-primary: var(--portuus-navy);
+  --color-accent: var(--portuus-blue-400);
+}
+
+html #page-wrapper {
+  background-image: radial-gradient(ellipse at top, var(--portuus-surface-hover) 0%, var(--portuus-navy) 60%);
+  background-color: var(--portuus-navy);
+}
