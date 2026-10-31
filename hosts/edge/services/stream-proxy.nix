@@ -14,7 +14,7 @@ let
     mc.minecraft-amplified
     mc.minecraft-cobbleverse
   ];
-  inherit (mc) palworld;
+  inherit (mc) gmod palworld;
 in
 {
   services.nginx = {
@@ -30,6 +30,7 @@ in
       ) minecraft}
 
       ${lib.optionalString palworld.enable "server { listen ${toString palworld.port} udp; proxy_pass ${ip}:${toString palworld.port}; }"}
+      ${lib.optionalString gmod.enable "server { listen ${toString gmod.port} udp; proxy_pass ${ip}:${toString gmod.port}; }"}
 
       server { listen ${toString rd.nat-test};  proxy_pass ${ip}:${toString rd.nat-test}; }
       server { listen ${toString rd.id};        proxy_pass ${ip}:${toString rd.id}; }
@@ -57,6 +58,7 @@ in
     allowedUDPPorts = [
       rd.id
     ]
-    ++ lib.optional palworld.enable palworld.port;
+    ++ lib.optional palworld.enable palworld.port
+    ++ lib.optional gmod.enable gmod.port;
   };
 }

@@ -38,6 +38,10 @@ rec {
       port = 3456;
       sshPort = 2222;
     };
+    gmod = {
+      enable = true;
+      port = 27015;
+    };
     headscale = {
       subdomain = "hs";
       fqdn = "hs." + domain;

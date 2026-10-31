@@ -50,6 +50,7 @@ in
       charbogen.url = "https://${s.charbogen.fqdn}/";
       feuerwehr.url = "https://${s.feuerwehr.fqdn}/";
       cobbleverse.units = minecraftUnit "cobbleverse";
+      ttt.units = [ "gmod.service" ];
       survival.units = minecraftUnit "survival";
       creative.units = minecraftUnit "creative";
       amplified.units = minecraftUnit "amplified";

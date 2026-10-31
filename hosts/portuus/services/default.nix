@@ -12,6 +12,7 @@
     ./fail2ban.nix
     ./forgejo
     ./github-runners.nix
+    ./gmod.nix
     ./immich.nix
     ./jirafeau.nix
     ./mailserver.nix
