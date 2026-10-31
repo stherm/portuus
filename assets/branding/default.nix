@@ -46,5 +46,6 @@ in
   primary = colors.blue-600;
   accent = colors.blue-400;
   logo = ./logo.svg;
+  errorPage = ./error.html;
   png = ./png;
 }

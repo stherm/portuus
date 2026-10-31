@@ -5,6 +5,7 @@
 
 {
   imports = [
+    ./error-pages.nix
     ./headscale.nix
     ./jetkvm-proxy.nix
     ./livekit.nix
