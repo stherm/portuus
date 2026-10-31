@@ -114,7 +114,30 @@ in
     ];
   };
 
-  networking.hosts."127.0.0.1" = [ config.mailserver.fqdn ];
+  networking = {
+    hosts."127.0.0.1" = [ config.mailserver.fqdn ];
+
+    firewall =
+      let
+        ports = lib.concatMapStringsSep "," toString [
+          mp.smtp
+          mp.submission-tls
+          mp.imap
+        ];
+        v4 = "PREROUTING -i tailscale0 -p tcp -m multiport --dports ${ports} ! -s ${edgeIp} -j DROP";
+        v6 = "PREROUTING -i tailscale0 -p tcp -m multiport --dports ${ports} -j DROP";
+      in
+      {
+        extraCommands = ''
+          iptables -w -t raw -C ${v4} 2>/dev/null || iptables -w -t raw -I ${v4}
+          ip6tables -w -t raw -C ${v6} 2>/dev/null || ip6tables -w -t raw -I ${v6}
+        '';
+        extraStopCommands = ''
+          iptables -w -t raw -D ${v4} 2>/dev/null || true
+          ip6tables -w -t raw -D ${v6} 2>/dev/null || true
+        '';
+      };
+  };
 
   systemd.services = lib.genAttrs [ "dovecot" "postfix" "rspamd" ] (_: {
     unitConfig.RequiresMountsFor = [ dataDir ];
