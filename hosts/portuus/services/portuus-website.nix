@@ -32,6 +32,8 @@ in
     checks = {
       cloud.url = "https://${s.nextcloud.fqdn}/status.php";
       gallery.url = "https://${s.immich.fqdn}/api/server/ping";
+      media.url = "https://${s.jellyfin.fqdn}/health";
+      books.url = "https://${s.audiobookshelf.fqdn}/healthcheck";
       vault.url = "https://${s.vaultwarden.fqdn}/alive";
       dav.url = "https://${s.radicale.fqdn}/";
       mail.units = [
