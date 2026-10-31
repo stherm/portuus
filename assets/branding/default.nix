@@ -47,5 +47,6 @@ in
   accent = colors.blue-400;
   logo = ./logo.svg;
   errorPage = ./error.html;
+  iconLocations = import ./icons.nix;
   png = ./png;
 }
