@@ -15,10 +15,33 @@ import urllib.request
 from pathlib import Path
 
 ECOSYSTEM_MARKERS = {
-    "plugin", "gem", "extension", "module", "addon", "add-on", "theme",
-    "jenkins", "wordpress", "drupal", "joomla", "npm", "pypi", "php",
-    "ruby", "rubygems", "node", "nodejs", "python", "perl-module", "cpan",
-    "android", "ios", "windows", "macos", "chrome", "firefox-extension",
+    "plugin",
+    "gem",
+    "extension",
+    "module",
+    "addon",
+    "add-on",
+    "theme",
+    "jenkins",
+    "wordpress",
+    "drupal",
+    "joomla",
+    "npm",
+    "pypi",
+    "php",
+    "ruby",
+    "rubygems",
+    "node",
+    "nodejs",
+    "python",
+    "perl-module",
+    "cpan",
+    "android",
+    "ios",
+    "windows",
+    "macos",
+    "chrome",
+    "firefox-extension",
 }
 SKIP_VERSION_TYPES = {"rpm", "git", "deb", "maven"}
 UNBOUNDED = {"", "0", "*", "unspecified", "n/a", "-"}
@@ -69,11 +92,17 @@ def matching_entries(record, pname):
     tokens = set(norm(pname))
     matched, foreign, ambiguous = [], [], []
     for entry in entries:
-        raw_product = str(entry.get("product") or entry.get("packageName") or "").strip().lower()
+        raw_product = (
+            str(entry.get("product") or entry.get("packageName") or "").strip().lower()
+        )
         if raw_product in PLACEHOLDER:
             continue
         product = norm(entry.get("product")) + norm(entry.get("packageName"))
-        vendor = [] if str(entry.get("vendor") or "").strip().lower() in PLACEHOLDER else norm(entry.get("vendor"))
+        vendor = (
+            []
+            if str(entry.get("vendor") or "").strip().lower() in PLACEHOLDER
+            else norm(entry.get("vendor"))
+        )
         if tokens and tokens <= set(product):
             extra = (set(product) | set(vendor)) - tokens
             if extra & ECOSYSTEM_MARKERS:
@@ -95,7 +124,9 @@ def fixed_in_version(entries, version):
     for entry in entries:
         if entry.get("defaultStatus") == "affected" and not entry.get("versions"):
             return None
-        ranges = [v for v in entry.get("versions", []) or [] if v.get("status") == "affected"]
+        ranges = [
+            v for v in entry.get("versions", []) or [] if v.get("status") == "affected"
+        ]
         if not ranges:
             return None
         for rng in ranges:
@@ -136,12 +167,17 @@ def derivation_patches(drv, cache):
         return cache[drv]
     patches = []
     if drv:
-        proc = subprocess.run(["nix", "derivation", "show", drv], capture_output=True, text=True)
+        proc = subprocess.run(
+            ["nix", "derivation", "show", drv], capture_output=True, text=True
+        )
         if proc.returncode == 0:
             data = json.loads(proc.stdout)
             for value in (data.get("derivations") or data).values():
                 env = value.get("env", {})
-                sources = [env.get("patches"), (value.get("structuredAttrs") or {}).get("patches")]
+                sources = [
+                    env.get("patches"),
+                    (value.get("structuredAttrs") or {}).get("patches"),
+                ]
                 if "__json" in env:
                     sources.append(json.loads(env["__json"]).get("patches"))
                 for raw in sources:
@@ -160,7 +196,9 @@ def patched_in_derivation(cve_id, drv, cache):
         if cve_id.lower() in name.lower():
             return name
         if not path.exists() and patch.startswith("/nix/store/"):
-            subprocess.run(["nix-store", "--realise", patch], capture_output=True, text=True)
+            subprocess.run(
+                ["nix-store", "--realise", patch], capture_output=True, text=True
+            )
         if path.is_file():
             try:
                 if needle in path.read_bytes():
@@ -176,7 +214,12 @@ def triage(findings, cache_dir):
     for pkg in findings:
         pname, version, name = pkg["pname"], pkg["version"], pkg["name"]
         for cve_id in pkg["affected_by"]:
-            decision = {"cve": cve_id, "package": name, "verdict": "undecided", "reason": ""}
+            decision = {
+                "cve": cve_id,
+                "package": name,
+                "verdict": "undecided",
+                "reason": "",
+            }
             try:
                 record = load_cve(cve_id, cache_dir)
             except Exception as exc:
@@ -186,14 +229,27 @@ def triage(findings, cache_dir):
             matched, foreign, ambiguous = matching_entries(record, pname)
             patch = patched_in_derivation(cve_id, pkg.get("derivation", ""), drv_cache)
             if patch:
-                decision.update(verdict="patched", reason=f"{cve_id} in applied patch {patch}")
+                decision.update(
+                    verdict="patched", reason=f"{cve_id} in applied patch {patch}"
+                )
             elif not matched and not ambiguous and foreign:
-                products = sorted({f"{e.get('vendor', '?')}/{e.get('product', e.get('packageName', '?'))}" for e in foreign})
-                decision.update(verdict="false_positive", reason="affects " + ", ".join(products[:3]))
+                products = sorted(
+                    {
+                        f"{e.get('vendor', '?')}/{e.get('product', e.get('packageName', '?'))}"
+                        for e in foreign
+                    }
+                )
+                decision.update(
+                    verdict="false_positive",
+                    reason="affects " + ", ".join(products[:3]),
+                )
             elif matched:
                 why = fixed_in_version(matched, version)
                 if why:
-                    decision.update(verdict="fixed_in_version", reason=f"{version} outside the affected range ({why})")
+                    decision.update(
+                        verdict="fixed_in_version",
+                        reason=f"{version} outside the affected range ({why})",
+                    )
             out.append(decision)
     return out
 
@@ -205,7 +261,9 @@ def main():
     args = parser.parse_args()
     args.cve_cache.mkdir(parents=True, exist_ok=True)
     findings = json.loads(args.vulnix_json.read_text())
-    json.dump(triage(findings, args.cve_cache), sys.stdout, ensure_ascii=False, indent=1)
+    json.dump(
+        triage(findings, args.cve_cache), sys.stdout, ensure_ascii=False, indent=1
+    )
 
 
 if __name__ == "__main__":

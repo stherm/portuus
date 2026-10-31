@@ -37,7 +37,7 @@ in
     environment.XDG_CONFIG_HOME = builtins.dirOf (builtins.dirOf config.sops.templates."${configDir}/config.toml".path);
     serviceConfig = {
       ExecStartPre = "${pkgs.curl}/bin/curl --silent --output /dev/null --retry 30 --retry-delay 1 --retry-connrefused ${endpoint}";
-      ExecStart ="${pkgs.attic-client}/bin/attic watch-store local:${s.cache}";
+      ExecStart = "${pkgs.attic-client}/bin/attic watch-store local:${s.cache}";
       User = user;
       Group = user;
       Restart = "always";
