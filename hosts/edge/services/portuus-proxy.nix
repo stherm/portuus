@@ -32,6 +32,14 @@ in
     { "${s.attic.fqdn}".locations."= /".return = "302 https://${c.domain}/"; }
 
     {
+      "www.${c.domain}" = {
+        enableACME = true;
+        forceSSL = true;
+        globalRedirect = c.domain;
+      };
+    }
+
+    {
       "${s.forgejo.fqdn}" = {
         enableACME = true;
         forceSSL = true;
