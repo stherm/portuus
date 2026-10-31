@@ -18,6 +18,9 @@
   --color-illustration-bg-secondary: var(--portuus-blue-300-rgb);
   --color-illustration-logo: var(--portuus-blue-600-rgb);
   --color-marketing-logo: var(--portuus-navy-rgb);
+  --color-background-alt: var(--portuus-blue-50-rgb);
+  --color-bg-secondary: var(--portuus-blue-50);
+  --color-bg-tertiary: var(--portuus-blue-50);
   --color-nav-fg-primary: var(--portuus-text);
   --color-nav-fg-secondary: var(--portuus-text);
   --color-nav-bg-primary: var(--portuus-navy);
@@ -35,6 +38,7 @@
 }
 
 .theme_dark {
+  --color-marketing-logo: var(--portuus-text-rgb);
   --color-primary-100: var(--portuus-surface-hover-rgb);
   --color-primary-600: var(--portuus-blue-400-rgb);
   --color-primary-700: var(--portuus-blue-200-rgb);
@@ -60,4 +64,30 @@
   --color-nav-bg-secondary-strong: var(--portuus-surface-hover);
   --color-nav-border-primary: var(--portuus-border);
   --color-nav-border-secondary: var(--portuus-border);
+}
+
+bit-landing-header a {
+  display: flex !important;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgb(var(--color-marketing-logo));
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+bit-landing-header a bit-svg {
+  display: none !important;
+}
+
+bit-landing-header a::before {
+  content: "";
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  background: url("../images/icon-white.svg") no-repeat center / contain;
+}
+
+bit-landing-header a::after {
+  content: "portuus";
 }
