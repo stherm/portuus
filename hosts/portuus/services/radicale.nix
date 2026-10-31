@@ -32,7 +32,6 @@ in
     users = [
       "pascal"
       "portuus"
-      "susagi"
       "steffen"
       "ulm"
     ];
