@@ -95,6 +95,19 @@ let
       setValue "$branding" /BrandingOptions/CustomCss "$(cat ${customCss})"
       setValue "$branding" /BrandingOptions/LoginDisclaimer "Accounts are handed out by the portuus admins."
       setValue "$branding" /BrandingOptions/SplashscreenEnabled false
+
+      subtitles=${cfg.dataDir}/plugins/configurations/Jellyfin.Plugin.OpenSubtitles.xml
+      username=$(cat ${config.sops.secrets."jellyfin/opensubtitles-username".path})
+      password=$(cat ${config.sops.secrets."jellyfin/opensubtitles-password".path})
+      if [ "$username" != CHANGE_ME ] && [ "$password" != CHANGE_ME ]; then
+        mkdir -p "$(dirname "$subtitles")"
+        if [ ! -f "$subtitles" ]; then
+          printf '%s\n' '<?xml version="1.0" encoding="utf-8"?>' '<PluginConfiguration />' > "$subtitles"
+        fi
+        setValue "$subtitles" /PluginConfiguration/Username "$username"
+        setValue "$subtitles" /PluginConfiguration/Password "$password"
+        setValue "$subtitles" /PluginConfiguration/CredentialsInvalid false
+      fi
     '';
   };
 in
@@ -218,6 +231,14 @@ in
       };
     };
 
-    jellyfin.unitConfig.RequiresMountsFor = [ dataDir ];
+    jellyfin = {
+      unitConfig.RequiresMountsFor = [ dataDir ];
+      restartTriggers = [ configScript ];
+    };
   };
+
+  sops.secrets = lib.genAttrs [ "jellyfin/opensubtitles-username" "jellyfin/opensubtitles-password" ] (_: {
+    owner = cfg.user;
+    restartUnits = [ "jellyfin.service" ];
+  });
 }
