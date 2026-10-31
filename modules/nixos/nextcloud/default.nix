@@ -20,6 +20,7 @@ let
     mkDefault
     mkEnableOption
     mkIf
+    mkMerge
     mkOption
     optional
     optionalAttrs
@@ -82,14 +83,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.etc."secrets/nextcloud-initial-admin-pass".text = "nextcloud";
-
     services.nextcloud = {
       hostName = fqdn;
       https = if cfg.reverseProxy.enable then cfg.reverseProxy.forceSSL else mkDefault false;
       config = {
         adminuser = mkDefault "nextcloud";
-        adminpassFile = mkDefault "/etc/secrets/nextcloud-initial-admin-pass";
+        adminpassFile = mkDefault config.sops.secrets."nextcloud/admin-pass".path;
         dbtype = mkDefault "pgsql";
       };
       database.createLocally = mkDefault true;
@@ -184,23 +183,29 @@ in
       };
     };
 
-    sops = mkIf cfg.mailIntegration.enable (
+    sops =
       let
         owner = "nextcloud";
         group = "nextcloud";
         mode = "0440";
       in
-      {
-        secrets."nextcloud/smtp-password" = {
-          inherit owner group mode;
-        };
-        templates."nextcloud" = {
-          inherit owner group mode;
-          content = ''
-            {"mail_smtppassword":"${config.sops.placeholder."nextcloud/smtp-password"}"}
-          '';
-        };
-      }
-    );
+      mkMerge [
+        {
+          secrets."nextcloud/admin-pass" = {
+            inherit owner group mode;
+          };
+        }
+        (mkIf cfg.mailIntegration.enable {
+          secrets."nextcloud/smtp-password" = {
+            inherit owner group mode;
+          };
+          templates."nextcloud" = {
+            inherit owner group mode;
+            content = ''
+              {"mail_smtppassword":"${config.sops.placeholder."nextcloud/smtp-password"}"}
+            '';
+          };
+        })
+      ];
   };
 }
