@@ -12,6 +12,42 @@ let
   s = c.services.jellyfin;
   cfg = config.services.jellyfin;
   dataDir = "/data/jellyfin";
+  b = c.branding;
+
+  customCss = pkgs.writeText "jellyfin-portuus.css" (
+    b.cssVariables + builtins.readFile ../../../assets/branding/jellyfin.css
+  );
+
+  banner = pkgs.runCommand "portuus-banner" { nativeBuildInputs = [ pkgs.librsvg ]; } ''
+    mkdir $out
+    logo=$(base64 -w0 ${b.logo})
+    cat > $out/banner.svg <<EOF
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100">
+      <image href="data:image/svg+xml;base64,$logo" x="0" y="0" width="100" height="100"/>
+      <text x="112" y="68" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="${b.colors.text}">portuus</text>
+    </svg>
+    EOF
+    rsvg-convert -w 800 -h 200 $out/banner.svg -o $out/banner.png
+  '';
+
+  icons = b.iconDir { inherit lib pkgs; } {
+    "favicon.ico" = 48;
+    "touchicon.png" = 180;
+    "touchicon144.png" = 144;
+    "icon-transparent.png" = 512;
+    "32px.png" = 32;
+    "40px.png" = 40;
+  };
+
+  hashedAsset = name: ext: file: {
+    "~ ^/web/${name}\\.[0-9a-f]+\\.${ext}$" = {
+      root = file.dir;
+      extraConfig = ''
+        try_files /${file.name} =404;
+        add_header Cache-Control "public, max-age=86400";
+      '';
+    };
+  };
 
   configScript = pkgs.writeShellApplication {
     name = "jellyfin-config";
@@ -51,6 +87,14 @@ let
       setValue "$system" /ServerConfiguration/EnableMetrics false
       setValue "$system" /ServerConfiguration/TrickplayOptions/EnableHwAcceleration true
       setValue "$system" /ServerConfiguration/TrickplayOptions/EnableHwEncoding true
+
+      branding=${cfg.configDir}/branding.xml
+      if [ -d ${cfg.configDir} ] && [ ! -f "$branding" ]; then
+        printf '%s\n' '<?xml version="1.0" encoding="utf-8"?>' '<BrandingOptions />' > "$branding"
+      fi
+      setValue "$branding" /BrandingOptions/CustomCss "$(cat ${customCss})"
+      setValue "$branding" /BrandingOptions/LoginDisclaimer "Accounts are handed out by the portuus admins."
+      setValue "$branding" /BrandingOptions/SplashscreenEnabled false
     '';
   };
 in
@@ -106,10 +150,47 @@ in
       };
     };
 
-    nginx.virtualHosts.${s.fqdn}.extraConfig = ''
-      set_real_ip_from ${c.hosts.edge.ip};
-      real_ip_header X-Real-IP;
-    '';
+    nginx.virtualHosts.${s.fqdn} = {
+      extraConfig = ''
+        set_real_ip_from ${c.hosts.edge.ip};
+        real_ip_header X-Real-IP;
+      '';
+      locations = lib.mkMerge [
+        { "= /web/portuus-banner.svg".alias = "${banner}/banner.svg"; }
+        (hashedAsset "banner-light" "png" {
+          dir = banner;
+          name = "banner.png";
+        })
+        (hashedAsset "banner-dark" "png" {
+          dir = banner;
+          name = "banner.png";
+        })
+        (hashedAsset "favicon" "ico" {
+          dir = icons;
+          name = "favicon.ico";
+        })
+        (hashedAsset "touchicon" "png" {
+          dir = icons;
+          name = "touchicon.png";
+        })
+        (hashedAsset "touchicon144" "png" {
+          dir = icons;
+          name = "touchicon144.png";
+        })
+        (hashedAsset "icon-transparent" "png" {
+          dir = icons;
+          name = "icon-transparent.png";
+        })
+        (hashedAsset "32px" "png" {
+          dir = icons;
+          name = "32px.png";
+        })
+        (hashedAsset "40px" "png" {
+          dir = icons;
+          name = "40px.png";
+        })
+      ];
+    };
   };
 
   users = {

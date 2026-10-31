@@ -1,0 +1,124 @@
+html,
+.backgroundContainer,
+.dialog,
+.nowPlayingContextMenu,
+.nowPlayingPlaylist,
+.ui-corner-all,
+.ui-shadow,
+.noBackdropTransparency .detailPagePrimaryContainer,
+.noBackdropTransparency .detailPageSecondaryContainer {
+  background-color: var(--portuus-navy);
+}
+
+.backgroundContainer.withBackdrop {
+  background-color: rgb(var(--portuus-navy-rgb) / 88%);
+}
+
+.skinHeader-withBackground,
+.collapseContent,
+.formDialogFooter:not(.formDialogFooter-clear),
+.formDialogHeader:not(.formDialogHeader-clear),
+.paperList,
+.visualCardBox,
+.appfooter,
+.playlistSectionButton {
+  background-color: var(--portuus-surface);
+}
+
+.detailRibbon {
+  background: rgb(var(--portuus-surface-rgb) / 85%);
+}
+
+.fab,
+.raised,
+.toast {
+  background: var(--portuus-surface-hover);
+}
+
+.fab:focus,
+.raised:focus,
+.listItem:focus {
+  background: var(--portuus-border);
+}
+
+.listItem:hover {
+  background: var(--portuus-surface-hover);
+}
+
+.emby-input,
+.emby-textarea,
+.emby-select-withcolor {
+  background: var(--portuus-surface);
+  border-color: var(--portuus-border);
+}
+
+.emby-select-withcolor > option {
+  background: var(--portuus-surface);
+}
+
+.button-submit,
+.selectionCommandsPanel {
+  background: var(--portuus-blue-700);
+  color: var(--portuus-text);
+}
+
+.button-submit:focus,
+.button-submit:hover {
+  background: var(--portuus-blue-600);
+}
+
+.inputLabelFocused,
+.selectLabelFocused,
+.textareaLabelFocused,
+.button-flat:hover,
+.button-link,
+.upNextDialog-countdownText,
+.paper-icon-button-light.show-focus:focus {
+  color: var(--portuus-blue-400);
+}
+
+.emby-input:focus,
+.emby-textarea:focus,
+.emby-select-withcolor:focus,
+.emby-checkbox:checked + span + .checkboxOutline,
+.itemSelectionPanel {
+  border-color: var(--portuus-blue-400) !important;
+}
+
+.progressring-spiner {
+  border-color: var(--portuus-blue-400);
+}
+
+.emby-checkbox:checked + span + .checkboxOutline {
+  background-color: var(--portuus-blue-700);
+}
+
+.itemProgressBarForeground,
+.playedIndicator,
+.countIndicator {
+  background-color: var(--portuus-blue-600);
+}
+
+.pageTitleWithDefaultLogo {
+  background-image: url("/web/portuus-banner.svg") !important;
+}
+
+.defaultCardBackground1 {
+  background-color: var(--portuus-surface);
+}
+
+.defaultCardBackground2 {
+  background-color: var(--portuus-blue-700);
+}
+
+.defaultCardBackground3 {
+  background-color: var(--portuus-blue-600);
+}
+
+.defaultCardBackground4 {
+  background-color: var(--portuus-surface-hover);
+}
+
+.defaultCardBackground5 {
+  background-color: var(--portuus-blue-800);
+}

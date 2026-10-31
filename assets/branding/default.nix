@@ -48,5 +48,6 @@ in
   logo = ./logo.svg;
   errorPage = ./error.html;
   iconLocations = import ./icons.nix;
+  iconDir = import ./icon-dir.nix;
   png = ./png;
 }
