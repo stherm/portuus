@@ -1,0 +1,34 @@
+:root,
+.light {
+  --immich-primary: 76 128 153;
+  --immich-ui-primary-50: #eef4f7;
+  --immich-ui-primary-100: #d6e4eb;
+  --immich-ui-primary-200: #bfd5e0;
+  --immich-ui-primary-300: #92b8cb;
+  --immich-ui-primary-400: #6297b2;
+  --immich-ui-primary-500: #4c8099;
+  --immich-ui-primary-600: #3d677b;
+  --immich-ui-primary-700: #2e4e5d;
+  --immich-ui-primary-800: #1f3540;
+  --immich-ui-primary-900: #0f1c22;
+  --immich-ui-primary-950: #071016;
+}
+
+.dark {
+  --immich-dark-primary: 146 184 203;
+  --immich-dark-bg: 2 25 46;
+  --immich-dark-gray: 10 39 64;
+  --immich-ui-primary-950: #f3f7f9;
+  --immich-ui-primary-900: #edf3f6;
+  --immich-ui-primary-800: #d6e4eb;
+  --immich-ui-primary-700: #bfd5e0;
+  --immich-ui-primary-600: #a8c7d6;
+  --immich-ui-primary-500: #92b8cb;
+  --immich-ui-primary-400: #4c8099;
+  --immich-ui-primary-300: #3d677b;
+  --immich-ui-primary-200: #2e4e5d;
+  --immich-ui-primary-100: #13324a;
+  --immich-ui-primary-50: #0a2740;
+  --immich-ui-light: #02192e;
+  --immich-ui-gray: #0a2740;
+}
