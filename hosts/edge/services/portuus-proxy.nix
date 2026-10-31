@@ -46,6 +46,7 @@ in
         enableACME = true;
         forceSSL = true;
         locations = {
+          "/".proxyPass = "http://${portuusIP}";
           "/_matrix" = {
             proxyPass = "http://${portuusIP}";
             extraConfig = "client_max_body_size 200M;";

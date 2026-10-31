@@ -27,6 +27,9 @@
 
     website-ff.url = "git+https://git.portuus.de/steffen/website-ff.git?ref=main";
     website-ff.inputs.nixpkgs.follows = "nixpkgs";
+
+    portuus-website.url = "git+https://git.portuus.de/portuus/portuus-website.git?ref=main";
+    portuus-website.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

@@ -21,6 +21,7 @@
     ./nginx.nix
     ./openssh.nix
     ./palworld.nix
+    ./portuus-website.nix
     ./postgresql.nix
     ./radicale.nix
     ./rustdesk-server.nix
