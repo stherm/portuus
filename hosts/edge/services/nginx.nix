@@ -10,5 +10,11 @@
     enable = true;
     forceSSL = true;
     openFirewall = true;
+
+    virtualHosts."_" = {
+      default = true;
+      rejectSSL = true;
+      locations."/".return = "444";
+    };
   };
 }
