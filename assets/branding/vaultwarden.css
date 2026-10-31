@@ -13,6 +13,14 @@
   --color-primary-100: var(--portuus-blue-100-rgb);
   --color-primary-600: var(--portuus-blue-700-rgb);
   --color-primary-700: var(--portuus-blue-800-rgb);
+  --color-illustration-outline: var(--portuus-navy-rgb);
+  --color-illustration-bg-primary: var(--portuus-blue-100-rgb);
+  --color-illustration-bg-secondary: var(--portuus-blue-300-rgb);
+  --color-illustration-logo: var(--portuus-blue-600-rgb);
+  --color-marketing-logo: var(--portuus-navy-rgb);
+  --color-nav-bg-primary: var(--portuus-navy);
+  --color-nav-bg-primary-strong: var(--portuus-surface-hover);
+  --color-nav-border-primary: var(--portuus-border);
 }
 
 .theme_dark {
@@ -31,4 +39,14 @@
   --color-bg-brand-softer: var(--portuus-surface);
   --color-bg-brand-soft: var(--portuus-surface-hover);
   --color-bg-brand-medium: var(--portuus-border);
+  --color-illustration-outline: var(--portuus-blue-400-rgb);
+  --color-illustration-bg-primary: var(--portuus-blue-300-rgb);
+  --color-illustration-bg-secondary: var(--portuus-blue-600-rgb);
+  --color-illustration-bg-tertiary: var(--portuus-blue-50-rgb);
+  --color-nav-bg-primary: var(--portuus-navy);
+  --color-nav-bg-secondary: var(--portuus-navy);
+  --color-nav-bg-primary-strong: var(--portuus-surface-hover);
+  --color-nav-bg-secondary-strong: var(--portuus-surface-hover);
+  --color-nav-border-primary: var(--portuus-border);
+  --color-nav-border-secondary: var(--portuus-border);
 }

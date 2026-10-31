@@ -54,7 +54,10 @@ in
       set_real_ip_from ${c.hosts.edge.ip};
       real_ip_header X-Real-IP;
     '';
-    locations = b.iconLocations { inherit lib pkgs; } (
+    locations = {
+      "= /images/icon-white.svg".alias = b.logo;
+    }
+    // b.iconLocations { inherit lib pkgs; } (
       icons
       // lib.mapAttrs' (file: lib.nameValuePair (builtins.replaceStrings [ "images/" ] [ "images/icons/" ] file)) (
         lib.filterAttrs (file: _: lib.hasPrefix "images/" file) icons
