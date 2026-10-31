@@ -67,9 +67,9 @@ scp -r -P 2299 . steffen@178.105.18.167:/tmp/portuus
 ssh -p 2299 steffen@178.105.18.167 "nix-shell -p git --run 'sudo nixos-rebuild switch --flake /tmp/portuus#edge'"
 
 # Portuus
-ssh -p 2299 steffen@79.248.193.69 "rm -rf /tmp/portuus"
-scp -r -P 2299 . steffen@79.248.193.69:/tmp/portuus
-ssh -p 2299 steffen@79.248.193.69 "sudo nixos-rebuild switch --flake /tmp/portuus#portuus"
+ssh -p 2299 steffen@100.64.0.2 "rm -rf /tmp/portuus"
+scp -r -P 2299 . steffen@100.64.0.2:/tmp/portuus
+ssh -p 2299 steffen@100.64.0.2 "sudo nixos-rebuild switch --flake /tmp/portuus#portuus"
 ```
 
 ## Constants
