@@ -125,6 +125,10 @@ in
       relayhost = [ "[${edgeIp}]:${toString c.mail-relay.port}" ];
       smtpd_client_auth_rate_limit = 10;
       smtpd_client_connection_rate_limit = 30;
+      smtpd_relay_restrictions = lib.mkForce [
+        "permit_sasl_authenticated"
+        "reject_unauth_destination"
+      ];
     };
     master = {
       ${toString mp.smtp} = mkProxyListener [ ];
