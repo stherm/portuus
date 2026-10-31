@@ -11,19 +11,21 @@ let
   fj = c.services.forgejo;
   cfg = config.services.forgejo;
 
-  brandingDir = ../../../../assets/branding;
+  b = c.branding;
+  colorsCss = pkgs.writeText "portuus-colors.css" b.cssVariables;
 
   branding = pkgs.runCommand "forgejo-portuus-branding" { } ''
     img=$out/public/assets/img
     mkdir -p $img $out/public/assets/css $out/templates
 
-    cp ${brandingDir}/logo.svg $img/logo.svg
-    cp ${brandingDir}/logo.svg $img/favicon.svg
-    cp ${brandingDir}/png/logo-512.png $img/logo.png
-    cp ${brandingDir}/png/logo-180.png $img/apple-touch-icon.png
-    cp ${brandingDir}/png/logo-64.png $img/favicon.png
+    cp ${b.logo} $img/logo.svg
+    cp ${b.logo} $img/favicon.svg
+    cp ${b.png}/logo-512.png $img/logo.png
+    cp ${b.png}/logo-180.png $img/apple-touch-icon.png
+    cp ${b.png}/logo-64.png $img/favicon.png
 
-    cp ${./branding/theme-portuus.css} $out/public/assets/css/theme-portuus.css
+    theme=${./branding/theme-portuus.css}
+    { head -n 1 $theme; echo; cat ${colorsCss}; tail -n +2 $theme; } > $out/public/assets/css/theme-portuus.css
     cp ${./branding/home.tmpl} $out/templates/home.tmpl
   '';
 in

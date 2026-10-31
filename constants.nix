@@ -119,6 +119,8 @@ rec {
     imap = 10993;
   };
 
+  branding = import ./assets/branding;
+
   mail-relay = {
     port = 2525;
   };

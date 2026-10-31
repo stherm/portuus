@@ -45,12 +45,12 @@ in
       name = "portuus";
       slogan = "Cloud auf portuus.de";
       url = "https://portuus.de";
-      primary_color = "#4c8099";
+      primary_color = c.branding.primary;
       background = "backgroundColor";
-      background_color = "#02192e";
-      logo = ../../../assets/branding/logo.svg;
-      logoheader = ../../../assets/branding/logo.svg;
-      favicon = ../../../assets/branding/logo.svg;
+      background_color = c.branding.colors.navy;
+      logo = c.branding.logo;
+      logoheader = c.branding.logo;
+      favicon = c.branding.logo;
     };
     settings = {
       trusted_proxies = [ c.hosts.edge.ip ];

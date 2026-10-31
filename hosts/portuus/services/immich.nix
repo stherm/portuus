@@ -11,11 +11,11 @@ let
   c = constants;
   s = c.services.immich;
 
-  brandingDir = ../../../assets/branding;
+  b = c.branding;
 
   icons = pkgs.runCommand "immich-portuus-icons" { nativeBuildInputs = [ pkgs.imagemagick ]; } ''
     mkdir $out
-    src=${brandingDir}/png/logo-1024.png
+    src=${b.png}/logo-1024.png
     for size in 16 32 48 96 144; do
       magick $src -resize ''${size}x$size $out/favicon-$size.png
     done
@@ -24,7 +24,7 @@ let
     magick $src -define icon:auto-resize=16,32,48 $out/favicon.ico
     for size in 192 512; do
       inner=$((size * 4 / 5))
-      magick $src -resize ''${inner}x$inner -background '#02192e' -gravity center -extent ''${size}x$size \
+      magick $src -resize ''${inner}x$inner -background '${b.colors.navy}' -gravity center -extent ''${size}x$size \
         $out/manifest-icon-$size.maskable.png
     done
   '';
@@ -58,7 +58,7 @@ in
         externalDomain = lib.mkForce "https://${s.fqdn}";
         loginPageMessage = "Welcome to the portuus gallery. Accounts are handed out by the admins.";
       };
-      theme.customCss = builtins.readFile "${brandingDir}/immich.css";
+      theme.customCss = b.cssVariables + builtins.readFile ../../../assets/branding/immich.css;
     };
     mediaLocation = "/data/immich";
     accelerationDevices = null;
