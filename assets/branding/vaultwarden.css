@@ -18,9 +18,20 @@
   --color-illustration-bg-secondary: var(--portuus-blue-300-rgb);
   --color-illustration-logo: var(--portuus-blue-600-rgb);
   --color-marketing-logo: var(--portuus-navy-rgb);
+  --color-nav-fg-primary: var(--portuus-text);
+  --color-nav-fg-secondary: var(--portuus-text);
   --color-nav-bg-primary: var(--portuus-navy);
+  --color-nav-bg-secondary: var(--portuus-navy);
   --color-nav-bg-primary-strong: var(--portuus-surface-hover);
+  --color-nav-bg-secondary-strong: var(--portuus-surface-hover);
+  --color-nav-bg-primary-hover: rgba(255, 255, 255, 0.08);
+  --color-nav-bg-secondary-hover: rgba(255, 255, 255, 0.08);
+  --color-nav-bg-primary-hover-strong: rgba(255, 255, 255, 0.16);
+  --color-nav-bg-secondary-hover-strong: rgba(255, 255, 255, 0.16);
   --color-nav-border-primary: var(--portuus-border);
+  --color-nav-border-secondary: var(--portuus-border);
+  --color-nav-border-primary-focus: var(--portuus-text);
+  --color-nav-border-secondary-focus: var(--portuus-text);
 }
 
 .theme_dark {
