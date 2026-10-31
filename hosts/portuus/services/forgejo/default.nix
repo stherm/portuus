@@ -59,6 +59,8 @@ in
       };
       session.COOKIE_SECURE = true;
       actions.ENDLESS_TASK_TIMEOUT = "12h";
+      api.ENABLE_SWAGGER = false;
+      "service.explore".DISABLE_USERS_PAGE = true;
       mailer = {
         ENABLED = true;
         PROTOCOL = "smtps";

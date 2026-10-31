@@ -42,8 +42,10 @@ in
 
   environment.etc."headscale/acl.hujson".source = lib.mkForce ./acl.hujson;
 
-  services.nginx.virtualHosts.${constants.services.headscale.fqdn}.locations."= /".return =
-    "302 https://${constants.domain}/";
+  services.nginx.virtualHosts.${constants.services.headscale.fqdn}.locations = {
+    "= /".return = "302 https://${constants.domain}/";
+    "^~ /swagger".return = "404";
+  };
 
   networking.hosts."127.0.0.1" = [ constants.services.headscale.fqdn ];
 
