@@ -7,7 +7,7 @@ in
   services = {
     livekit = {
       enable = true;
-      openFirewall = true;
+      openFirewall = false;
       keyFile = config.sops.templates."livekit/key".path;
       settings.port = 7880;
       settings.room.auto_create = false;
@@ -43,7 +43,15 @@ in
 
   systemd.services.lk-jwt-service.environment.LIVEKIT_FULL_ACCESS_HOMESERVERS = c.domain;
 
-  networking.firewall.allowedTCPPorts = [ 7881 ];
+  networking.firewall = {
+    allowedTCPPorts = [ 7881 ];
+    allowedUDPPortRanges = [
+      {
+        from = config.services.livekit.settings.rtc.port_range_start;
+        to = config.services.livekit.settings.rtc.port_range_end;
+      }
+    ];
+  };
 
   sops = {
     secrets."livekit/key" = { };
