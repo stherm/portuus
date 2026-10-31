@@ -35,7 +35,10 @@ in
     accelerationDevices = null;
   };
 
-  services.nginx.virtualHosts.${s.fqdn}.locations = b.iconLocations { inherit lib pkgs; } {
+  services.nginx.virtualHosts.${s.fqdn}.locations = {
+    "= /portuus-logo.svg".alias = b.logo;
+  }
+  // b.iconLocations { inherit lib pkgs; } {
     "favicon.ico" = 48;
     "favicon.png" = 64;
     "favicon-16.png" = 16;

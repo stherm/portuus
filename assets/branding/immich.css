@@ -31,4 +31,16 @@
   --immich-ui-primary-50: var(--portuus-surface);
   --immich-ui-light: var(--portuus-navy);
   --immich-ui-gray: var(--portuus-surface);
+  --immich-ui-light-50: var(--portuus-navy);
+  --immich-ui-light-100: var(--portuus-surface);
+  --immich-ui-light-200: var(--portuus-surface-hover);
+  --immich-ui-light-300: var(--portuus-border);
+  --color-gray-700: var(--portuus-border);
+  --color-gray-800: var(--portuus-navy);
+  --color-gray-900: var(--portuus-navy);
+  --color-neutral-700: var(--portuus-border);
+}
+
+img[alt="Immich logo"] {
+  content: url("/portuus-logo.svg");
 }
