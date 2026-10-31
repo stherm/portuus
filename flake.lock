@@ -848,11 +848,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793438403,
-        "narHash": "sha256-nSXpSvLdemOcnqArNS+4DnO2Ry5R3KMdKKXDBsK2lWw=",
+        "lastModified": 1793439513,
+        "narHash": "sha256-Q+Rvvp8d47HjDPjgfJkpTKRdS2E3gjWm7ez1fTrUHGQ=",
         "ref": "main",
-        "rev": "30374571ef0a0a99090aef726ecbab4c2b988f65",
-        "revCount": 1,
+        "rev": "b8f0a24de865f040506b0c71649df85adc39051c",
+        "revCount": 2,
         "type": "git",
         "url": "https://git.portuus.de/portuus/portuus-website.git"
       },

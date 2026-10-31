@@ -42,6 +42,9 @@ in
 
   environment.etc."headscale/acl.hujson".source = lib.mkForce ./acl.hujson;
 
+  services.nginx.virtualHosts.${constants.services.headscale.fqdn}.locations."= /".return =
+    "302 https://${constants.domain}/";
+
   networking.hosts."127.0.0.1" = [ constants.services.headscale.fqdn ];
 
   systemd.services.tailscaled-autoconnect.serviceConfig.TimeoutStartSec = "5min";

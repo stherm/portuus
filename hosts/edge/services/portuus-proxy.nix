@@ -29,6 +29,7 @@ in
       proxy_read_timeout 600s;
       proxy_send_timeout 600s;
     '')
+    { "${s.attic.fqdn}".locations."= /".return = "302 https://${c.domain}/"; }
 
     {
       "${s.forgejo.fqdn}" = {
