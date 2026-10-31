@@ -49,6 +49,8 @@ let
       setValue "$system" /ServerConfiguration/RemoteClientBitrateLimit 15000000
       setValue "$system" /ServerConfiguration/QuickConnectAvailable true
       setValue "$system" /ServerConfiguration/EnableMetrics false
+      setValue "$system" /ServerConfiguration/TrickplayOptions/EnableHwAcceleration true
+      setValue "$system" /ServerConfiguration/TrickplayOptions/EnableHwEncoding true
     '';
   };
 in
@@ -75,7 +77,6 @@ in
       libraries = [
         "movies"
         "shows"
-        "books"
       ];
 
       hardwareAcceleration = {

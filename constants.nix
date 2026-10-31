@@ -22,6 +22,11 @@ rec {
       cache = "portuus";
       publicKey = "portuus:OEIdyRk2znvu8n4B+2FnNmWjOWnKxRACfQfuIYHNd8s=";
     };
+    audiobookshelf = {
+      subdomain = "books";
+      fqdn = "books." + domain;
+      port = 8000;
+    };
     charbogen = {
       fqdn = "roll-dice.org";
       authFqdn = "auth.roll-dice.org";

@@ -105,6 +105,7 @@ zfs create -o canmount=noauto -o mountpoint=legacy dpool/data
 mount -o X-mount.mkdir -t zfs dpool/data "$MNT"/data
 
 zfs create -o mountpoint=legacy -o quota=500G dpool/data/attic
+zfs create -o mountpoint=legacy -o quota=200G dpool/data/audiobooks
 zfs create -o mountpoint=legacy               dpool/data/backup
 zfs create -o mountpoint=legacy               dpool/data/charbogen
 zfs create -o mountpoint=legacy               dpool/data/forgejo
@@ -117,6 +118,7 @@ zfs create -o mountpoint=legacy               dpool/data/maubot
 zfs create -o mountpoint=legacy -o quota=3T   dpool/data/nextcloud
 
 mount -o X-mount.mkdir -t zfs dpool/data/attic          "$MNT"/data/attic
+mount -o X-mount.mkdir -t zfs dpool/data/audiobooks     "$MNT"/data/audiobooks
 mount -o X-mount.mkdir -t zfs dpool/data/backup         "$MNT"/data/backup
 mount -o X-mount.mkdir -t zfs dpool/data/charbogen      "$MNT"/data/charbogen
 mount -o X-mount.mkdir -t zfs dpool/data/forgejo        "$MNT"/data/forgejo

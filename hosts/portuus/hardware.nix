@@ -67,6 +67,11 @@
       fsType = "zfs";
     };
 
+    "/data/audiobooks" = {
+      device = "dpool/data/audiobooks";
+      fsType = "zfs";
+    };
+
     "/data/backup" = {
       device = "dpool/data/backup";
       fsType = "zfs";
