@@ -4,6 +4,7 @@
   forgejo = import ./forgejo;
   github-runner = import ./github-runner;
   immich = import ./immich;
+  gmod = import ./gmod;
   minecraft-servers = import ./minecraft-servers;
   nextcloud = import ./nextcloud;
   palworld = import ./palworld;
