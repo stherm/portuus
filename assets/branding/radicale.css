@@ -1,0 +1,81 @@
+:root {
+  --container-h1-color: var(--portuus-navy);
+  --summary-hover-color: var(--portuus-blue-600);
+  --input-focus-visible-border-color: var(--portuus-blue-600);
+  --copy-btn-color: var(--portuus-blue-600);
+  --copy-btn-hover-bg-color: var(--portuus-blue-50);
+  --copy-btn-hover-color: var(--portuus-blue-700);
+  --button-bg-color: var(--portuus-navy);
+  --fabcontainer-a-bg-color: var(--portuus-navy);
+  --button-blue-a-blue-bg-color: var(--portuus-blue-600);
+  --button-blue-a-blue-border-color: var(--portuus-blue-700);
+  --button-blue-hover-a-blue-hover-bg-color: var(--portuus-blue-500);
+  --button-blue-active-a-blue-active-bg-color: var(--portuus-blue-700);
+  --button-green-a-green-bg-color: var(--portuus-blue-600);
+  --button-green-a-green-border-color: var(--portuus-blue-700);
+  --button-green-hover-a-green-hover-bg-color: var(--portuus-blue-500);
+  --button-green-active-a-green-active-bg-color: var(--portuus-blue-700);
+  --container-border-color: var(--portuus-blue-200);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body-bg-color: var(--portuus-navy);
+    --body-color: var(--portuus-text);
+    --container-bg-color: var(--portuus-surface);
+    --container-border-color: var(--portuus-border);
+    --container-h1-color: var(--portuus-text);
+    --tr-border-bottom-color: var(--portuus-border);
+    --th-color: var(--portuus-muted);
+    --details-border-color: var(--portuus-border);
+    --details-bg-color: var(--portuus-surface);
+    --summary-hover-color: var(--portuus-blue-400);
+    --loginscene-infcloudlink-color: var(--portuus-muted);
+    --loadingscene-bg-color: var(--portuus-navy);
+    --logoutview-bg-color: var(--portuus-surface);
+    --logoutview-color: var(--portuus-muted);
+    --logoutview-border-bottom-color: var(--portuus-border);
+    --logoutview-a-color: var(--portuus-text);
+    --collectionsscene-article-bg-color: var(--portuus-surface);
+    --collectionsscene-article-border-color: var(--portuus-border);
+    --collectionsscene-article-colorbar-bg-color: var(--portuus-navy);
+    --uploadcollectionscene-border-bottom-color: var(--portuus-border);
+    --fabcontainer-a-color: var(--portuus-text);
+    --fabcontainer-a-bg-color: var(--portuus-blue-600);
+    --badge_icon-bg-color: var(--portuus-surface);
+    --button-color: var(--portuus-text);
+    --button-bg-color: var(--portuus-surface-hover);
+    --input-select-border-color: var(--portuus-border);
+    --input-select-bg-color: var(--portuus-navy);
+    --input-focus-visible-border-color: var(--portuus-blue-400);
+    --copy-btn-color: var(--portuus-blue-400);
+    --copy-btn-hover-bg-color: var(--portuus-surface-hover);
+    --copy-btn-hover-color: var(--portuus-blue-200);
+    --button-blue-a-blue-bg-color: var(--portuus-blue-600);
+    --button-blue-a-blue-border-color: var(--portuus-blue-700);
+    --button-blue-hover-a-blue-hover-bg-color: var(--portuus-blue-500);
+    --button-blue-active-a-blue-active-bg-color: var(--portuus-blue-700);
+    --pill-bg-color: var(--portuus-border);
+    --pill-color: var(--portuus-text);
+    --button-green-a-green-bg-color: var(--portuus-blue-600);
+    --button-green-a-green-border-color: var(--portuus-blue-700);
+    --button-green-hover-a-green-hover-bg-color: var(--portuus-blue-500);
+    --button-green-active-a-green-active-bg-color: var(--portuus-blue-700);
+  }
+
+  input,
+  select {
+    background: var(--input-select-bg-color);
+    color: var(--body-color);
+  }
+}
+
+#loginscene .logocontainer img {
+  display: block;
+  width: 140px;
+  margin: 0 auto;
+}
+
+#loginscene .infcloudlink-hidden {
+  display: none;
+}
