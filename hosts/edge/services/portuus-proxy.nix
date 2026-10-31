@@ -30,6 +30,7 @@ in
       proxy_send_timeout 600s;
     '')
     { "${s.attic.fqdn}".locations."= /".return = "302 https://${c.domain}/"; }
+    { "${s.vaultwarden.fqdn}".locations."^~ /admin".return = "404"; }
 
     {
       "www.${c.domain}" = {
