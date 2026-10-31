@@ -111,5 +111,22 @@
     };
   };
 
-  systemd.services.lk-jwt-service.enable = false;
+  systemd.services = {
+    lk-jwt-service.enable = false;
+
+    postgresql-synapse-nopass = {
+      description = "Remove the default password of the matrix-synapse database role";
+      after = [ "postgresql.target" ];
+      requires = [ "postgresql.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        User = "postgres";
+      };
+      script = ''
+        ${config.services.postgresql.package}/bin/psql -v ON_ERROR_STOP=1 -c 'ALTER ROLE "matrix-synapse" PASSWORD NULL'
+      '';
+    };
+  };
 }
