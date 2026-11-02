@@ -8,6 +8,7 @@
 {
   imports = [
     ./overlays.nix
+    ./security.nix
   ];
 
   users.users.root.openssh.authorizedKeys.keys = [

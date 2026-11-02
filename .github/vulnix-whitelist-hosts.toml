@@ -30,6 +30,20 @@ cve = [
 until = "2027-01-18"
 comment = "CVE-2026-16554 not applicable: The overflow only occurs on 32-bit platforms and only with cJSON_PrintBuffered(). Both hosts are x86_64. The only user in the runtime closure is librist, and librist does not call cJSON_PrintBuffered. | CVE-2026-67215 not applicable: The flaw is only exploitable via JSON Patch (cJSONUtils_ApplyPatches*) from libcjson_utils. The only user of cjson on the hosts is librist. librist only generates statistics JSON and imports neither cJSONUtils functions nor any parse function. | CVE-2026-67216 not applicable: Only cJSON_Compare() on attacker-influenced input is affected. librist is the only user of cjson in the closure and does not call cJSON_Compare. librist also does not parse any JSON. | CVE-2026-67217 not applicable: Only apply_patch() in cJSON_Utils (JSON Patch) is affected. It is not used by any program on the hosts. librist, the only user, does not link libcjson_utils and does not call any cJSONUtils functions."
 
+["cups-2.4.19"]
+cve = [
+  "CVE-2026-107885",
+  "CVE-2026-107886",
+  "CVE-2026-107888",
+  "CVE-2026-107890",
+  "CVE-2026-55453",
+  "CVE-2026-55467",
+  "CVE-2026-55480",
+  "CVE-2026-61702",
+]
+until = "2027-02-02"
+comment = "All not applicable: The flaws are in the scheduler cupsd (cupsdCheckJobs, add_class, add_job, cupsdCreateJob, copy_model, copy_banner) or in the ipp backend. No cupsd runs on either host (services.printing.enable = false). cups is only in the closure as cups-2.4.19-lib, pulled in by gtk3/gtk4 and on portuus also by openjdk and steam-run."
+
 ["dhcpcd-10.3.1"]
 cve = [
   "CVE-2026-56113",
@@ -47,6 +61,13 @@ cve = [
 ]
 until = "2027-01-18"
 comment = "CVE-2026-53432 not applicable: The version is affected (fix only in 0.73.1). However, fzf is only used interactively by admins: system-path and the synix tailnet switch script with fixed, short input. A crash needs a line of about 2.2 MB plus a 999-byte pattern typed by the admin, and would only panic their own process; no service uses fzf. | CVE-2026-53433 not applicable: Only the HTTP server in --listen mode is affected. Neither the repo nor synix starts fzf with --listen. fzf only runs interactively (tailnet switch script, admin shell)."
+
+["gcc-15.2.0"]
+cve = [
+  "CVE-2023-4039",
+]
+until = "2027-02-02"
+comment = "CVE-2023-4039 not applicable: Only affects GCC targeting AArch64 (disputed). Both hosts are x86_64-linux, the closure only contains gcc-15.2.0-lib of the x86_64 compiler (via steam-run, cryptsetup, gnutls and others)."
 
 ["gcc-15.3.0"]
 cve = [
@@ -68,6 +89,13 @@ cve = [
 ]
 until = "2027-01-18"
 comment = "CVE-2024-45993 not applicable: The heap overflow is only in the CLI helper gif2rgb, not in libgif.so; Debian classifies it as 'Crash in CLI tool, no security impact'. No service on any host calls gif2rgb."
+
+["glib-2.88.3"]
+cve = [
+  "CVE-2026-58016",
+]
+until = "2027-02-02"
+comment = "CVE-2026-58016 not applicable: Out-of-bounds read (denial of service) in g_dbus_node_info_new_for_xml() when a process parses malformed D-Bus introspection XML. That needs a malicious peer on the local D-Bus. The servers have no desktop sessions and no untrusted local users, and no service parses introspection XML from the network."
 
 ["gstreamer-1.26.11"]
 cve = [
@@ -199,6 +227,13 @@ cve = [
 ]
 until = "2027-01-18"
 comment = "CVE-2026-18022 not applicable: According to the advisory only 32-bit systems are affected. portuus is x86_64. In addition, the flaw could only be exploited by a database user when building an IVFFlat index."
+
+["samba-4.23.10"]
+cve = [
+  "CVE-2026-2340",
+]
+until = "2027-02-02"
+comment = "CVE-2026-2340 not applicable: The flaw is in the smbd module vfs_worm. No smbd runs (services.samba.enable = false). On portuus samba is only in the closure as libsmbclient for ffmpeg-full and jellyfin-ffmpeg."
 
 ["sqlite-3.51.2"]
 cve = [

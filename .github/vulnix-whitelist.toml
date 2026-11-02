@@ -22,6 +22,13 @@ cve = [
 until = "2027-01-18"
 comment = "CVE-2025-69649 fixed in this version: The fix (commit 66a3492, PR 33697, 08.12.2025) is already included in the release tag binutils-2_46 (08.02.2026). The check `if (section != NULL)` in process_relocs is present in readelf.c of 2.46. The 'thru 2.46' in the CVE text is imprecise. | CVE-2025-69650 fixed in this version: The fix (commit ea4bc025, PR 33698/33700, 08.12.2025, all_relocations is zeroed with memset) is included in readelf.c of 2.46. The CVE is also disputed. | CVE-2025-69651 fixed in this version: Same fix as CVE-2025-69650 (commit ea4bc025, PR 33698/33700). It is present in the 2.46 release tag. | CVE-2025-69652 fixed in this version: The fix (commit 44b79abd, PR 33701, 08.12.2025) is included in dwarf.c of 2.46. It contains the check `num_debug_info_entries != DEBUG_INFO_UNAVAILABLE` in the initialization of debug_info_p."
 
+["brotli-1.2.1"]
+cve = [
+  "CVE-2026-111497",
+]
+until = "2027-02-02"
+comment = "CVE-2026-111497 fixed in this version: The CVE record limits the decoder buffer overflow to Brotli 1.0.3 through 1.2.0 (affected 1.2.0 < 1.2.1), and 1.2.1 is the fixed release. nixpkgs 26.05 builds brotli from the upstream tag v1.2.1."
+
 ["coreutils-9.11"]
 cve = [
   "CVE-2026-56391",
@@ -36,6 +43,13 @@ cve = [
 ]
 until = "2027-01-18"
 comment = "CVE-2022-26691 fixed in this version: The Apple record concerns the CUPS validation of Local-Authorization certificates, which was fixed in CUPS 2.4.2; the installed version is 2.4.19. In addition, no cupsd is running (services.printing.enable = false), cups is only in the closure as libcups via gtk4."
+
+["cups-2.4.20"]
+cve = [
+  "CVE-2022-26691",
+]
+until = "2027-02-02"
+comment = "CVE-2022-26691 fixed in this version: The Apple record concerns the CUPS validation of Local-Authorization certificates, which was fixed in CUPS 2.4.2; the installed version is 2.4.20."
 
 ["dash-0.5.13.3"]
 cve = [
@@ -96,6 +110,20 @@ cve = [
 until = "2027-01-18"
 comment = "CVE-2025-15281 patched: The nixpkgs patch 2.42-master.patch (backports from release/2.42/master, suffix -100) contains the fix 'posix: Reset wordexp_t fields with WRDE_REUSE (CVE-2025-15281 / BZ 33814)'. | CVE-2026-4046 patched: 2.42-master.patch contains the commit 'Use pending character state in IBM1390, IBM1399 character sets (CVE-2026-4046)' including a test for bug 33980. | CVE-2026-4437 patched: 2.42-master.patch contains 'resolv: Count records correctly (CVE-2026-4437)'. | CVE-2026-4438 patched: 2.42-master.patch contains 'resolv: Check hostname for validity (CVE-2026-4438)'. | CVE-2026-5435 patched: 2.42-master.patch contains 'resolv: More types as unknown in ns_sprintrrf (CVE-2026-5435)' (bug 34033) along with the test case tst-ns_sprintrr. | CVE-2026-5450 patched: 2.42-master.patch contains 'stdio-common: Fix buffer overflow in scanf %mc [BZ #34008]', whose commit message names CVE-2026-5450. | CVE-2026-5928 patched: 2.42-master.patch contains 'libio: Fix ungetwc operating on byte stream [BZ #33998]', whose commit message names CVE-2026-5928 (fix in _IO_wdefault_pbackfail). | CVE-2026-6238 patched: 2.42-master.patch contains 'resolv: Fix buffer overreads in ns_sprintrrf (CVE-2026-6238)'."
 
+["glibc-2.42-103"]
+cve = [
+  "CVE-2025-15281",
+  "CVE-2026-4046",
+  "CVE-2026-4437",
+  "CVE-2026-4438",
+  "CVE-2026-5435",
+  "CVE-2026-5450",
+  "CVE-2026-5928",
+  "CVE-2026-6238",
+]
+until = "2027-02-02"
+comment = "All patched: The nixpkgs patch 2.42-master.patch (backports from release/2.42/master, version suffix -103) contains the fixes, and each CVE ID appears in the applied patch (found by vulnix_prefilter.py). Same verdict as for glibc-2.42-100, only the backport level changed."
+
 ["glibc-2.44-25"]
 cve = [
   "CVE-2026-5435",
@@ -103,6 +131,21 @@ cve = [
 ]
 until = "2027-01-18"
 comment = "CVE-2026-5435 fixed in this version: The fix is already included in the glibc 2.44 release: NEWS lists bug 34033 (ns_sprintrrf TSIG path) among the bugs fixed in 2.44. The MITRE entry '2.2 and newer' is too broad here. | CVE-2026-6238 fixed in this version: According to MITRE only glibc up to 2.43 is affected, and the glibc 2.44 NEWS list bug 34069 (CVE-2026-6238) as fixed."
+
+["glibc-2.44-57"]
+cve = [
+  "CVE-2026-5435",
+  "CVE-2026-6238",
+]
+until = "2027-02-02"
+comment = "Both patched: The nixpkgs patch 2.44-master.patch contains the fixes and names both CVE IDs (found by vulnix_prefilter.py). Both fixes are also part of the glibc 2.44 release itself (NEWS lists bugs 34033 and 34069)."
+
+["go-1.26.10"]
+cve = [
+  "CVE-2023-49292",
+]
+until = "2027-02-02"
+comment = "CVE-2023-49292 false positive: The CVE concerns the Golang library ecies/go (ECIES for secp256k1, fixed in 2.0.8), product 'go' of vendor 'ecies'. It does not concern the Go toolchain."
 
 ["gstreamer-1.26.11"]
 cve = [

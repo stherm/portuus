@@ -9,6 +9,7 @@
     final: prev:
     let
       files = [
+        ./security.nix
       ];
       imports = builtins.map (f: import f final prev) files;
     in
